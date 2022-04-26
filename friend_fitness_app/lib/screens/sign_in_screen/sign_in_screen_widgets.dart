@@ -1,13 +1,13 @@
-import 'dart:developer';
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/common/constants/app_images.dart';
 import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
+import 'package:friend_fitness_app/screens/sign_up_screen/sign_up_screen.dart';
 import 'package:get/get.dart';
-
 import '../../common/constants/app_colors.dart';
 import '../../common/field_validation.dart';
 import '../../controllers/sign_in_screen_controller/sign_in_screen_controller.dart';
+import '../profile_screen/profile_screen.dart';
 
 /// Login Header Text Module
 class LoginHeaderModule extends StatelessWidget {
@@ -158,6 +158,7 @@ class LoginButtonModule extends StatelessWidget {
           onTap: () {
             if (screenController.signInFormKey.currentState!.validate()) {
               // log("");
+              Get.offAll(()=> const ProfileScreen(), transition: Transition.zoom);
             }
           },
           child: Container(
@@ -198,6 +199,8 @@ class OrTextModule extends StatelessWidget {
   }
 }
 
+
+/// Social Media Button
 class SocialMediaButton extends StatelessWidget {
   const SocialMediaButton({Key? key}) : super(key: key);
 
@@ -241,6 +244,38 @@ class SocialMediaButton extends StatelessWidget {
           ).commonAllSidePadding(padding: 17),
         ),
 
+      ],
+    );
+  }
+}
+
+///
+class SignUpTextModule extends StatelessWidget {
+  const SignUpTextModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text(
+          "Don't have account? ",
+          style: TextStyle(
+            fontSize: 13,
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            Get.off(()=> SignUpScreen(), transition: Transition.zoom);
+          },
+          child: const Text(
+            "SignUp",
+            style: TextStyle(
+              fontSize: 13,
+              decoration: TextDecoration.underline,
+            ),
+          ),
+        ),
       ],
     );
   }

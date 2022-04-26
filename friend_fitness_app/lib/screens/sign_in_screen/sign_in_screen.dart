@@ -13,25 +13,33 @@ class SignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 100),
-            const LoginHeaderModule(),
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 100),
+              const LoginHeaderModule(),
 
-            const SizedBox(height: 100),
-            LoginFormModule().commonSymmetricPadding(horizontal: 35),
-            const SizedBox(height: 10),
-            const ForgotPasswordTextModule().commonSymmetricPadding(horizontal: 35),
-            const SizedBox(height: 25),
-            LoginButtonModule(),
-            const SizedBox(height: 25),
-            const OrTextModule(),
-            const SizedBox(height: 25),
-            SocialMediaButton(),
-            const SizedBox(height: 25),
+              const SizedBox(height: 100),
+              LoginFormModule().commonSymmetricPadding(horizontal: 35),
 
-          ],
+              const SizedBox(height: 10),
+              const ForgotPasswordTextModule().commonSymmetricPadding(horizontal: 35),
+
+              const SizedBox(height: 25),
+              LoginButtonModule(),
+
+              const SizedBox(height: 25),
+              const OrTextModule(),
+
+              const SizedBox(height: 25),
+              const SocialMediaButton(),
+
+              const SizedBox(height: 25),
+              const SignUpTextModule(),
+
+            ],
+          ),
         ),
       ),
     );
