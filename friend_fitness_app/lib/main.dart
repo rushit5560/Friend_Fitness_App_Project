@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 import 'screens/profile_screen/profile_screen.dart';
 
@@ -12,13 +13,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-
-        primarySwatch: Colors.blue,
-      ),
-      home: ProfileScreen(),
+    return GetMaterialApp(
+      title: 'Friends Fitness App',
+      theme: appLightTheme(),
+      home: const ProfileScreen(),
     );
   }
 }
