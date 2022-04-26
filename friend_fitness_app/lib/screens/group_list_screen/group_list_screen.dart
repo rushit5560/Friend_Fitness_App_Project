@@ -8,14 +8,16 @@ class GroupListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: const [
-          GroupListScreenAppBarModule(),
-          SizedBox(height: 15),
-          Expanded(
-            child: GroupListModule(),
-          ),
-        ],
+      body: SafeArea(
+        child: Column(
+          children: const [
+            GroupListScreenAppBarModule(),
+            SizedBox(height: 15),
+            Expanded(
+              child: GroupListModule(),
+            ),
+          ],
+        ),
       ),
     );
   }
