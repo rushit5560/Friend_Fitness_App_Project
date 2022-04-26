@@ -26,7 +26,7 @@ class ProfileScreenAppBarModule extends StatelessWidget {
                 "Profile",
                 overflow: TextOverflow.ellipsis,
                 style: TextStyle(
-                    fontWeight: FontWeight.bold, fontSize: 16),
+                    fontWeight: FontWeight.bold, fontSize: 20),
               ),
               Container(),
             ],
@@ -35,7 +35,6 @@ class ProfileScreenAppBarModule extends StatelessWidget {
   }
 }
 
-
 class ProfileImage extends StatelessWidget {
   const ProfileImage({Key? key}) : super(key: key);
 
@@ -43,10 +42,224 @@ class ProfileImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.grey.shade300)
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.colorLightGrey,
+            blurRadius: 6,
+            blurStyle: BlurStyle.outer,
+          ),
+        ],
       ),
-      child: Image.asset(AppImages.profileImg),
+      child: Padding(
+        padding: const EdgeInsets.all(30.0),
+        child: Image.asset(AppImages.profileImg, scale: 2,),
+      ),
     );
   }
 }
+
+class NameTextFieldModule extends StatelessWidget {
+  const NameTextFieldModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Expanded(
+            flex: 2,
+            child: Text("Name:", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),)
+        ),
+        Expanded(
+            flex: 4,
+            child: Container(
+              height: 45,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.colorLightGrey,
+                    blurRadius: 2,
+                    blurStyle: BlurStyle.outer,
+                  ),
+                ],
+              ),
+            )
+        )
+      ],
+    );
+  }
+}
+
+class WeightTextFieldModule extends StatelessWidget {
+  const WeightTextFieldModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Expanded(
+            flex: 2,
+            child: Text("Weight:", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),)
+        ),
+        Expanded(
+            flex: 4,
+            child: Container(
+              height: 45,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.colorLightGrey,
+                    blurRadius: 2,
+                    blurStyle: BlurStyle.outer,
+                  ),
+                ],
+              ),
+            )
+        )
+      ],
+    );
+  }
+}
+
+class MeasurementTextFieldModule extends StatelessWidget {
+  const MeasurementTextFieldModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Expanded(
+            flex: 2,
+            child: Text("Measurement:", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),)
+        ),
+        Expanded(
+            flex: 4,
+            child: Container(
+              height: 45,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.colorLightGrey,
+                    blurRadius: 2,
+                    blurStyle: BlurStyle.outer,
+                  ),
+                ],
+              ),
+            )
+        )
+      ],
+    );
+  }
+}
+
+class HeightTextFieldModule extends StatelessWidget {
+  const HeightTextFieldModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Expanded(
+            flex: 2,
+            child: Text("Height:", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),)
+        ),
+        Expanded(
+            flex: 4,
+            child: Container(
+              height: 45,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.colorLightGrey,
+                    blurRadius: 2,
+                    blurStyle: BlurStyle.outer,
+                  ),
+                ],
+              ),
+            )
+        )
+      ],
+    );
+  }
+}
+
+class SaveButtonModule extends StatelessWidget {
+  const SaveButtonModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+        color: AppColors.colorDarkGrey
+      ),
+      child: const Padding(
+        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 13),
+        child: Text("SAVE", style: TextStyle(color: Colors.white),),
+      ),
+    );
+  }
+}
+
+class BeforeAfterImageModule extends StatelessWidget {
+  const BeforeAfterImageModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Column(
+          children: [
+            Text("Before", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),),
+
+            SizedBox(height: 10),
+            Container(
+              height: Get.height * 0.15,
+              width: Get.width * 0.27,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.colorLightGrey,
+                    blurRadius: 2,
+                    blurStyle: BlurStyle.outer,
+                  ),
+                ],
+              ),
+            )
+          ],
+        ),
+        SizedBox(width: 20,),
+        Column(
+          children: [
+            Text("After", style: TextStyle(fontWeight: FontWeight.w500,fontSize: 18),),
+
+            SizedBox(height: 10),
+            Container(
+              height: Get.height * 0.15,
+              width: Get.width * 0.27,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.colorLightGrey,
+                    blurRadius: 2,
+                    blurStyle: BlurStyle.outer,
+                  ),
+                ],
+              ),
+            )
+          ],
+        )
+      ],
+    );
+  }
+}
+
+
+
