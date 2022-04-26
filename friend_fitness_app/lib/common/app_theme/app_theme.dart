@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
 ThemeData appLightTheme() {
-  return ThemeData();
+  return ThemeData(
+    scaffoldBackgroundColor: Colors.white,
+  );
 }
