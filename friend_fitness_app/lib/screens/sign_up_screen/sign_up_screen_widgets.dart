@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
+import 'package:friend_fitness_app/screens/home_screen/home_screen.dart';
 import 'package:friend_fitness_app/screens/profile_screen/profile_screen.dart';
 import 'package:get/get.dart';
 
@@ -257,7 +258,7 @@ class RegisterButtonModule extends StatelessWidget {
           onTap: () {
             if (screenController.signUpFormKey.currentState!.validate()) {
               // log("");
-              Get.offAll(()=> const ProfileScreen(), transition: Transition.zoom);
+              Get.offAll(()=> HomeScreen(), transition: Transition.zoom);
             }
           },
           child: Container(

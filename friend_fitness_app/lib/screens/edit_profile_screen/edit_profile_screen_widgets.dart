@@ -41,7 +41,7 @@ class ProfileScreenAppBarModule extends StatelessWidget {
 class ProfileImage extends StatelessWidget {
   ProfileImage({Key? key}) : super(key: key);
   final ImagePicker imagePicker = ImagePicker();
-  EditProfileScreenController screenController = Get.find<EditProfileScreenController>();
+  final screenController = Get.find<EditProfileScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -386,14 +386,17 @@ class SaveButtonModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: AppColors.colorDarkGrey
-      ),
-      child: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 13),
-        child: Text("SAVE", style: TextStyle(color: Colors.white),),
+    return GestureDetector(
+      onTap: () => Get.back(),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(20),
+            color: AppColors.colorDarkGrey
+        ),
+        child: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 13),
+          child: Text("SAVE", style: TextStyle(color: Colors.white),),
+        ),
       ),
     );
   }
@@ -402,7 +405,7 @@ class SaveButtonModule extends StatelessWidget {
 class BeforeAfterImageModule extends StatelessWidget {
   BeforeAfterImageModule({Key? key}) : super(key: key);
   final ImagePicker imagePicker = ImagePicker();
-  EditProfileScreenController screenController = Get.find<EditProfileScreenController>();
+  final screenController = Get.find<EditProfileScreenController>();
 
 
   @override
@@ -469,8 +472,8 @@ class BeforeAfterImageModule extends StatelessWidget {
                           color: AppColors.colorDarkGrey
                       ),
                       child: Container(
-                          padding: EdgeInsets.all(5.0),
-                          child: Icon(Icons.camera_alt, color: Colors.white, size: 15)),
+                          padding: const EdgeInsets.all(5.0),
+                          child: const Icon(Icons.camera_alt, color: Colors.white, size: 15)),
                     ),
                   ),
                 )
@@ -478,12 +481,12 @@ class BeforeAfterImageModule extends StatelessWidget {
             )
           ],
         ),
-        SizedBox(width: 20,),
+        const SizedBox(width: 20),
         Column(
           children: [
-            Text("After", style: TextStyle(fontWeight: FontWeight.w500,fontSize: 18),),
+            const Text("After", style: TextStyle(fontWeight: FontWeight.w500,fontSize: 18),),
 
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Stack(
               clipBehavior: Clip.none,
               alignment: Alignment.bottomCenter,
@@ -538,8 +541,8 @@ class BeforeAfterImageModule extends StatelessWidget {
                           color: AppColors.colorDarkGrey
                       ),
                       child: Container(
-                          padding: EdgeInsets.all(5.0),
-                          child: Icon(Icons.camera_alt, color: Colors.white, size: 15)),
+                          padding: const EdgeInsets.all(5.0),
+                          child: const Icon(Icons.camera_alt, color: Colors.white, size: 15)),
                     ),
                   ),
                 )

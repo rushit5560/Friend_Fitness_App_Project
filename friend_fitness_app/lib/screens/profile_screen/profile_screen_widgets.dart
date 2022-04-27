@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/common/constants/app_colors.dart';
 import 'package:friend_fitness_app/common/constants/app_images.dart';
+import 'package:friend_fitness_app/screens/edit_profile_screen/edit_profile_screen.dart';
 import 'package:get/get.dart';
 
 class ProfileScreenAppBarModule extends StatelessWidget {
@@ -192,14 +193,17 @@ class SaveButtonModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: AppColors.colorDarkGrey
-      ),
-      child: const Padding(
-        padding: EdgeInsets.symmetric(horizontal: 30, vertical: 13),
-        child: Text("SAVE", style: TextStyle(color: Colors.white),),
+    return GestureDetector(
+      onTap: () => Get.to(()=> EditProfileScreen(), transition: Transition.zoom),
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: AppColors.colorDarkGrey
+        ),
+        child: const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 13),
+          child: Text("UPDATE", style: TextStyle(color: Colors.white),),
+        ),
       ),
     );
   }

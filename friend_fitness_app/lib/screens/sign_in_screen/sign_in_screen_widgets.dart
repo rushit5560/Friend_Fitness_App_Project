@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/common/constants/app_images.dart';
 import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
+import 'package:friend_fitness_app/screens/home_screen/home_screen.dart';
 import 'package:friend_fitness_app/screens/sign_up_screen/sign_up_screen.dart';
 import 'package:get/get.dart';
 import '../../common/constants/app_colors.dart';
@@ -158,7 +159,7 @@ class LoginButtonModule extends StatelessWidget {
           onTap: () {
             if (screenController.signInFormKey.currentState!.validate()) {
               // log("");
-              Get.offAll(()=> const ProfileScreen(), transition: Transition.zoom);
+              Get.offAll(()=> HomeScreen(), transition: Transition.zoom);
             }
           },
           child: Container(
