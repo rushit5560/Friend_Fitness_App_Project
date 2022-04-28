@@ -21,4 +21,11 @@ class AppImages{
   static const bottomHomeImg = root + "bottom_home.png";
   static const bottomCategoriesImg = root + "bottom_categories.png";
   static const bottomGroupImg = root + "bottom_group.png";
+
+  static const categoryAlcoholImg = root + "category_alcohol.png";
+  static const categoryCandyImg = root + "category_candy.png";
+  static const categoryDairyProductImg = root + "category_dairy_product.png";
+  static const categoryPastaImg = root + "category_pasta.png";
+  static const categoryPizzaImg = root + "category_pizza.png";
+  static const categorySodaImg = root + "category_soda.png";
 }
