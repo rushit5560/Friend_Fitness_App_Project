@@ -29,6 +29,7 @@ class ForgotPasswordScreen extends StatelessWidget {
                       ForgotPasswordEmailTextFieldModule(),
                       const SizedBox(height: 50),
                       SendOtpButtonModule(),
+                      const SizedBox(height: 15),
                     ],
                   ),
                 ).commonSymmetricPadding(horizontal: 25),
