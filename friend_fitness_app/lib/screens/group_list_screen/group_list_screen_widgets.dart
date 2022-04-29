@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/common/constants/app_images.dart';
 import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
+import 'package:friend_fitness_app/screens/group_chat_screen/group_chat_screen.dart';
 import 'package:get/get.dart';
 import '../../common/constants/app_colors.dart';
 
@@ -53,43 +54,48 @@ class GroupListModule extends StatelessWidget {
   }
 
   Widget _groupListTile() {
-    return Container(
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 6,
-            blurStyle: BlurStyle.outer,
-            color: AppColors.colorLightGrey,
-          ),
-        ],
-      ),
-
-      child: Row(
-        children: [
-          Container(
-            height: 50,
-            width: 50,
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.grey,
+    return GestureDetector(
+      onTap: () {
+        Get.to(()=> GroupChatScreen());
+      },
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(15),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 6,
+              blurStyle: BlurStyle.outer,
+              color: AppColors.colorLightGrey,
             ),
-            child: Image.asset(AppImages.groupIconImg).commonAllSidePadding(padding: 8),
-          ),
-          const SizedBox(width: 15),
-          const Expanded(
-            child: Text(
-              "Group Name",
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 17,
+          ],
+        ),
+
+        child: Row(
+          children: [
+            Container(
+              height: 50,
+              width: 50,
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.grey,
+              ),
+              child: Image.asset(AppImages.groupIconImg).commonAllSidePadding(padding: 8),
+            ),
+            const SizedBox(width: 15),
+            const Expanded(
+              child: Text(
+                "Group Name",
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17,
+                ),
               ),
             ),
-          ),
-        ],
-      ).commonAllSidePadding(padding: 10),
+          ],
+        ).commonAllSidePadding(padding: 10),
+      ),
     );
   }
 

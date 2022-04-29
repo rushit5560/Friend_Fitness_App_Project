@@ -250,7 +250,7 @@ class SocialMediaButton extends StatelessWidget {
   }
 }
 
-///
+/// Sign Up Text
 class SignUpTextModule extends StatelessWidget {
   const SignUpTextModule({Key? key}) : super(key: key);
 
