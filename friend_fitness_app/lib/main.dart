@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:friend_fitness_app/screens/index_screen/index_screen.dart';
 import 'package:get/get.dart';
 import 'common/app_theme/app_theme.dart';
 import 'screens/sign_in_screen/sign_in_screen.dart';
-import 'screens/sign_up_screen/sign_up_screen.dart';
 
 
 void main() {
@@ -20,7 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'Friends Fitness App',
       debugShowCheckedModeBanner: false,
       theme: appLightTheme(),
-      home: IndexScreen(),
+      home: SignInScreen(),
     );
   }
 }
