@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/common/constants/app_colors.dart';
 import 'package:friend_fitness_app/common/constants/app_images.dart';
+import 'package:friend_fitness_app/common/sharedpreference_data.dart';
 import 'package:friend_fitness_app/screens/edit_profile_screen/edit_profile_screen.dart';
+import 'package:friend_fitness_app/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:get/get.dart';
 
 class ProfileScreenAppBarModule extends StatelessWidget {
-  const ProfileScreenAppBarModule({Key? key}) : super(key: key);
+  ProfileScreenAppBarModule({Key? key}) : super(key: key);
+  SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
+
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +33,13 @@ class ProfileScreenAppBarModule extends StatelessWidget {
                 style: TextStyle(
                     fontWeight: FontWeight.bold, fontSize: 20),
               ),
-              Container(),
+              GestureDetector(
+                onTap: (){
+                  sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+                  Get.offAll(() => SignInScreen(), transition: Transition.zoom);
+                  Get.snackbar('You Have Successfully Logout', '');
+                },
+                  child: const Icon(Icons.logout)),
             ],
           ),
     );

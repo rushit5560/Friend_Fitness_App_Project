@@ -12,7 +12,7 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           //mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const ProfileScreenAppBarModule(),
+            ProfileScreenAppBarModule(),
             const SizedBox(height: 15),
             Expanded(
               child: SingleChildScrollView(
