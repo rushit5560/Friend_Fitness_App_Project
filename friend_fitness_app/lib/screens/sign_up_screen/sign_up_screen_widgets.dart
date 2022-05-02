@@ -257,8 +257,8 @@ class RegisterButtonModule extends StatelessWidget {
         GestureDetector(
           onTap: () {
             if (screenController.signUpFormKey.currentState!.validate()) {
-              // log("");
-              Get.offAll(()=> HomeScreen(), transition: Transition.zoom);
+              //Get.offAll(()=> HomeScreen(), transition: Transition.zoom);
+              screenController.signUpWithFirebaseFunction();
             }
           },
           child: Container(

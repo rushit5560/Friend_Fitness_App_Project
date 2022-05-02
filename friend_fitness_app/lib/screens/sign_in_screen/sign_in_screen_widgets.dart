@@ -159,7 +159,8 @@ class LoginButtonModule extends StatelessWidget {
           onTap: () {
             if (screenController.signInFormKey.currentState!.validate()) {
               // log("");
-              Get.offAll(()=> HomeScreen(), transition: Transition.zoom);
+             // Get.offAll(()=> HomeScreen(), transition: Transition.zoom);
+              screenController.signInWithFirebaseFunction();
             }
           },
           child: Container(

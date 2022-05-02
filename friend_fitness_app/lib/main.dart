@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       title: 'Friends Fitness App',
       debugShowCheckedModeBanner: false,
       theme: appLightTheme(),
-      home: IndexScreen(),
+      home: SignInScreen(),
     );
   }
 }

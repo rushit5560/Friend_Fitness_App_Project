@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "327963012958",
+    "project_id": "fitness-app-f51fa",
+    "storage_bucket": "fitness-app-f51fa.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:327963012958:android:f5ec6aa2b2f003c94769cf",
+        "android_client_info": {
+          "package_name": "com.example.friend_fitness_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "327963012958-mgii4aa4l7fokeaojmoo8rorgjd5om5i.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDErCea5X6odORA9eA3SZYtATsXUbVCH0w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "327963012958-mgii4aa4l7fokeaojmoo8rorgjd5om5i.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
