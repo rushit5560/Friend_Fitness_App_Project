@@ -29,4 +29,5 @@ class AppImages{
   static const categoryPizzaImg = root + "category_pizza.png";
   static const categorySodaImg = root + "category_soda.png";
   static const exerciseImg = root + "exercise.png";
+  static const sendImg = root + "send.png";
 }

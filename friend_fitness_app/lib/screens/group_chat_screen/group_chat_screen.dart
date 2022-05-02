@@ -17,9 +17,12 @@ class GroupChatScreen extends StatelessWidget {
           children: [
             const GroupChatScreenAppBarModule(),
             const SizedBox(height: 10),
-            // Expanded(
-            //   child: GroupChatListModule(),
-            // ),
+            Expanded(
+              child: GroupChatListModule(),
+            ),
+            const SizedBox(height: 10),
+            SendMessageModule(),
+            const SizedBox(height: 10),
           ],
         ),
       ),
