@@ -1,9 +1,10 @@
-import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:friend_fitness_app/common/common_widgets.dart';
 import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
 import 'package:get/get.dart';
 import '../../common/constants/app_colors.dart';
 import '../../controllers/category_screen_controller/category_screen_controller.dart';
+import '../../model/category_model/category_model.dart';
 
 
 class CategoryScreenAppBarModule extends StatelessWidget {
@@ -44,18 +45,28 @@ class CategoryListModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: screenController.categoryList.length,
-      shrinkWrap: true,
-      physics: const BouncingScrollPhysics(),
-      itemBuilder: (context, i) {
-        CategoryModel singleCategory = screenController.categoryList[i];
-        return _categoryListTile(singleCategory).commonSymmetricPadding(vertical: 8);
+    return StreamBuilder<List<CategoryModel>>(
+      stream: screenController.getAllCategoryFromFirebase(),
+      builder: (context, snapshot) {
+        if(snapshot.hasError) {
+          return Text("Something went wrong! ${snapshot.error}");
+        }
+        else if(snapshot.hasData) {
+          final categories = snapshot.data;
+
+          return ListView(
+            children: categories!.map((val) {
+              return categoryListTile(val).commonSymmetricPadding(horizontal: 8, vertical: 6);
+            }).toList(),
+          ).commonAllSidePadding(padding: 15);
+        } else {
+          return const CustomCircularProgressIndicator();
+        }
       },
-    ).commonAllSidePadding(padding: 15);
+    );
   }
 
-  Widget _categoryListTile(CategoryModel singleCategory) {
+  Widget categoryListTile(CategoryModel singleCategory) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -72,12 +83,12 @@ class CategoryListModule extends StatelessWidget {
           SizedBox(
             height: 55,
             width: 55,
-            child: Image.asset(singleCategory.img),
+            child: Image.network(singleCategory.categoryImg),
           ),
           const SizedBox(width: 20),
           Expanded(
             child: Text(
-              singleCategory.name,
+              singleCategory.categoryName,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
@@ -91,7 +102,7 @@ class CategoryListModule extends StatelessWidget {
             children: [
               GestureDetector(
                 onTap: () {
-                  singleCategory.value++;
+                  // singleCategory.value++;
                   screenController.loadUI();
                 },
                 child: Container(
@@ -110,7 +121,7 @@ class CategoryListModule extends StatelessWidget {
               ),
 
               Text(
-                "${singleCategory.value}",
+                "0",
                 style: const TextStyle(
                   fontSize: 16,
                 ),
@@ -118,11 +129,11 @@ class CategoryListModule extends StatelessWidget {
 
               GestureDetector(
                 onTap: () {
-                  if(singleCategory.value < 1) {
-                    log("Value ${singleCategory.value}");
-                  } else {
-                    singleCategory.value--;
-                  }
+                  // if(singleCategory.value < 1) {
+                  //   log("Value ${singleCategory.value}");
+                  // } else {
+                  //   singleCategory.value--;
+                  // }
                   screenController.loadUI();
                 },
                 child: Container(
@@ -148,3 +159,14 @@ class CategoryListModule extends StatelessWidget {
   }
 
 }
+
+
+// ListView.builder(
+// itemCount: screenController.categoryList.length,
+// shrinkWrap: true,
+// physics: const BouncingScrollPhysics(),
+// itemBuilder: (context, i) {
+// CategoryModelOld singleCategory = screenController.categoryList[i];
+// return _categoryListTile(singleCategory).commonSymmetricPadding(vertical: 8);
+// },
+// ).commonAllSidePadding(padding: 15)
