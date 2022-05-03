@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
 
 import '../../common/constants/app_images.dart';
+import '../../model/home_screen_models/exercise_model.dart';
 
 class HomeScreenController extends GetxController {
   RxBool isLoading = false.obs;
@@ -16,6 +18,15 @@ class HomeScreenController extends GetxController {
     TrackExerciseModel(img: AppImages.pilatesImg, name: "Pilates"),
     TrackExerciseModel(img: AppImages.yogaImg, name: "Hot Yoga"),
   ];
+
+  /// Get Exercise From Firebase Function
+  Stream<List<ExerciseModel>> getAllExerciseFromFirebase() {
+    return FirebaseFirestore.instance.collection("exercise")
+        .snapshots()
+        .map((snapshot) =>
+        snapshot.docs.map((doc) => ExerciseModel.fromJson(doc.data()))
+            .toList());
+  }
 
   List<TrackExerciseModel> trackMovementList = [
     TrackExerciseModel(img: AppImages.walkingImg, name: "Walking"),

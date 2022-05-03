@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 
-import 'package:friend_fitness_app/common/sharedpreference_data.dart';
+import 'package:friend_fitness_app/common/sharedpreference_data/sharedpreference_data.dart';
 import 'package:friend_fitness_app/common/user_details.dart';
 import 'package:friend_fitness_app/screens/index_screen/index_screen.dart';
 import 'package:friend_fitness_app/screens/sign_in_screen/sign_in_screen.dart';
@@ -11,7 +11,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SplashScreenController extends GetxController{
   SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
-  goToNextScreen()async {
+  goToNextScreen() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     UserDetails.isUserLoggedIn = prefs.getBool(sharedPreferenceData.isUserLoggedInKey) ?? false;
     UserDetails.userId = prefs.getString(sharedPreferenceData.userIdKey) ?? "";

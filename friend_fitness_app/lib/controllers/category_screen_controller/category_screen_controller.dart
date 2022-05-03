@@ -9,6 +9,13 @@ class CategoryScreenController extends GetxController {
   FirebaseDatabaseMethods firebaseDatabaseMethods = FirebaseDatabaseMethods();
   Stream<List<CategoryModel>>? categoryListFirebase;
 
+  RxInt dairyProductValue = 0.obs;
+  RxInt alcoholValue = 0.obs;
+  RxInt pastaValue = 0.obs;
+  RxInt pizzaValue = 0.obs;
+  RxInt candyValue = 0.obs;
+  RxInt sodaValue = 0.obs;
+
 
   /// Get Category From Firebase Function
   Stream<List<CategoryModel>> getAllCategoryFromFirebase() {

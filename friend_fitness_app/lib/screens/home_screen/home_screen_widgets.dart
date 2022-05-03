@@ -4,9 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
 import 'package:friend_fitness_app/screens/profile_screen/profile_screen.dart';
 import 'package:get/get.dart';
+import '../../common/common_widgets.dart';
 import '../../common/constants/app_colors.dart';
 import '../../common/constants/app_images.dart';
 import '../../controllers/home_screen_controller/home_screen_controller.dart';
+import '../../model/home_screen_models/exercise_model.dart';
 
 
 /// AppBar
@@ -197,27 +199,42 @@ class TrackExerciseModule extends StatelessWidget {
         ),
         SizedBox(
           height: 130,
-          child: GridView.builder(
-            itemCount: screenController.trackExerciseList.length,
-            shrinkWrap: true,
-            physics: const BouncingScrollPhysics(),
-            scrollDirection: Axis.horizontal,
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 1,
-              mainAxisSpacing: 10,
-              crossAxisSpacing: 10,
-            ),
-            itemBuilder: (context, i) {
-              TrackExerciseModel singleItem = screenController.trackExerciseList[i];
-              return _trackExerciseGridTile(singleItem);
+          child: StreamBuilder<List<ExerciseModel>>(
+            stream: screenController.getAllExerciseFromFirebase(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Text("Something went wrong! ${snapshot.error}");
+              } else if (snapshot.hasData) {
+                final exercises = snapshot.data;
+
+                return GridView.builder(
+                  itemCount: exercises!.length,
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 1,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                  ),
+                  itemBuilder: (context, i) {
+                    ExerciseModel singleExercise = exercises[i];
+                    return _trackExerciseGridTile(singleExercise)
+                        .commonSymmetricPadding(vertical: 8);
+                  },
+                ).commonSymmetricPadding(vertical: 10);
+
+              } else {
+                return const CustomCircularProgressIndicator();
+              }
             },
-          ).commonSymmetricPadding(vertical: 10),
+          ),
         ),
       ],
     );
   }
 
-  Widget _trackExerciseGridTile(TrackExerciseModel singleItem) {
+  Widget _trackExerciseGridTile(ExerciseModel singleItem) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -234,13 +251,13 @@ class TrackExerciseModule extends StatelessWidget {
         children: [
           Expanded(
             flex: 75,
-            child: Image.asset(singleItem.img, fit: BoxFit.cover).commonAllSidePadding(),
+            child: Image.network(singleItem.exerciseImage, fit: BoxFit.cover).commonAllSidePadding(),
           ),
           // const SizedBox(height: 5),
           Expanded(
             flex: 25,
             child: Text(
-              singleItem.name,
+              singleItem.exerciseName,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(

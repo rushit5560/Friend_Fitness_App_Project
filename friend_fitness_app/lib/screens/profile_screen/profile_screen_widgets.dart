@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/common/constants/app_colors.dart';
 import 'package:friend_fitness_app/common/constants/app_images.dart';
-import 'package:friend_fitness_app/common/sharedpreference_data.dart';
+import 'package:friend_fitness_app/common/sharedpreference_data/sharedpreference_data.dart';
 import 'package:friend_fitness_app/screens/edit_profile_screen/edit_profile_screen.dart';
 import 'package:friend_fitness_app/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:get/get.dart';
