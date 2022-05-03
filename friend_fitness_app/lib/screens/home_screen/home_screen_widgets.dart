@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
+import 'package:friend_fitness_app/model/home_screen_models/movement_model.dart';
 import 'package:friend_fitness_app/screens/profile_screen/profile_screen.dart';
 import 'package:get/get.dart';
 import '../../common/common_widgets.dart';
@@ -293,7 +294,37 @@ class TrackMovementModule extends StatelessWidget {
         ),
         SizedBox(
           height: 130,
-          child: GridView.builder(
+          child: StreamBuilder<List<MovementModel>>(
+            stream: screenController.getAllMovementFromFirebase(),
+            builder: (context, snapshot) {
+              if (snapshot.hasError) {
+                return Text("Something went wrong! ${snapshot.error}");
+              } else if (snapshot.hasData) {
+                final movements = snapshot.data;
+
+                return GridView.builder(
+                  itemCount: movements!.length,
+                  shrinkWrap: true,
+                  physics: const BouncingScrollPhysics(),
+                  scrollDirection: Axis.horizontal,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 1,
+                    mainAxisSpacing: 10,
+                    crossAxisSpacing: 10,
+                  ),
+                  itemBuilder: (context, i) {
+                    MovementModel singleMovement = movements[i];
+                    return _trackMovementGridTile(singleMovement)
+                        .commonSymmetricPadding(vertical: 8);
+                  },
+                ).commonSymmetricPadding(vertical: 10);
+
+              } else {
+                return const CustomCircularProgressIndicator();
+              }
+            },
+          ),
+          /*child: GridView.builder(
             itemCount: screenController.trackMovementList.length,
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
@@ -307,13 +338,13 @@ class TrackMovementModule extends StatelessWidget {
               TrackExerciseModel singleItem = screenController.trackMovementList[i];
               return _trackMovementGridTile(singleItem);
             },
-          ).commonSymmetricPadding(vertical: 10),
+          ).commonSymmetricPadding(vertical: 10),*/
         ),
       ],
     );
   }
 
-  Widget _trackMovementGridTile(TrackExerciseModel singleItem) {
+  Widget _trackMovementGridTile(MovementModel singleItem) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -330,13 +361,13 @@ class TrackMovementModule extends StatelessWidget {
         children: [
           Expanded(
             flex: 75,
-            child: Image.asset(singleItem.img, fit: BoxFit.cover).commonAllSidePadding(),
+            child: Image.network(singleItem.movementImage, fit: BoxFit.cover).commonAllSidePadding(),
           ),
           // const SizedBox(height: 5),
           Expanded(
             flex: 25,
             child: Text(
-              singleItem.name,
+              singleItem.movementName,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(

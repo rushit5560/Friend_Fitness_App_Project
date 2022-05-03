@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:friend_fitness_app/model/home_screen_models/movement_model.dart';
 import 'package:get/get.dart';
 
 import '../../common/constants/app_images.dart';
@@ -9,15 +10,15 @@ class HomeScreenController extends GetxController {
   RxBool isSuccessStatus = false.obs;
   RxInt waterIntakeValue = 0.obs;
 
-  List<TrackExerciseModel> trackExerciseList = [
-    TrackExerciseModel(img: AppImages.runningImg, name: "Running"),
-    TrackExerciseModel(img: AppImages.runningImg, name: "Weights"),
-    TrackExerciseModel(img: AppImages.boxingImg, name: "Boxing"),
-    TrackExerciseModel(img: AppImages.hikingImg, name: "Hiking"),
-    TrackExerciseModel(img: AppImages.boxingImg, name: "Fitness Class"),
-    TrackExerciseModel(img: AppImages.pilatesImg, name: "Pilates"),
-    TrackExerciseModel(img: AppImages.yogaImg, name: "Hot Yoga"),
-  ];
+  // List<TrackExerciseModel> trackExerciseList = [
+  //   TrackExerciseModel(img: AppImages.runningImg, name: "Running"),
+  //   TrackExerciseModel(img: AppImages.runningImg, name: "Weights"),
+  //   TrackExerciseModel(img: AppImages.boxingImg, name: "Boxing"),
+  //   TrackExerciseModel(img: AppImages.hikingImg, name: "Hiking"),
+  //   TrackExerciseModel(img: AppImages.boxingImg, name: "Fitness Class"),
+  //   TrackExerciseModel(img: AppImages.pilatesImg, name: "Pilates"),
+  //   TrackExerciseModel(img: AppImages.yogaImg, name: "Hot Yoga"),
+  // ];
 
   /// Get Exercise From Firebase Function
   Stream<List<ExerciseModel>> getAllExerciseFromFirebase() {
@@ -25,6 +26,15 @@ class HomeScreenController extends GetxController {
         .snapshots()
         .map((snapshot) =>
         snapshot.docs.map((doc) => ExerciseModel.fromJson(doc.data()))
+            .toList());
+  }
+
+  /// Get Movement From Firebase Function
+  Stream<List<MovementModel>> getAllMovementFromFirebase() {
+    return FirebaseFirestore.instance.collection("movement")
+        .snapshots()
+        .map((snapshot) =>
+        snapshot.docs.map((doc) => MovementModel.fromJson(doc.data()))
             .toList());
   }
 
