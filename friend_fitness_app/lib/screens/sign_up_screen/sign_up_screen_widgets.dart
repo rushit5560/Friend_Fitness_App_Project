@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
 import 'package:friend_fitness_app/screens/home_screen/home_screen.dart';
 import 'package:friend_fitness_app/screens/profile_screen/profile_screen.dart';
+import 'package:friend_fitness_app/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:get/get.dart';
 
 import '../../common/constants/app_colors.dart';
@@ -274,6 +275,38 @@ class RegisterButtonModule extends StatelessWidget {
                 fontSize: 20,
               ),
             ).commonSymmetricPadding(horizontal: 30, vertical: 14),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// Sign Up Text
+class SignInTextModule extends StatelessWidget {
+  const SignInTextModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Text(
+          "Already account? ",
+          style: TextStyle(
+            fontSize: 13,
+          ),
+        ),
+        GestureDetector(
+          onTap: () {
+            Get.off(()=> SignInScreen(), transition: Transition.zoom);
+          },
+          child: const Text(
+            "SignIn",
+            style: TextStyle(
+              fontSize: 13,
+              decoration: TextDecoration.underline,
+            ),
           ),
         ),
       ],

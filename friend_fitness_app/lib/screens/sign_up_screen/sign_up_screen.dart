@@ -28,6 +28,8 @@ class SignUpScreen extends StatelessWidget {
                 const SizedBox(height: 25),
                 RegisterButtonModule(),
 
+                const SizedBox(height: 25),
+                const SignInTextModule()
               ],
             ),
           ),
