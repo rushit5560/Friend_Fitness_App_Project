@@ -199,7 +199,7 @@ class TrackExerciseModule extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 150,
+          height: 170,
           child: GridView.builder(
             itemCount: screenController.exerciseList.length,
             shrinkWrap: true,
@@ -223,6 +223,7 @@ class TrackExerciseModule extends StatelessWidget {
 
   Widget _trackExerciseGridTile(ExerciseModel singleItem) {
     return Container(
+      alignment: Alignment.center,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
@@ -279,7 +280,7 @@ class TrackMovementModule extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 130,
+          height: 170,
           child: GridView.builder(
             itemCount: screenController.movementList.length,
             shrinkWrap: true,
@@ -376,8 +377,8 @@ class TrackWaterIntakeModule extends StatelessWidget {
             children: [
 
               Container(
-                width: 38,
-                height: 50,
+                width: 55,
+                height: 80,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: NetworkImage(screenController.waterIntakeList[0].waterIntakeImage),
@@ -604,7 +605,7 @@ class TrackTimeSpendOnMindFullnessModule extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 130,
+          height: 170,
           // child: StreamBuilder<List<MindfulnessModel>>(
           //   stream: screenController.getAllMindfulnessFromFirebase(),
           //   builder: (context, snapshot) {
