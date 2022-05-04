@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:friend_fitness_app/common/common_widgets.dart';
 import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
 import 'package:get/get.dart';
 
@@ -13,29 +14,33 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            const HomeScreenAppBarModule(),
-            const SizedBox(height: 15),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
+        child: Obx(
+          () => homeScreenController.isLoading.value
+              ? const CustomCircularProgressIndicator()
+              : Column(
                   children: [
-                    const LeaderBoardModule(),
+                    const HomeScreenAppBarModule(),
                     const SizedBox(height: 15),
-                    TrackExerciseModule(),
-                    const SizedBox(height: 10),
-                    TrackMovementModule(),
-                    const SizedBox(height: 10),
-                    TrackWaterIntakeModule(),
-                    const SizedBox(height: 10),
-                    TrackTimeSpendOnMindFullnessModule(),
-                    const SizedBox(height: 10),
+                    Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            const LeaderBoardModule(),
+                            const SizedBox(height: 15),
+                            TrackExerciseModule(),
+                            const SizedBox(height: 10),
+                            TrackMovementModule(),
+                            const SizedBox(height: 10),
+                            TrackWaterIntakeModule(),
+                            const SizedBox(height: 10),
+                            TrackTimeSpendOnMindFullnessModule(),
+                            const SizedBox(height: 10),
+                          ],
+                        ).commonSymmetricPadding(horizontal: 10),
+                      ),
+                    ),
                   ],
-                ).commonSymmetricPadding(horizontal: 10),
-              ),
-            ),
-          ],
+                ),
         ),
       ),
 

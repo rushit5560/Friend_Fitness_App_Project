@@ -679,38 +679,38 @@ class TrackTimeSpendOnMindFullnessModule extends StatelessWidget {
         ),
         SizedBox(
           height: 130,
-          child: StreamBuilder<List<MindfulnessModel>>(
-            stream: screenController.getAllMindfulnessFromFirebase(),
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                return Text("Something went wrong! ${snapshot.error}");
-              } else if (snapshot.hasData) {
-                final mindfulness = snapshot.data;
-
-                return GridView.builder(
-                  itemCount: mindfulness!.length,
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(),
-                  scrollDirection: Axis.horizontal,
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 1,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10,
-                  ),
-                  itemBuilder: (context, i) {
-                    MindfulnessModel singleMindfulness = mindfulness[i];
-                    return _trackTimeSpendOnMindFullnessGridTile(singleMindfulness)
-                        .commonSymmetricPadding(vertical: 8);
-                  },
-                ).commonSymmetricPadding(vertical: 10);
-
-              } else {
-                return const CustomCircularProgressIndicator();
-              }
-            },
-          ),
-          /*child: GridView.builder(
-            itemCount: screenController.trackMindFullnessList.length,
+          // child: StreamBuilder<List<MindfulnessModel>>(
+          //   stream: screenController.getAllMindfulnessFromFirebase(),
+          //   builder: (context, snapshot) {
+          //     if (snapshot.hasError) {
+          //       return Text("Something went wrong! ${snapshot.error}");
+          //     } else if (snapshot.hasData) {
+          //       final mindfulness = snapshot.data;
+          //
+          //       return GridView.builder(
+          //         itemCount: mindfulness!.length,
+          //         shrinkWrap: true,
+          //         physics: const BouncingScrollPhysics(),
+          //         scrollDirection: Axis.horizontal,
+          //         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          //           crossAxisCount: 1,
+          //           mainAxisSpacing: 10,
+          //           crossAxisSpacing: 10,
+          //         ),
+          //         itemBuilder: (context, i) {
+          //           MindfulnessModel singleMindfulness = mindfulness[i];
+          //           return _trackTimeSpendOnMindFullnessGridTile(singleMindfulness)
+          //               .commonSymmetricPadding(vertical: 8);
+          //         },
+          //       ).commonSymmetricPadding(vertical: 10);
+          //
+          //     } else {
+          //       return const CustomCircularProgressIndicator();
+          //     }
+          //   },
+          // ),
+          child: GridView.builder(
+            itemCount: screenController.mindfulnessList.length,
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
             scrollDirection: Axis.horizontal,
@@ -720,10 +720,10 @@ class TrackTimeSpendOnMindFullnessModule extends StatelessWidget {
               crossAxisSpacing: 10,
             ),
             itemBuilder: (context, i) {
-              TrackExerciseModel singleItem = screenController.trackMindFullnessList[i];
+              MindfulnessModel singleItem = screenController.mindfulnessList[i];
               return _trackTimeSpendOnMindFullnessGridTile(singleItem);
             },
-          ).commonSymmetricPadding(vertical: 10),*/
+          ).commonSymmetricPadding(vertical: 10),
         ),
       ],
     );
