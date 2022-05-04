@@ -4,6 +4,8 @@ import 'package:get/get.dart';
 
 import '../../common/constants/app_images.dart';
 import '../../model/home_screen_models/exercise_model.dart';
+import '../../model/home_screen_models/mindfulness_model.dart';
+import '../../model/home_screen_models/water_intake_model.dart';
 
 class HomeScreenController extends GetxController {
   RxBool isLoading = false.obs;
@@ -35,6 +37,24 @@ class HomeScreenController extends GetxController {
         .snapshots()
         .map((snapshot) =>
         snapshot.docs.map((doc) => MovementModel.fromJson(doc.data()))
+            .toList());
+  }
+
+  /// Get WaterIntake From Firebase Function
+  Stream<List<WaterIntakeModel>> getWaterIntakeFromFirebase() {
+    return FirebaseFirestore.instance.collection("water_intake")
+        .snapshots()
+        .map((snapshot) =>
+        snapshot.docs.map((doc) => WaterIntakeModel.fromJson(doc.data()))
+            .toList());
+  }
+
+  /// Get WaterIntake From Firebase Function
+  Stream<List<MindfulnessModel>> getAllMindfulnessFromFirebase() {
+    return FirebaseFirestore.instance.collection("mindfulness")
+        .snapshots()
+        .map((snapshot) =>
+        snapshot.docs.map((doc) => MindfulnessModel.fromJson(doc.data()))
             .toList());
   }
 
