@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:friend_fitness_app/model/home_screen_models/movement_model.dart';
 import 'package:get/get.dart';
@@ -10,13 +9,97 @@ import '../../model/home_screen_models/exercise_model.dart';
 import '../../model/home_screen_models/mindfulness_model.dart';
 import '../../model/home_screen_models/water_intake_model.dart';
 
+
+
 class HomeScreenController extends GetxController {
   RxBool isLoading = false.obs;
   RxInt isSuccessStatusCode = 0.obs;
   RxInt waterIntakeValue = 0.obs;
 
   List<MindfulnessModel> mindfulnessList = [];
+  List<ExerciseModel> exerciseList = [];
+  List<MovementModel> movementList = [];
+  List<WaterIntakeModel> waterIntakeList = [];
 
+
+  /// Get Exercise List From Firebase Using Postman API
+  getExerciseFromFirebaseFunction() async {
+    isLoading(true);
+    String url = "https://fitness-app-f51fa-default-rtdb.firebaseio.com/exercise.json";
+    log('url: $url');
+
+    try {
+      http.Response response = await http.get(Uri.parse(url));
+      isSuccessStatusCode = response.statusCode.obs;
+      log('isStatus: $isSuccessStatusCode');
+
+      if(isSuccessStatusCode.value == 200) {
+        Map<String, dynamic> newMapResponse = jsonDecode(response.body);
+        log("newMapResponse : $newMapResponse");
+
+        newMapResponse.forEach((k, v) => exerciseList.add(ExerciseModel(
+            exerciseId: v['exercise_id'],
+            exerciseName: v['exercise_name'],
+            exerciseImage: v['exercise_image'],
+            exercisePoint: v['exercise_point']
+        )));
+        // log("mindFullNessList: ${mindFullNessList.first}");
+        for(int i =0; i < exerciseList.length; i++) {
+          log(exerciseList[i].exerciseId.toString());
+          log(exerciseList[i].exerciseName);
+        }
+
+
+      } else {
+        log('Something went wrong!');
+      }
+    } catch(e) {
+      log("getExerciseFromFirebaseFunction Error ::: $e");
+    } finally{
+      // isLoading(false);
+      await getMovementFromFirebaseFunction();
+    }
+  }
+
+  /// Get Movement List From Firebase Using Postman API
+  getMovementFromFirebaseFunction() async {
+    isLoading(true);
+    String url = "https://fitness-app-f51fa-default-rtdb.firebaseio.com/movement.json";
+    log("Movement API URL : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url));
+      isSuccessStatusCode = response.statusCode.obs;
+      log('isStatus: $isSuccessStatusCode');
+
+      if(isSuccessStatusCode.value == 200) {
+        Map<String, dynamic> newMapResponse = jsonDecode(response.body);
+        log("newMapResponse : $newMapResponse");
+
+        newMapResponse.forEach((k, v) => movementList.add(MovementModel(
+            movementId: v['movement_id'],
+            movementName: v['movement_name'],
+            movementImage: v['movement_image'],
+            movementPoint: v['movement_point']
+        )));
+        // log("mindFullNessList: ${mindFullNessList.first}");
+        for(int i =0; i < movementList.length; i++) {
+          log(movementList[i].movementId.toString());
+          log(movementList[i].movementName);
+        }
+
+
+      } else {
+        log('Something went wrong!');
+      }
+
+    } catch(e) {
+      log("getMovementFromFirebaseFunction Error ::: $e");
+    } finally {
+      isLoading(false);
+      await getMindFullNessFromFirebaseFunction();
+    }
+  }
 
   /// Get Mindfulness List From Firebase Using Postman API
   getMindFullNessFromFirebaseFunction() async {
@@ -47,34 +130,57 @@ class HomeScreenController extends GetxController {
           log(mindfulnessList[i].mindfulnessName);
         }
 
-      }else{
-        log('Fail');
-        Fluttertoas
-        // Get.snackbar("Wrong Email/Password", '');
+      }else {
+        log('Something went wrong!');
       }
     }catch(e){
-      log('Error: $e');
+      log('Error ::: $e');
     } finally{
-      isLoading(false);
+      // isLoading(false);
+      await getWaterIntakeFromFirebaseFunction();
     }
   }
 
-  /// Get Exercise List From Firebase Using Postman API
-  getExerciseFromFirebaseFunction() async {
+
+  /// Get Water Intake From Firebase Using postman API
+  getWaterIntakeFromFirebaseFunction() async {
     isLoading(true);
-    String url = "https://fitness-app-f51fa-default-rtdb.firebaseio.com/exercise.json";
-    log('url: $url');
+    String url = "https://fitness-app-f51fa-default-rtdb.firebaseio.com/water_intake.json";
+    log("Water Intake API URL : $url");
 
     try {
+      http.Response response = await http.get(Uri.parse(url));
+      isSuccessStatusCode = response.statusCode.obs;
+      log('isStatus: $isSuccessStatusCode');
+
+      if(isSuccessStatusCode.value == 200){
+        log('Success');
+        Map<String, dynamic> newMapResponse = jsonDecode(response.body);
+        log("newMapResponse : $newMapResponse");
+
+        newMapResponse.forEach((k, v) => waterIntakeList.add(WaterIntakeModel(
+          waterIntakeId: v['water_intake_id'],
+          waterIntakeImage: v['water_intake_image'],
+          waterIntakeName: v['water_intake_name'],
+          waterIntakeDes: v['water_intake_description'],
+          waterIntakePoint: v['water_intake_point'],
+        )));
+        for(int i =0; i < waterIntakeList.length; i++) {
+          log(waterIntakeList[i].waterIntakeId.toString());
+          log(waterIntakeList[i].waterIntakeName);
+        }
+
+      }else {
+        log('Something went wrong!');
+      }
 
     } catch(e) {
-      log("");
-    } finally{
+      log("getWaterIntakeFromFirebaseFunction Error ::: $e");
+    } finally {
       isLoading(false);
     }
+
   }
-
-
 
 
 
@@ -128,7 +234,7 @@ class HomeScreenController extends GetxController {
 
   @override
   void onInit() {
-    getMindFullNessFromFirebaseFunction();
+    getExerciseFromFirebaseFunction();
     super.onInit();
   }
 

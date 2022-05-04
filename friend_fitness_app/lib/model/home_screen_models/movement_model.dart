@@ -2,7 +2,7 @@ class MovementModel {
   int movementId;
   String movementName;
   String movementImage;
-  double movementPoint;
+  int movementPoint;
 
   MovementModel({
     required this.movementId,
@@ -15,7 +15,7 @@ class MovementModel {
     movementId: json['movement_id'] ?? 0,
     movementName: json['movement_name'] ?? "",
     movementImage: json['movement_image'] ?? "",
-    movementPoint: json['movement_point'] ?? 0.0,
+    movementPoint: json['movement_point'] ?? 0,
   );
 
 }
