@@ -5,8 +5,8 @@ import 'package:friend_fitness_app/screens/edit_profile_screen/edit_profile_scre
 import 'package:get/get.dart';
 
 class EditProfileScreen extends StatelessWidget {
+  //EditProfileScreen({Key? key}) : super(key: key);
   EditProfileScreen({Key? key}) : super(key: key);
-
   final editScreenController = Get.put(EditProfileScreenController());
 
   @override
@@ -28,6 +28,8 @@ class EditProfileScreen extends StatelessWidget {
                       ProfileImage(),
                       const SizedBox(height: 35),
                        NameTextFieldModule(),
+                      const SizedBox(height: 20),
+                      EmailTextFieldModule(),
                       const SizedBox(height: 20),
                        WeightTextFieldModule(),
                       const SizedBox(height: 20),

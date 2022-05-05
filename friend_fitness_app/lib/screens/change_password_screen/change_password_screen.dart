@@ -16,28 +16,32 @@ class ChangePasswordScreen extends StatelessWidget {
       onTap: () => hideKeyboard(),
       child: Scaffold(
         body: SafeArea(
-          child: Column(
-            children: [
-              const ChangePasswordScreenAppBarModule(),
-              const SizedBox(height: 10),
-              Expanded(
-                child: Form(
-                  key: changePasswordScreenController.changePassFormKey,
-                  child: Column(
-                    children: [
-                      OldPasswordTextFieldModule(),
-                      const SizedBox(height: 15),
-                      NewPasswordTextFieldModule(),
-                      const SizedBox(height: 15),
-                      ConfirmNewPasswordTextFieldModule(),
-                      const SizedBox(height: 25),
-                      PasswordSaveButtonModule(),
-                      const SizedBox(height: 15),
-                    ],
-                  ).commonAllSidePadding(padding: 15),
+          child: Obx(()=>
+          changePasswordScreenController.isLoading.value ?
+              const CircularProgressIndicator():
+             Column(
+              children: [
+                const ChangePasswordScreenAppBarModule(),
+                const SizedBox(height: 10),
+                Expanded(
+                  child: Form(
+                    key: changePasswordScreenController.changePassFormKey,
+                    child: Column(
+                      children: [
+                        OldPasswordTextFieldModule(),
+                        const SizedBox(height: 15),
+                        NewPasswordTextFieldModule(),
+                        const SizedBox(height: 15),
+                        ConfirmNewPasswordTextFieldModule(),
+                        const SizedBox(height: 25),
+                        PasswordSaveButtonModule(),
+                        const SizedBox(height: 15),
+                      ],
+                    ).commonAllSidePadding(padding: 15),
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

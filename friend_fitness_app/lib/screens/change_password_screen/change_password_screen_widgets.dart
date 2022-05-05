@@ -170,7 +170,7 @@ class PasswordSaveButtonModule extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if(screenController.changePassFormKey.currentState!.validate()) {
-
+          screenController.changePasswordWithFirebaseAPI();
         }
       },
       child: Container(

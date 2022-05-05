@@ -20,26 +20,30 @@ class ProfileScreen extends StatelessWidget {
             const SizedBox(height: 15),
             Expanded(
               child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const ProfileImage(),
-                    const SizedBox(height: 35),
-                    NameTextFieldModule(),
-                    const SizedBox(height: 20),
-                    const EmailTextFieldModule(),
-                    const SizedBox(height: 20),
-                    const WeightTextFieldModule(),
-                    const SizedBox(height: 20),
-                    const MeasurementTextFieldModule(),
-                    const SizedBox(height: 20),
-                    const HeightTextFieldModule(),
-                    const SizedBox(height: 30),
-                    const SaveButtonModule(),
-                    const SizedBox(height: 30),
-                    const BeforeAfterImageModule(),
-                    const SizedBox(height: 20),
-                  ],
-                ).commonAllSidePadding(),
+                child: Obx(()=>
+                profileScreenController.isLoading.value ?
+                    const CircularProgressIndicator():
+                   Column(
+                    children: [
+                      ProfileImage(),
+                      const SizedBox(height: 35),
+                      NameTextFieldModule(),
+                      const SizedBox(height: 20),
+                      EmailTextFieldModule(),
+                      const SizedBox(height: 20),
+                       WeightTextFieldModule(),
+                      const SizedBox(height: 20),
+                       MeasurementTextFieldModule(),
+                      const SizedBox(height: 20),
+                       HeightTextFieldModule(),
+                      const SizedBox(height: 30),
+                       SaveButtonModule(),
+                      const SizedBox(height: 30),
+                      const BeforeAfterImageModule(),
+                      const SizedBox(height: 20),
+                    ],
+                  ).commonAllSidePadding(),
+                ),
               ),
             )
 

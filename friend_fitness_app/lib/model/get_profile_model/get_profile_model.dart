@@ -19,7 +19,7 @@ class GetProfileModel {
 
   factory GetProfileModel.fromJson(Map<String, dynamic> json) => GetProfileModel(
     kind: json["kind"] ?? "",
-    users: List<User>.from(json["users"].map((x) => User.fromJson(x)) ?? {}),
+    users: List<User>.from(json["users"].map((x) => User.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -32,6 +32,8 @@ class User {
   User({
     required this.localId,
     required this.email,
+    required this.displayName,
+    required this.photoUrl,
     required this.passwordHash,
     required this.emailVerified,
     required this.passwordUpdatedAt,
@@ -44,6 +46,8 @@ class User {
 
   String localId;
   String email;
+  String displayName;
+  String photoUrl;
   String passwordHash;
   bool emailVerified;
   int passwordUpdatedAt;
@@ -56,9 +60,11 @@ class User {
   factory User.fromJson(Map<String, dynamic> json) => User(
     localId: json["localId"] ?? "",
     email: json["email"] ?? "",
+    displayName: json["displayName"] ?? "",
+    photoUrl: json["photoUrl"] ?? "",
     passwordHash: json["passwordHash"] ?? "",
     emailVerified: json["emailVerified"] ?? false,
-    passwordUpdatedAt: json["passwordUpdatedAt"],
+    passwordUpdatedAt: json["passwordUpdatedAt"] ?? 0,
     providerUserInfo: List<ProviderUserInfo>.from(json["providerUserInfo"].map((x) => ProviderUserInfo.fromJson(x))),
     validSince: json["validSince"] ?? "",
     lastLoginAt: json["lastLoginAt"] ?? "",
@@ -69,6 +75,8 @@ class User {
   Map<String, dynamic> toJson() => {
     "localId": localId,
     "email": email,
+    "displayName": displayName,
+    "photoUrl": photoUrl,
     "passwordHash": passwordHash,
     "emailVerified": emailVerified,
     "passwordUpdatedAt": passwordUpdatedAt,
@@ -83,18 +91,24 @@ class User {
 class ProviderUserInfo {
   ProviderUserInfo({
     required this.providerId,
+    required this.displayName,
+    required this.photoUrl,
     required this.federatedId,
     required this.email,
     required this.rawId,
   });
 
   String providerId;
+  String displayName;
+  String photoUrl;
   String federatedId;
   String email;
   String rawId;
 
   factory ProviderUserInfo.fromJson(Map<String, dynamic> json) => ProviderUserInfo(
     providerId: json["providerId"] ?? "",
+    displayName: json["displayName"] ?? "",
+    photoUrl: json["photoUrl"] ?? "",
     federatedId: json["federatedId"] ?? "",
     email: json["email"] ?? "",
     rawId: json["rawId"] ?? "",
@@ -102,6 +116,8 @@ class ProviderUserInfo {
 
   Map<String, dynamic> toJson() => {
     "providerId": providerId,
+    "displayName": displayName,
+    "photoUrl": photoUrl,
     "federatedId": federatedId,
     "email": email,
     "rawId": rawId,

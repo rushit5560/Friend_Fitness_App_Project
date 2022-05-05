@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/common/constants/app_colors.dart';
 import 'package:friend_fitness_app/common/constants/app_images.dart';
 import 'package:friend_fitness_app/controllers/edit_profile_screen_controller/edit_profile_screen_controller.dart';
+import 'package:friend_fitness_app/controllers/profile_screen_controller/profile_screen_controller.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -41,86 +42,92 @@ class ProfileScreenAppBarModule extends StatelessWidget {
 class ProfileImage extends StatelessWidget {
   ProfileImage({Key? key}) : super(key: key);
   final ImagePicker imagePicker = ImagePicker();
-  final screenController = Get.find<EditProfileScreenController>();
+  //final screenController = Get.find<EditProfileScreenController>();
+  final screenController = Get.find<ProfileScreenController>();
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      clipBehavior: Clip.none,
-      alignment: Alignment.bottomCenter,
-      children: [
-      screenController.profileImage != null ?
-      Container(
-        height: 150, width: 150,
-        decoration: BoxDecoration(
+    return Obx(()=>
+        screenController.isLoading.value ?
+            CircularProgressIndicator():
+       Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.bottomCenter,
+        children: [
+        screenController.profile != null ?
+        Container(
+          height: 150, width: 150,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              //border: Border.all(color: AppColors.colorLightGrey),
+              boxShadow: [
+                BoxShadow(
+                    blurRadius: 1,
+                    blurStyle: BlurStyle.outer,
+                    color: Colors.grey.shade500
+                )
+              ]
+          ),
+          child: ClipRRect(
             borderRadius: BorderRadius.circular(10.0),
-            //border: Border.all(color: AppColors.colorLightGrey),
-            boxShadow: [
-              BoxShadow(
-                  blurRadius: 1,
-                  blurStyle: BlurStyle.outer,
+            child: Image.file(screenController.profile!,
+                height: 150, width: 150, fit: BoxFit.fill),
+          ),
+        ) :
+        Container(
+          height: 150, width: 150,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10.0),
+              //border: Border.all(color: AppColors.colorLightGrey),
+              boxShadow: [
+                BoxShadow(
+                    blurRadius: 1,
+                    blurStyle: BlurStyle.outer,
                   color: Colors.grey.shade500
-              )
-            ]
+                )
+              ]
+          ),
+          child: ClipRRect(
+            child: Image.asset(AppImages.profileImg, scale: 2,),
+          ),
         ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(10.0),
-          child: Image.file(screenController.profileImage!,
-              height: 150, width: 150, fit: BoxFit.fill),
-        ),
-      ) :
-      Container(
-        height: 150, width: 150,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10.0),
-            //border: Border.all(color: AppColors.colorLightGrey),
-            boxShadow: [
-              BoxShadow(
-                  blurRadius: 1,
-                  blurStyle: BlurStyle.outer,
-                color: Colors.grey.shade500
-              )
-            ]
-        ),
-        child: ClipRRect(
-          child: Image.asset(AppImages.profileImg, scale: 2,),
-        ),
-      ),
-        Positioned(
-          top: 135,
-          child: GestureDetector(
-            onTap: (){
-              gallery();
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(8),
-                color: AppColors.colorDarkGrey
-              ),
-              child: const Padding(
-                padding: EdgeInsets.all(5.0),
-                child: Icon(Icons.camera_alt, color: Colors.white, size: 15),
+          Positioned(
+            top: 135,
+            child: GestureDetector(
+              onTap: (){
+                gallery();
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(8),
+                  color: AppColors.colorDarkGrey
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.all(5.0),
+                  child: Icon(Icons.camera_alt, color: Colors.white, size: 15),
+                ),
               ),
             ),
-          ),
-        )
-      ],
+          )
+        ],
+      ),
     );
   }
 
   void gallery() async {
     final image = await imagePicker.pickImage(source: ImageSource.gallery);
     if(image != null){
-      screenController.profileImage = File(image.path);
+      screenController.profile = File(image.path);
       screenController.loadUI();
     } else{}
   }
 }
 
 class NameTextFieldModule extends StatelessWidget {
-  NameTextFieldModule({Key? key}) : super(key: key);
-  final screenController = Get.find<EditProfileScreenController>();
 
+  //final screenController = Get.find<EditProfileScreenController>();
+  final screenController = Get.find<ProfileScreenController>();
+  NameTextFieldModule({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -185,9 +192,77 @@ class NameTextFieldModule extends StatelessWidget {
   }
 }
 
+class EmailTextFieldModule extends StatelessWidget {
+  EmailTextFieldModule({Key? key}) : super(key: key);
+  //final screenController = Get.find<EditProfileScreenController>();
+  final screenController = Get.find<ProfileScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Expanded(
+            flex: 2,
+            child: Text("Email:", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),)
+        ),
+        Expanded(
+            flex: 4,
+            child: Stack(
+              children: [
+                Container(
+                  height: 45,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.colorLightGrey,
+                        blurRadius: 2,
+                        blurStyle: BlurStyle.outer,
+                      ),
+                    ],
+                  ),
+                ),
+                TextFormField(
+                  controller: screenController.emailFieldController,
+                  keyboardType: TextInputType.text,
+                  cursorColor: Colors.black,
+                  decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                    border: InputBorder.none,
+                    // suffix: IconButton(
+                    //   onPressed: () {},
+                    //   iconSize: 15,
+                    //   icon: Icon(Icons.visibility_off_rounded),
+                    // ),
+                    // suffix: Container(
+                    //   child: index == 0
+                    //       ? null
+                    //       : GestureDetector(
+                    //     onTap: () {
+                    //       signInScreenController.isPassVisible.value = !signInScreenController.isPassVisible.value;
+                    //       print('isPassVisible : ${signInScreenController.isPassVisible.value}');
+                    //     },
+                    //     child: Obx(
+                    //       ()=> Icon(signInScreenController.isPassVisible.value
+                    //           ? Icons.visibility_rounded
+                    //           : Icons.visibility_off_rounded),
+                    //     ),
+                    //   ),
+                    // ),
+                  ),
+                  //validator: (value) => FieldValidator().validateEmail(value!),
+                ),
+              ],
+            )
+        )
+      ],
+    );
+  }
+}
+
 class WeightTextFieldModule extends StatelessWidget {
   WeightTextFieldModule({Key? key}) : super(key: key);
-  final screenController = Get.find<EditProfileScreenController>();
+  final screenController = Get.find<ProfileScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -254,7 +329,7 @@ class WeightTextFieldModule extends StatelessWidget {
 
 class MeasurementTextFieldModule extends StatelessWidget {
   MeasurementTextFieldModule({Key? key}) : super(key: key);
-  final screenController = Get.find<EditProfileScreenController>();
+  final screenController = Get.find<ProfileScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -321,7 +396,7 @@ class MeasurementTextFieldModule extends StatelessWidget {
 
 class HeightTextFieldModule extends StatelessWidget {
    HeightTextFieldModule({Key? key}) : super(key: key);
-  final screenController = Get.find<EditProfileScreenController>();
+  final screenController = Get.find<ProfileScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -388,7 +463,7 @@ class HeightTextFieldModule extends StatelessWidget {
 
 class SaveButtonModule extends StatelessWidget {
   SaveButtonModule({Key? key}) : super(key: key);
-  final screenController = Get.find<EditProfileScreenController>();
+  final screenController = Get.find<ProfileScreenController>();
 
 
   @override

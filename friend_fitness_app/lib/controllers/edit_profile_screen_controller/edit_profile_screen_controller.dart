@@ -17,6 +17,7 @@ class EditProfileScreenController extends GetxController{
   RxInt isSuccessStatusCode = 0.obs;
 
   TextEditingController nameFieldController = TextEditingController();
+  TextEditingController emailFieldController = TextEditingController();
   TextEditingController weightFieldController = TextEditingController();
   TextEditingController measurementFieldController = TextEditingController();
   TextEditingController heightFieldController = TextEditingController();
@@ -25,10 +26,10 @@ class EditProfileScreenController extends GetxController{
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    updateProfileWithFirebaseAPI();
+    //updateProfileWithFirebaseAPI();
   }
 
-  updateProfileWithFirebaseAPI() async {
+  /*updateProfileWithFirebaseAPI() async {
     isLoading(true);
     String url = "https://identitytoolkit.googleapis.com/v1/accounts:update?key=AIzaSyDErCea5X6odORA9eA3SZYtATsXUbVCH0w";
     log('url: $url');
@@ -38,7 +39,7 @@ class EditProfileScreenController extends GetxController{
         "idToken" : UserDetails.userIdToken,
         "displayName": nameFieldController.text.trim(),
         "photoUrl" : profileImage!.path,
-        //"returnSecureToken" : true
+        "returnSecureToken" : "true"
       };
 
       log('data: $data');
@@ -60,7 +61,7 @@ class EditProfileScreenController extends GetxController{
     } finally{
       isLoading(false);
     }
-  }
+  }*/
 
   loadUI() {
     isLoading(true);
