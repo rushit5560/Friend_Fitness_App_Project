@@ -1,14 +1,13 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
-import 'package:friend_fitness_app/model/home_screen_models/movement_model.dart';
+import 'package:friend_fitness_app/model/home_screen_models/fitness_model.dart';
+import 'package:friend_fitness_app/screens/exercise_details_screen/exercise_details_screen.dart';
 import 'package:friend_fitness_app/screens/profile_screen/profile_screen.dart';
 import 'package:get/get.dart';
 import '../../common/constants/app_colors.dart';
 import '../../common/constants/app_images.dart';
 import '../../controllers/home_screen_controller/home_screen_controller.dart';
-import '../../model/home_screen_models/exercise_model.dart';
-import '../../model/home_screen_models/mindfulness_model.dart';
 
 
 
@@ -211,7 +210,7 @@ class TrackExerciseModule extends StatelessWidget {
               crossAxisSpacing: 10,
             ),
             itemBuilder: (context, i) {
-              ExerciseModel singleExercise = screenController.exerciseList[i];
+              FitnessModel singleExercise = screenController.exerciseList[i];
               return _trackExerciseGridTile(singleExercise)
                   .commonSymmetricPadding(vertical: 8);
             },
@@ -221,42 +220,51 @@ class TrackExerciseModule extends StatelessWidget {
     );
   }
 
-  Widget _trackExerciseGridTile(ExerciseModel singleItem) {
-    return Container(
-      alignment: Alignment.center,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 6,
-            blurStyle: BlurStyle.outer,
-            color: AppColors.colorLightGrey,
-          ),
-        ],
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
-            flex: 75,
-            child: Image.network(singleItem.exerciseImage, fit: BoxFit.cover).commonAllSidePadding(),
-          ),
-          // const SizedBox(height: 5),
-          Expanded(
-            flex: 25,
-            child: Text(
-              singleItem.exerciseName,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 13,
+  Widget _trackExerciseGridTile(FitnessModel singleItem) {
+    return GestureDetector(
+      onTap: () {
+        Get.to(()=>
+            ExerciseDetailsScreen(),
+          transition: Transition.zoom,
+          arguments: singleItem
+        );
+      },
+      child: Container(
+        alignment: Alignment.center,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 6,
+              blurStyle: BlurStyle.outer,
+              color: AppColors.colorLightGrey,
+            ),
+          ],
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              flex: 75,
+              child: Image.network(singleItem.fitnessImage, fit: BoxFit.cover).commonAllSidePadding(),
+            ),
+            // const SizedBox(height: 5),
+            Expanded(
+              flex: 25,
+              child: Text(
+                singleItem.fitnessName,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                ),
               ),
             ),
-          ),
-        ],
-      ),
-    ).commonAllSidePadding(padding: 5);
+          ],
+        ),
+      ).commonAllSidePadding(padding: 5),
+    );
   }
 }
 
@@ -292,7 +300,7 @@ class TrackMovementModule extends StatelessWidget {
               crossAxisSpacing: 10,
             ),
             itemBuilder: (context, i) {
-              MovementModel singleMovement = screenController.movementList[i];
+              FitnessModel singleMovement = screenController.movementList[i];
               return _trackMovementGridTile(singleMovement)
                   .commonSymmetricPadding(vertical: 8);
             },
@@ -302,7 +310,7 @@ class TrackMovementModule extends StatelessWidget {
     );
   }
 
-  Widget _trackMovementGridTile(MovementModel singleItem) {
+  Widget _trackMovementGridTile(FitnessModel singleItem) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -319,13 +327,13 @@ class TrackMovementModule extends StatelessWidget {
         children: [
           Expanded(
             flex: 75,
-            child: Image.network(singleItem.movementImage, fit: BoxFit.cover).commonAllSidePadding(),
+            child: Image.network(singleItem.fitnessImage, fit: BoxFit.cover).commonAllSidePadding(),
           ),
           // const SizedBox(height: 5),
           Expanded(
             flex: 25,
             child: Text(
-              singleItem.movementName,
+              singleItem.fitnessName,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(
@@ -647,7 +655,7 @@ class TrackTimeSpendOnMindFullnessModule extends StatelessWidget {
               crossAxisSpacing: 10,
             ),
             itemBuilder: (context, i) {
-              MindfulnessModel singleItem = screenController.mindfulnessList[i];
+              FitnessModel singleItem = screenController.mindfulnessList[i];
               return _trackTimeSpendOnMindFullnessGridTile(singleItem);
             },
           ).commonSymmetricPadding(vertical: 10),
@@ -656,7 +664,7 @@ class TrackTimeSpendOnMindFullnessModule extends StatelessWidget {
     );
   }
 
-  Widget _trackTimeSpendOnMindFullnessGridTile(MindfulnessModel singleItem) {
+  Widget _trackTimeSpendOnMindFullnessGridTile(FitnessModel singleItem) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -673,13 +681,13 @@ class TrackTimeSpendOnMindFullnessModule extends StatelessWidget {
         children: [
           Expanded(
             flex: 75,
-            child: Image.network(singleItem.mindfulnessImage, fit: BoxFit.cover).commonAllSidePadding(),
+            child: Image.network(singleItem.fitnessImage, fit: BoxFit.cover).commonAllSidePadding(),
           ),
           // const SizedBox(height: 5),
           Expanded(
             flex: 25,
             child: Text(
-              singleItem.mindfulnessName,
+              singleItem.fitnessName,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(

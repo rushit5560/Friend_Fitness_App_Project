@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/screens/splash_screen/splash_screen.dart';
 import 'package:get/get.dart';
 import 'common/app_theme/app_theme.dart';
-import 'screens/sign_in_screen/sign_in_screen.dart';
 
 
 void main() async {

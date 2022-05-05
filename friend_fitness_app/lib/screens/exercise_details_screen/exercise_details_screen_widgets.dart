@@ -7,7 +7,8 @@ import '../../controllers/exercise_details_screen_controller/exercise_details_sc
 
 /// AppBar
 class ExerciseDetailsScreenAppBarModule extends StatelessWidget {
-  const ExerciseDetailsScreenAppBarModule({Key? key}) : super(key: key);
+  ExerciseDetailsScreenAppBarModule({Key? key}) : super(key: key);
+  final screenController = Get.find<ExerciseDetailsScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -34,12 +35,12 @@ class ExerciseDetailsScreenAppBarModule extends StatelessWidget {
               ),
             ),
           ),
-          const Expanded(
+          Expanded(
             child: Text(
-              "Exercise Name",
+              screenController.singleItem.fitnessName,
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+              style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
             ),
           ),
           Container(
