@@ -118,7 +118,9 @@ class ProfileImage extends StatelessWidget {
 }
 
 class NameTextFieldModule extends StatelessWidget {
-  const NameTextFieldModule({Key? key}) : super(key: key);
+  NameTextFieldModule({Key? key}) : super(key: key);
+  final screenController = Get.find<EditProfileScreenController>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -146,7 +148,7 @@ class NameTextFieldModule extends StatelessWidget {
                   ),
                 ),
                 TextFormField(
-                  //controller: screenController.emailTextFieldController,
+                  controller: screenController.nameFieldController,
                   keyboardType: TextInputType.text,
                   cursorColor: Colors.black,
                   decoration: const InputDecoration(
@@ -184,7 +186,8 @@ class NameTextFieldModule extends StatelessWidget {
 }
 
 class WeightTextFieldModule extends StatelessWidget {
-  const WeightTextFieldModule({Key? key}) : super(key: key);
+  WeightTextFieldModule({Key? key}) : super(key: key);
+  final screenController = Get.find<EditProfileScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -212,7 +215,7 @@ class WeightTextFieldModule extends StatelessWidget {
                   ),
                 ),
                 TextFormField(
-                  //controller: screenController.emailTextFieldController,
+                  controller: screenController.weightFieldController,
                   keyboardType: TextInputType.text,
                   cursorColor: Colors.black,
                   decoration: const InputDecoration(
@@ -250,7 +253,8 @@ class WeightTextFieldModule extends StatelessWidget {
 }
 
 class MeasurementTextFieldModule extends StatelessWidget {
-  const MeasurementTextFieldModule({Key? key}) : super(key: key);
+  MeasurementTextFieldModule({Key? key}) : super(key: key);
+  final screenController = Get.find<EditProfileScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -278,7 +282,7 @@ class MeasurementTextFieldModule extends StatelessWidget {
                   ),
                 ),
                 TextFormField(
-                  //controller: screenController.emailTextFieldController,
+                  controller: screenController.measurementFieldController,
                   keyboardType: TextInputType.text,
                   cursorColor: Colors.black,
                   decoration: const InputDecoration(
@@ -316,7 +320,8 @@ class MeasurementTextFieldModule extends StatelessWidget {
 }
 
 class HeightTextFieldModule extends StatelessWidget {
-  const HeightTextFieldModule({Key? key}) : super(key: key);
+   HeightTextFieldModule({Key? key}) : super(key: key);
+  final screenController = Get.find<EditProfileScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -344,7 +349,7 @@ class HeightTextFieldModule extends StatelessWidget {
                   ),
                 ),
                 TextFormField(
-                  //controller: screenController.emailTextFieldController,
+                  controller: screenController.heightFieldController,
                   keyboardType: TextInputType.text,
                   cursorColor: Colors.black,
                   decoration: const InputDecoration(
@@ -382,12 +387,16 @@ class HeightTextFieldModule extends StatelessWidget {
 }
 
 class SaveButtonModule extends StatelessWidget {
-  const SaveButtonModule({Key? key}) : super(key: key);
+  SaveButtonModule({Key? key}) : super(key: key);
+  final screenController = Get.find<EditProfileScreenController>();
+
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => Get.back(),
+      onTap: () {
+        screenController.updateProfileWithFirebaseAPI();
+      },
       child: Container(
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(20),

@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/common/sharedpreference_data/sharedpreference_data.dart';
+import 'package:friend_fitness_app/common/user_details.dart';
 import 'package:friend_fitness_app/model/user_signin_model/user_signin_model.dart';
 import 'package:friend_fitness_app/screens/index_screen/index_screen.dart';
 import 'package:get/get.dart';
@@ -44,9 +45,11 @@ class SignInScreenController extends GetxController {
 
       if(isStatus.value == 200){
         log('Success');
-        String userId = signInModel.localId;
-        String userIdToken = signInModel.idToken;
-        await sharedPreferenceData.setUserLoginDetailsInPrefs(userId: userId, userIdToken: userIdToken);
+        UserDetails.userId = signInModel.localId;
+        UserDetails.userIdToken = signInModel.idToken;
+        log('UserDetails.userId: ${UserDetails.userId}');
+        log('UserDetails.userIdToken: ${UserDetails.userIdToken}');
+        await sharedPreferenceData.setUserLoginDetailsInPrefs(userId: UserDetails.userId, userIdToken: UserDetails.userIdToken);
         Get.offAll(()=> IndexScreen(), transition: Transition.zoom);
         Get.snackbar(signInModel.email + " Login Successfully", '');
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/common/constants/app_colors.dart';
 import 'package:friend_fitness_app/common/constants/app_images.dart';
 import 'package:friend_fitness_app/common/sharedpreference_data/sharedpreference_data.dart';
+import 'package:friend_fitness_app/controllers/profile_screen_controller/profile_screen_controller.dart';
 import 'package:friend_fitness_app/screens/edit_profile_screen/edit_profile_screen.dart';
 import 'package:friend_fitness_app/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:get/get.dart';
@@ -71,7 +72,9 @@ class ProfileImage extends StatelessWidget {
 }
 
 class NameTextFieldModule extends StatelessWidget {
-  const NameTextFieldModule({Key? key}) : super(key: key);
+  NameTextFieldModule({Key? key}) : super(key: key);
+
+  final screenController = Get.find<ProfileScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -80,6 +83,38 @@ class NameTextFieldModule extends StatelessWidget {
         const Expanded(
             flex: 2,
             child: Text("Name:", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),)
+        ),
+        Expanded(
+            flex: 4,
+            child: Container(
+              height: 45,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.colorLightGrey,
+                    blurRadius: 2,
+                    blurStyle: BlurStyle.outer,
+                  ),
+                ],
+              ),
+            )
+        )
+      ],
+    );
+  }
+}
+
+class EmailTextFieldModule extends StatelessWidget {
+  const EmailTextFieldModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Expanded(
+            flex: 2,
+            child: Text("Email:", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),)
         ),
         Expanded(
             flex: 4,
