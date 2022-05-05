@@ -15,10 +15,6 @@ class HomeScreenController extends GetxController {
   List<FitnessModel> exerciseList = [];
   List<FitnessModel> movementList = [];
   List<FitnessModel> mindfulnessList = [];
-
-  // List<MindfulnessModel> mindfulnessList = [];
-  // List<ExerciseModel> exerciseList = [];
-  // List<MovementModel> movementList = [];
   List<WaterIntakeModel> waterIntakeList = [];
 
 
@@ -90,6 +86,8 @@ class HomeScreenController extends GetxController {
         Map<String, dynamic> newMapResponse = jsonDecode(response.body);
         log("newMapResponse : $newMapResponse");
 
+        waterIntakeList.clear();
+
         newMapResponse.forEach((k, v) => waterIntakeList.add(WaterIntakeModel(
           waterIntakeId: v['water_intake_id'],
           waterIntakeImage: v['water_intake_image'],
@@ -102,7 +100,7 @@ class HomeScreenController extends GetxController {
           log(waterIntakeList[i].waterIntakeName);
         }
 
-      }else {
+      } else {
         log('Something went wrong!');
       }
 

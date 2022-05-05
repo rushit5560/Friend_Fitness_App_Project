@@ -1,5 +1,5 @@
 class CategoryModel {
-  int categoryId;
+  String categoryId;
   String categoryName;
   String categoryImg;
   int categoryPoint;
@@ -12,7 +12,7 @@ class CategoryModel {
   });
 
   static CategoryModel fromJson(Map<String, dynamic> json) => CategoryModel(
-    categoryId: json['category_id'] ?? 0,
+    categoryId: json['category_id'] ?? "",
     categoryName: json['category_name'] ?? "",
     categoryImg: json['category_image'] ?? "",
     categoryPoint: json['category_point'] ?? 0,

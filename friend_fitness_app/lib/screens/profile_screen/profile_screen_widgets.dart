@@ -30,7 +30,16 @@ class ProfileScreenAppBarModule extends StatelessWidget {
         child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const SizedBox(width: 5),
+                GestureDetector(
+                  onTap: () => Get.back(),
+                  child: const SizedBox(
+                    width: 42,
+                    height: 42,
+                    child: Icon(
+                        Icons.arrow_back_ios_rounded
+                    ),
+                  ),
+                ),
                 //Container(),
                 const Text(
                   "Profile",
@@ -44,7 +53,10 @@ class ProfileScreenAppBarModule extends StatelessWidget {
                     Get.offAll(() => SignInScreen(), transition: Transition.zoom);
                     Get.snackbar('You Have Successfully Logout', '');
                   },
-                    child: const Icon(Icons.logout)),
+                    child: const SizedBox(
+                        width: 42,
+                        height: 42,
+                        child: Icon(Icons.logout))),
                 //SizedBox(width: 5),
               ],
             ),
