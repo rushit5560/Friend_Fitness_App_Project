@@ -1,12 +1,12 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:friend_fitness_app/common/common_widgets.dart';
 import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
 import 'package:get/get.dart';
 import '../../common/constants/app_colors.dart';
 import '../../controllers/category_screen_controller/category_screen_controller.dart';
 import '../../model/category_model/category_model.dart';
+
+
 
 class CategoryScreenAppBarModule extends StatelessWidget {
   const CategoryScreenAppBarModule({Key? key}) : super(key: key);
@@ -45,37 +45,38 @@ class CategoryListModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<List<CategoryModel>>(
-      stream: screenController.getAllCategoryFromFirebase(),
-      builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return Text("Something went wrong! ${snapshot.error}");
-        } else if (snapshot.hasData) {
-          final categories = snapshot.data;
-
-          return ListView.builder(
-            itemCount: categories!.length,
-            shrinkWrap: true,
-            physics: const BouncingScrollPhysics(),
-            itemBuilder: (context, i) {
-              CategoryModel singleCategory = categories[i];
-              return categoryListTile(singleCategory)
-                  .commonSymmetricPadding(vertical: 8);
-            },
-          ).commonAllSidePadding(padding: 15);
-
-          // return ListView(
-          //   physics: const BouncingScrollPhysics(),
-          //   children: categories!.map((val) {
-          //     return categoryListTile(val).commonSymmetricPadding(horizontal: 8, vertical: 6);
-          //   }).toList(),
-          // ).commonAllSidePadding(padding: 15);
-
-        } else {
-          return const CustomCircularProgressIndicator();
-        }
+    return ListView.builder(
+      itemCount: screenController.categoryList.length,
+      shrinkWrap: true,
+      physics: const BouncingScrollPhysics(),
+      itemBuilder: (context, i) {
+        CategoryModel singleCategory = screenController.categoryList[i];
+        return categoryListTile(singleCategory)
+            .commonSymmetricPadding(vertical: 8);
       },
-    );
+    ).commonAllSidePadding(padding: 15);
+    // return StreamBuilder<List<CategoryModel>>(
+    //   stream: screenController.getAllCategoryFromFirebase(),
+    //   builder: (context, snapshot) {
+    //     if (snapshot.hasError) {
+    //       return Text("Something went wrong! ${snapshot.error}");
+    //     } else if (snapshot.hasData) {
+    //       final categories = snapshot.data;
+    //
+    //       return ;
+    //
+    //       // return ListView(
+    //       //   physics: const BouncingScrollPhysics(),
+    //       //   children: categories!.map((val) {
+    //       //     return categoryListTile(val).commonSymmetricPadding(horizontal: 8, vertical: 6);
+    //       //   }).toList(),
+    //       // ).commonAllSidePadding(padding: 15);
+    //
+    //     } else {
+    //       return const CustomCircularProgressIndicator();
+    //     }
+    //   },
+    // );
   }
 
   Widget categoryListTile(CategoryModel singleCategory) {
