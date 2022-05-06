@@ -1,5 +1,5 @@
 class WaterIntakeModel {
-  int waterIntakeId;
+  String waterIntakeId;
   String waterIntakeName;
   String waterIntakeDes;
   String waterIntakeImage;
@@ -14,7 +14,7 @@ class WaterIntakeModel {
   });
 
   static WaterIntakeModel fromJson(Map<String, dynamic> json) => WaterIntakeModel(
-    waterIntakeId: json['water_intake_id'] ?? 0,
+    waterIntakeId: json['water_intake_id'] ?? "",
     waterIntakeName: json['water_intake_name'] ?? "",
     waterIntakeDes: json['water_intake_description'] ?? "",
     waterIntakeImage: json['water_intake_image'] ?? "",
