@@ -40,6 +40,7 @@ class IndexScreen extends StatelessWidget {
         ),
         child: Obx(
           ()=> BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
             backgroundColor: AppColors.colorLightGrey,
             items: <BottomNavigationBarItem>[
               BottomNavigationBarItem(

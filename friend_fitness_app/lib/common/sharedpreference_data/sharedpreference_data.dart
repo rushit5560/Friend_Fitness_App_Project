@@ -12,7 +12,7 @@ class SharedPreferenceData{
   String userWeightKey = "userProfile";
 
   // This Function Use For Set UserLoginStatus, UserId & Token in sharedPreference
-  setUserLoginDetailsInPrefs({required String userId, required String userIdToken, required String userProfile, required String weight}) async {
+  setUserLoginDetailsInPrefs({required String userId, required String userIdToken, required String userProfile}) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     //Remove Old Id & Token
@@ -26,7 +26,7 @@ class SharedPreferenceData{
     prefs.setString(userIdKey, userId);
     prefs.setString(userIdTokenKey, userIdToken);
     prefs.setString(userProfileKey, userProfile);
-    prefs.setString(userWeightKey, weight);
+    //prefs.setString(userWeightKey, weight);
 
     // Now Set Prefs Data in UserDetails in Code
     UserDetails.isUserLoggedIn = prefs.getBool(isUserLoggedInKey) ?? false;

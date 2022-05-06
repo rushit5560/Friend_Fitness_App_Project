@@ -20,6 +20,8 @@ class ProfileScreenController extends GetxController{
   File ? profile;
   File? beforeImageProfile;
   File? afterImageProfile;
+  GlobalKey<FormState> profileFormKey = GlobalKey();
+  GlobalKey<FormState> editProfileFormKey = GlobalKey();
   //RxString profileImage = "".obs;
 
   TextEditingController nameFieldController = TextEditingController();
@@ -37,7 +39,7 @@ class ProfileScreenController extends GetxController{
 
   getProfileWithFirebaseAPI() async {
     isLoading(true);
-    String url = "https://fitness-app-f51fa-default-rtdb.firebaseio.com/profile.json";
+    String url = "https://fitness-app-f51fa-default-rtdb.firebaseio.com/user.json";
     log('url: $url');
     log('UserDetails.userIdToken: ${UserDetails.userIdToken}');
     try{
@@ -79,7 +81,7 @@ class ProfileScreenController extends GetxController{
   updateProfileWithFirebaseAPI() async {
     isLoading(true);
     String uniqueId = "${DateTime.now().day}${DateTime.now().month}${DateTime.now().year}${DateTime.now().hour}${DateTime.now().minute}${DateTime.now().second}${DateTime.now().millisecond}";
-    String url = "https://fitness-app-f51fa-default-rtdb.firebaseio.com/profile.json";
+    String url = "https://fitness-app-f51fa-default-rtdb.firebaseio.com/user.json";
     log('url: $url');
     log('UserDetails.userId: ${UserDetails.userId}');
     try{

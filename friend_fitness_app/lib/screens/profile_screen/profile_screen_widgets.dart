@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:friend_fitness_app/common/constants/app_colors.dart';
 import 'package:friend_fitness_app/common/constants/app_images.dart';
+import 'package:friend_fitness_app/common/field_validation.dart';
 import 'package:friend_fitness_app/common/sharedpreference_data/sharedpreference_data.dart';
 import 'package:friend_fitness_app/controllers/profile_screen_controller/profile_screen_controller.dart';
 import 'package:friend_fitness_app/screens/change_password_screen/change_password_screen.dart';
@@ -146,28 +148,8 @@ class NameTextFieldModule extends StatelessWidget {
                   decoration: const InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 15),
                     border: InputBorder.none,
-                    // suffix: IconButton(
-                    //   onPressed: () {},
-                    //   iconSize: 15,
-                    //   icon: Icon(Icons.visibility_off_rounded),
-                    // ),
-                    // suffix: Container(
-                    //   child: index == 0
-                    //       ? null
-                    //       : GestureDetector(
-                    //     onTap: () {
-                    //       signInScreenController.isPassVisible.value = !signInScreenController.isPassVisible.value;
-                    //       print('isPassVisible : ${signInScreenController.isPassVisible.value}');
-                    //     },
-                    //     child: Obx(
-                    //       ()=> Icon(signInScreenController.isPassVisible.value
-                    //           ? Icons.visibility_rounded
-                    //           : Icons.visibility_off_rounded),
-                    //     ),
-                    //   ),
-                    // ),
                   ),
-                  //validator: (value) => FieldValidator().validateEmail(value!),
+                  validator: (value) => FieldValidator().validateName(value!),
                 ),
               ],
             )
@@ -213,28 +195,8 @@ class EmailTextFieldModule extends StatelessWidget {
                   decoration: const InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 15),
                     border: InputBorder.none,
-                    // suffix: IconButton(
-                    //   onPressed: () {},
-                    //   iconSize: 15,
-                    //   icon: Icon(Icons.visibility_off_rounded),
-                    // ),
-                    // suffix: Container(
-                    //   child: index == 0
-                    //       ? null
-                    //       : GestureDetector(
-                    //     onTap: () {
-                    //       signInScreenController.isPassVisible.value = !signInScreenController.isPassVisible.value;
-                    //       print('isPassVisible : ${signInScreenController.isPassVisible.value}');
-                    //     },
-                    //     child: Obx(
-                    //       ()=> Icon(signInScreenController.isPassVisible.value
-                    //           ? Icons.visibility_rounded
-                    //           : Icons.visibility_off_rounded),
-                    //     ),
-                    //   ),
-                    // ),
                   ),
-                  //validator: (value) => FieldValidator().validateEmail(value!),
+                  validator: (value) => FieldValidator().validateEmail(value!),
                 ),
               ],
             )
@@ -280,28 +242,8 @@ class WeightTextFieldModule extends StatelessWidget {
                   decoration: const InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 15),
                     border: InputBorder.none,
-                    // suffix: IconButton(
-                    //   onPressed: () {},
-                    //   iconSize: 15,
-                    //   icon: Icon(Icons.visibility_off_rounded),
-                    // ),
-                    // suffix: Container(
-                    //   child: index == 0
-                    //       ? null
-                    //       : GestureDetector(
-                    //     onTap: () {
-                    //       signInScreenController.isPassVisible.value = !signInScreenController.isPassVisible.value;
-                    //       print('isPassVisible : ${signInScreenController.isPassVisible.value}');
-                    //     },
-                    //     child: Obx(
-                    //       ()=> Icon(signInScreenController.isPassVisible.value
-                    //           ? Icons.visibility_rounded
-                    //           : Icons.visibility_off_rounded),
-                    //     ),
-                    //   ),
-                    // ),
                   ),
-                  //validator: (value) => FieldValidator().validateEmail(value!),
+                  validator: (value) => FieldValidator().validateWeight(value!),
                 ),
               ],
             )
@@ -347,28 +289,8 @@ class MeasurementTextFieldModule extends StatelessWidget {
                   decoration: const InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 15),
                     border: InputBorder.none,
-                    // suffix: IconButton(
-                    //   onPressed: () {},
-                    //   iconSize: 15,
-                    //   icon: Icon(Icons.visibility_off_rounded),
-                    // ),
-                    // suffix: Container(
-                    //   child: index == 0
-                    //       ? null
-                    //       : GestureDetector(
-                    //     onTap: () {
-                    //       signInScreenController.isPassVisible.value = !signInScreenController.isPassVisible.value;
-                    //       print('isPassVisible : ${signInScreenController.isPassVisible.value}');
-                    //     },
-                    //     child: Obx(
-                    //       ()=> Icon(signInScreenController.isPassVisible.value
-                    //           ? Icons.visibility_rounded
-                    //           : Icons.visibility_off_rounded),
-                    //     ),
-                    //   ),
-                    // ),
                   ),
-                  //validator: (value) => FieldValidator().validateEmail(value!),
+                  validator: (value) => FieldValidator().validateMeasurement(value!),
                 ),
               ],
             )
@@ -414,28 +336,8 @@ class HeightTextFieldModule extends StatelessWidget {
                   decoration: const InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 15),
                     border: InputBorder.none,
-                    // suffix: IconButton(
-                    //   onPressed: () {},
-                    //   iconSize: 15,
-                    //   icon: Icon(Icons.visibility_off_rounded),
-                    // ),
-                    // suffix: Container(
-                    //   child: index == 0
-                    //       ? null
-                    //       : GestureDetector(
-                    //     onTap: () {
-                    //       signInScreenController.isPassVisible.value = !signInScreenController.isPassVisible.value;
-                    //       print('isPassVisible : ${signInScreenController.isPassVisible.value}');
-                    //     },
-                    //     child: Obx(
-                    //       ()=> Icon(signInScreenController.isPassVisible.value
-                    //           ? Icons.visibility_rounded
-                    //           : Icons.visibility_off_rounded),
-                    //     ),
-                    //   ),
-                    // ),
                   ),
-                  //validator: (value) => FieldValidator().validateEmail(value!),
+                  validator: (value) => FieldValidator().validateHeight(value!),
                 ),
               ],
             )
@@ -455,19 +357,26 @@ class SaveButtonModule extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
-          onTap: () => Get.to(()=> EditProfileScreen(), transition: Transition.zoom)/*!.then((value) async{
-            await screenController.getProfileWithFirebaseAPI();
-          })*/,
-          child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
-              color: AppColors.colorDarkGrey
-            ),
-            child: const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 30, vertical: 13),
-              child: Text("UPDATE", style: TextStyle(color: Colors.white),),
-            ),
-          ),
+          onTap: (){
+            if(screenController.profileFormKey.currentState!.validate()) {
+              if(screenController.profile == null){
+                Fluttertoast.showToast(msg: "Please Select Profile");
+              } else{
+                Get.to(() => EditProfileScreen(), transition: Transition.zoom);
+              }
+
+            }
+          },
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: AppColors.colorDarkGrey
+              ),
+              child: const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 13),
+                child: Text("UPDATE", style: TextStyle(color: Colors.white),),
+              ),
+            )
         ),
         SizedBox(width: 20,),
         //Text("CHANGE PASSWORD", style: TextStyle(color: Colors.white),),
@@ -493,9 +402,9 @@ class BeforeAfterImageModule extends StatelessWidget {
       children: [
         Column(
           children: [
-            Text("Before", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),),
+            const Text("Before", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),),
 
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             screenController.beforeImageProfile!.path.isNotEmpty ?
             Container(
               height: Get.height * 0.15,
@@ -532,9 +441,9 @@ class BeforeAfterImageModule extends StatelessWidget {
         SizedBox(width: 20,),
         Column(
           children: [
-            Text("After", style: TextStyle(fontWeight: FontWeight.w500,fontSize: 18),),
+            const Text("After", style: TextStyle(fontWeight: FontWeight.w500,fontSize: 18),),
 
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             screenController.afterImageProfile!.path.isNotEmpty ?
             Container(
               height: Get.height * 0.15,

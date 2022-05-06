@@ -47,11 +47,11 @@ class SignInScreenController extends GetxController {
         log('Success');
         UserDetails.userId = signInModel.localId;
         UserDetails.userIdToken = signInModel.idToken;
-        UserDetails.userProfile = signInModel.profilePicture;
+        //UserDetails.userProfile = signInModel.profilePicture;
         log('UserDetails.userId: ${UserDetails.userId}');
         log('UserDetails.userIdToken: ${UserDetails.userIdToken}');
         log('UserDetails.userProfile: ${UserDetails.userProfile}');
-        await sharedPreferenceData.setUserLoginDetailsInPrefs(userId: UserDetails.userId, userIdToken: UserDetails.userIdToken, userProfile: UserDetails.userProfile, weight: "");
+        await sharedPreferenceData.setUserLoginDetailsInPrefs(userId: UserDetails.userId, userIdToken: UserDetails.userIdToken, userProfile: UserDetails.userProfile);
         Get.offAll(()=> IndexScreen(), transition: Transition.zoom);
         Get.snackbar(signInModel.email + " Login Successfully", '');
 

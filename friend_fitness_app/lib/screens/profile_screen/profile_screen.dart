@@ -23,26 +23,29 @@ class ProfileScreen extends StatelessWidget {
                 child: Obx(()=>
                 profileScreenController.isLoading.value ?
                     const CircularProgressIndicator():
-                   Column(
-                    children: [
-                      ProfileImage(),
-                      const SizedBox(height: 35),
-                      NameTextFieldModule(),
-                      const SizedBox(height: 20),
-                      EmailTextFieldModule(),
-                      const SizedBox(height: 20),
-                       WeightTextFieldModule(),
-                      const SizedBox(height: 20),
-                       MeasurementTextFieldModule(),
-                      const SizedBox(height: 20),
-                       HeightTextFieldModule(),
-                      const SizedBox(height: 30),
-                       SaveButtonModule(),
-                      const SizedBox(height: 30),
-                      BeforeAfterImageModule(),
-                      const SizedBox(height: 20),
-                    ],
+                   Form(
+                     key: profileScreenController.profileFormKey,
+                     child: Column(
+                      children: [
+                        ProfileImage(),
+                        const SizedBox(height: 35),
+                        NameTextFieldModule(),
+                        const SizedBox(height: 20),
+                        EmailTextFieldModule(),
+                        const SizedBox(height: 20),
+                         WeightTextFieldModule(),
+                        const SizedBox(height: 20),
+                         MeasurementTextFieldModule(),
+                        const SizedBox(height: 20),
+                         HeightTextFieldModule(),
+                        const SizedBox(height: 30),
+                         SaveButtonModule(),
+                        const SizedBox(height: 30),
+                        BeforeAfterImageModule(),
+                        const SizedBox(height: 20),
+                      ],
                   ).commonAllSidePadding(),
+                   ),
                 ),
               ),
             )

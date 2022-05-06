@@ -21,24 +21,9 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     const HomeScreenAppBarModule(),
                     const SizedBox(height: 15),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            const LeaderBoardModule(),
-                            const SizedBox(height: 15),
-
-                            // const SizedBox(height: 10),
-                            // TrackMovementModule(),
-                            // const SizedBox(height: 10),
-                            // TrackWaterIntakeModule(),
-                            // const SizedBox(height: 10),
-                            // TrackTimeSpendOnMindFullnessModule(),
-                            // const SizedBox(height: 10),
-                          ],
-                        ).commonSymmetricPadding(horizontal: 10),
-                      ),
-                    ),
+                    const Expanded(
+                      child: LeaderBoardModule(),
+                      ).commonSymmetricPadding(horizontal: 10),
                   ],
                 ),
         ),

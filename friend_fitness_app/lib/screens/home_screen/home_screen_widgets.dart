@@ -82,7 +82,7 @@ class LeaderBoardModule extends StatelessWidget {
         ),
         const SizedBox(height: 15),
         Container(
-          height: 250,
+          //height: 250,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),
@@ -97,7 +97,7 @@ class LeaderBoardModule extends StatelessWidget {
           child: Column(
             children: [
               SizedBox(
-                height: 200,
+                //height: 200,
                 child: ListView.builder(
                   itemCount: 3,
                   shrinkWrap: true,

@@ -11,6 +11,27 @@ class FieldValidator {
       return null;
     }
   }
+  String? validateWeight(String value) {
+    if (value.isEmpty) {
+      return 'Please Enter Weight';
+    }
+    return null;
+  }
+
+  String? validateMeasurement(String value) {
+    if (value.isEmpty) {
+      return 'Please Enter Measurement';
+    }
+    return null;
+  }
+
+  String? validateHeight(String value) {
+    if (value.isEmpty) {
+      return 'Please Enter Height';
+    }
+    return null;
+  }
+
   String ? validatePassword(String value) {
     if (value.isEmpty) {
       return "Please Enter Password";
