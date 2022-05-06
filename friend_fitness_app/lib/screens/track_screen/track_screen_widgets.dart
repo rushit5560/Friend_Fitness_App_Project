@@ -1,14 +1,16 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:friend_fitness_app/common/constants/app_colors.dart';
-import 'package:friend_fitness_app/common/constants/app_images.dart';
 import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
 import 'package:friend_fitness_app/controllers/track_screen_controller/track_screen_controller.dart';
 import 'package:friend_fitness_app/model/home_screen_models/fitness_model.dart';
 import 'package:friend_fitness_app/screens/exercise_details_screen/exercise_details_screen.dart';
+import 'package:friend_fitness_app/screens/water_intake_details_screen/water_intake_details_screen.dart';
 import 'package:get/get.dart';
 
+/// AppBar
 class TrackScreenAppBarModule extends StatelessWidget {
   const TrackScreenAppBarModule({Key? key}) : super(key: key);
 
@@ -18,11 +20,11 @@ class TrackScreenAppBarModule extends StatelessWidget {
       height: 55,
       width: Get.width,
       decoration: BoxDecoration(
-          borderRadius: const BorderRadius.only(
-              bottomRight: Radius.circular(25),
-              bottomLeft: Radius.circular(25)),
-          color: AppColors.colorLightGrey
-        //color: Colors.grey
+        borderRadius: const BorderRadius.only(
+          bottomRight: Radius.circular(25),
+          bottomLeft: Radius.circular(25),
+        ),
+        color: AppColors.colorLightGrey,
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -43,7 +45,7 @@ class TrackScreenAppBarModule extends StatelessWidget {
 /// Track Exercise
 class TrackExerciseModule extends StatelessWidget {
   TrackExerciseModule({Key? key}) : super(key: key);
-  final screenController = Get.find<TrackScrenController>();
+  final screenController = Get.find<TrackScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -85,11 +87,8 @@ class TrackExerciseModule extends StatelessWidget {
   Widget _trackExerciseGridTile(FitnessModel singleItem) {
     return GestureDetector(
       onTap: () {
-        Get.to(()=>
-            ExerciseDetailsScreen(),
-            transition: Transition.zoom,
-            arguments: singleItem
-        );
+        Get.to(() => ExerciseDetailsScreen(),
+            transition: Transition.zoom, arguments: singleItem);
       },
       child: Container(
         alignment: Alignment.center,
@@ -108,7 +107,8 @@ class TrackExerciseModule extends StatelessWidget {
           children: [
             Expanded(
               flex: 75,
-              child: Image.network(singleItem.fitnessImage, fit: BoxFit.cover).commonAllSidePadding(),
+              child: Image.network(singleItem.fitnessImage, fit: BoxFit.cover)
+                  .commonAllSidePadding(),
             ),
             // const SizedBox(height: 5),
             Expanded(
@@ -133,7 +133,7 @@ class TrackExerciseModule extends StatelessWidget {
 /// Track Movement
 class TrackMovementModule extends StatelessWidget {
   TrackMovementModule({Key? key}) : super(key: key);
-  final screenController = Get.find<TrackScrenController>();
+  final screenController = Get.find<TrackScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -189,7 +189,8 @@ class TrackMovementModule extends StatelessWidget {
         children: [
           Expanded(
             flex: 75,
-            child: Image.network(singleItem.fitnessImage, fit: BoxFit.cover).commonAllSidePadding(),
+            child: Image.network(singleItem.fitnessImage, fit: BoxFit.cover)
+                .commonAllSidePadding(),
           ),
           // const SizedBox(height: 5),
           Expanded(
@@ -208,13 +209,12 @@ class TrackMovementModule extends StatelessWidget {
       ),
     ).commonAllSidePadding(padding: 5);
   }
-
 }
 
 /// Track Water Intake
 class TrackWaterIntakeModule extends StatelessWidget {
   TrackWaterIntakeModule({Key? key}) : super(key: key);
-  final screenController = Get.find<TrackScrenController>();
+  final screenController = Get.find<TrackScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -231,225 +231,284 @@ class TrackWaterIntakeModule extends StatelessWidget {
           ),
         ),
 
-        Container(
-          width: Get.width,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 6,
-                blurStyle: BlurStyle.outer,
-                color: AppColors.colorLightGrey,
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-
-              Container(
-                width: 55,
-                height: 80,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: NetworkImage(screenController.waterIntakeList[0].waterIntakeImage),
-                    fit: BoxFit.cover,
+        GestureDetector(
+          onTap: () {
+            Get.to(() => WaterIntakeDetailsScreen(),
+                transition: Transition.zoom,
+                arguments: screenController.waterIntakeList[0]);
+          },
+          child: Container(
+            width: Get.width,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 6,
+                  blurStyle: BlurStyle.outer,
+                  color: AppColors.colorLightGrey,
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                Container(
+                  width: 55,
+                  height: 80,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage(
+                          screenController.waterIntakeList[0].waterIntakeImage),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ).commonSymmetricPadding(vertical: 10, horizontal: 10),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Text(
+                        screenController.waterIntakeList[0].waterIntakeName,
+                        style: const TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 17,
+                        ),
+                      ),
+                      const SizedBox(height: 10),
+                      Text(
+                        screenController.waterIntakeList[0].waterIntakeDes,
+                        style: const TextStyle(
+                          // fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-              ).commonSymmetricPadding(vertical: 10, horizontal: 10),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                const SizedBox(width: 10),
+                /*Row(
                   children: [
-                    Text(
-                      screenController.waterIntakeList[0].waterIntakeName,
-                      style: const TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17,
+                    GestureDetector(
+                      onTap: () {
+                        screenController.waterIntakeValue.value++;
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: AppColors.colorDarkGrey,
+                        ),
+                        child: Center(
+                          child: const Icon(
+                            Icons.add_rounded,
+                            color: Colors.white,
+                            size: 18,
+                          ).commonAllSidePadding(padding: 8),
+                        ),
                       ),
+                    ),
+
+                    Obx(
+                          ()=> Text(
+                        "${screenController.waterIntakeValue.value}",
+                        style: const TextStyle(
+                          fontSize: 16,
+                        ),
+                      ).commonSymmetricPadding(horizontal: 10),
+                    ),
+
+                    GestureDetector(
+                      onTap: () {
+                        if(screenController.waterIntakeValue.value < 1) {
+                          log("Value ${screenController.waterIntakeValue.value}");
+                        } else {
+                          screenController.waterIntakeValue.value--;
+                        }
+
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: AppColors.colorDarkGrey,
+                        ),
+                        child: Center(
+                          child: const Icon(
+                            Icons.remove_rounded,
+                            color: Colors.white,
+                            size: 18,
+                          ).commonAllSidePadding(padding: 8),
+                        ),
+                      ),
+                    ),
+
+                  ],
+                ),*/
+
+                Column(
+                  children: [
+                    Obx(
+                      () => Text(
+                        "${screenController.waterIntakeValue.value}",
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ).commonSymmetricPadding(horizontal: 10),
                     ),
                     const SizedBox(height: 10),
-                    Text(
-                      screenController.waterIntakeList[0].waterIntakeDes,
-                      style: const TextStyle(
-                        // fontWeight: FontWeight.bold,
-                        fontSize: 14,
+
+                    GestureDetector(
+                      onTap: () async {
+                        if (screenController.waterIntakeValue.value < 4) {
+                          screenController.waterIntakeValue++;
+                          log("${screenController.waterIntakeValue}");
+                          if (screenController.waterIntakeValue.value == 4) {
+                            Fluttertoast.showToast(msg: "Drink 1 Gallon water!");
+                            await screenController.addWaterIntakeRecordInFirebaseFunction();
+                            screenController.waterIntakeValue.value = 0;
+                          }
+                        }
+                      },
+                      child: Container(
+                        // height: 70,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          color: AppColors.colorDarkGrey,
+                        ),
+                        child: Row(
+                          children: const [
+                            Icon(
+                              Icons.add_rounded,
+                              color: Colors.white,
+                              size: 18,
+                            ),
+                            Text(
+                              "Add 1 Glass",
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ).commonSymmetricPadding(horizontal: 16, vertical: 10),
                       ),
                     ),
                   ],
                 ),
-              ),
-              const SizedBox(width: 10),
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      screenController.waterIntakeValue.value++;
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: AppColors.colorDarkGrey,
-                      ),
-                      child: Center(
-                        child: const Icon(
-                          Icons.add_rounded,
-                          color: Colors.white,
-                          size: 18,
-                        ).commonAllSidePadding(padding: 8),
-                      ),
-                    ),
-                  ),
+              ],
+            ).commonAllSidePadding(padding: 15),
+          ).commonAllSidePadding(),
+        ),
 
-                  Obx(
-                        ()=> Text(
-                      "${screenController.waterIntakeValue.value}",
-                      style: const TextStyle(
-                        fontSize: 16,
-                      ),
-                    ).commonSymmetricPadding(horizontal: 10),
-                  ),
-
-                  GestureDetector(
-                    onTap: () {
-                      if(screenController.waterIntakeValue.value < 1) {
-                        log("Value ${screenController.waterIntakeValue.value}");
-                      } else {
-                        screenController.waterIntakeValue.value--;
-                      }
-
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: AppColors.colorDarkGrey,
-                      ),
-                      child: Center(
-                        child: const Icon(
-                          Icons.remove_rounded,
-                          color: Colors.white,
-                          size: 18,
-                        ).commonAllSidePadding(padding: 8),
-                      ),
-                    ),
-                  ),
-
-                ],
-              ),
-            ],
-          ).commonAllSidePadding(padding: 15),
-        ).commonAllSidePadding(),
-
-        Container(
-          width: Get.width,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 6,
-                blurStyle: BlurStyle.outer,
-                color: AppColors.colorLightGrey,
-              ),
-            ],
-          ),
-          child: Row(
-            children: [
-
-              Container(
-                width: 38,
-                height: 50,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(AppImages.glassImg),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ).commonSymmetricPadding(vertical: 10, horizontal: 10),
-              const SizedBox(width: 10),
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: const [
-                    Text(
-                      "Water",
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 17,
-                      ),
-                    ),
-                    SizedBox(height: 10),
-                    Text(
-                      "Glasses",
-                      style: TextStyle(
-                        // fontWeight: FontWeight.bold,
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              const SizedBox(width: 10),
-              Row(
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      screenController.waterIntakeValue.value++;
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: AppColors.colorDarkGrey,
-                      ),
-                      child: Center(
-                        child: const Icon(
-                            Icons.add_rounded,
-                          color: Colors.white,
-                          size: 18,
-                        ).commonAllSidePadding(padding: 8),
-                      ),
-                    ),
-                  ),
-
-                  Obx(
-                    ()=> Text(
-                        "${screenController.waterIntakeValue.value}",
-                      style: const TextStyle(
-                        fontSize: 16,
-                      ),
-                    ).commonSymmetricPadding(horizontal: 10),
-                  ),
-
-                  GestureDetector(
-                    onTap: () {
-                      if(screenController.waterIntakeValue.value < 1) {
-                        log("Value ${screenController.waterIntakeValue.value}");
-                      } else {
-                        screenController.waterIntakeValue.value--;
-                      }
-
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: AppColors.colorDarkGrey,
-                      ),
-                      child: Center(
-                        child: const Icon(
-                          Icons.remove_rounded,
-                          color: Colors.white,
-                          size: 18,
-                        ).commonAllSidePadding(padding: 8),
-                      ),
-                    ),
-                  ),
-
-                ],
-              ),
-            ],
-          ).commonAllSidePadding(padding: 15),
-        ).commonAllSidePadding(),
+        // Container(
+        //   width: Get.width,
+        //   decoration: BoxDecoration(
+        //     borderRadius: BorderRadius.circular(10),
+        //     boxShadow: [
+        //       BoxShadow(
+        //         blurRadius: 6,
+        //         blurStyle: BlurStyle.outer,
+        //         color: AppColors.colorLightGrey,
+        //       ),
+        //     ],
+        //   ),
+        //   child: Row(
+        //     children: [
+        //
+        //       Container(
+        //         width: 38,
+        //         height: 50,
+        //         decoration: const BoxDecoration(
+        //           image: DecorationImage(
+        //             image: AssetImage(AppImages.glassImg),
+        //             fit: BoxFit.cover,
+        //           ),
+        //         ),
+        //       ).commonSymmetricPadding(vertical: 10, horizontal: 10),
+        //       const SizedBox(width: 10),
+        //       Expanded(
+        //         child: Column(
+        //           crossAxisAlignment: CrossAxisAlignment.start,
+        //           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        //           children: const [
+        //             Text(
+        //               "Water",
+        //               style: TextStyle(
+        //                 fontWeight: FontWeight.bold,
+        //                 fontSize: 17,
+        //               ),
+        //             ),
+        //             SizedBox(height: 10),
+        //             Text(
+        //               "Glasses",
+        //               style: TextStyle(
+        //                 // fontWeight: FontWeight.bold,
+        //                 fontSize: 14,
+        //               ),
+        //             ),
+        //           ],
+        //         ),
+        //       ),
+        //       const SizedBox(width: 10),
+        //       Row(
+        //         children: [
+        //           GestureDetector(
+        //             onTap: () {
+        //               screenController.waterIntakeValue.value++;
+        //             },
+        //             child: Container(
+        //               decoration: BoxDecoration(
+        //                 borderRadius: BorderRadius.circular(10),
+        //                 color: AppColors.colorDarkGrey,
+        //               ),
+        //               child: Center(
+        //                 child: const Icon(
+        //                     Icons.add_rounded,
+        //                   color: Colors.white,
+        //                   size: 18,
+        //                 ).commonAllSidePadding(padding: 8),
+        //               ),
+        //             ),
+        //           ),
+        //
+        //           Obx(
+        //             ()=> Text(
+        //                 "${screenController.waterIntakeValue.value}",
+        //               style: const TextStyle(
+        //                 fontSize: 16,
+        //               ),
+        //             ).commonSymmetricPadding(horizontal: 10),
+        //           ),
+        //
+        //           GestureDetector(
+        //             onTap: () {
+        //               if(screenController.waterIntakeValue.value < 1) {
+        //                 log("Value ${screenController.waterIntakeValue.value}");
+        //               } else {
+        //                 screenController.waterIntakeValue.value--;
+        //               }
+        //
+        //             },
+        //             child: Container(
+        //               decoration: BoxDecoration(
+        //                 borderRadius: BorderRadius.circular(10),
+        //                 color: AppColors.colorDarkGrey,
+        //               ),
+        //               child: Center(
+        //                 child: const Icon(
+        //                   Icons.remove_rounded,
+        //                   color: Colors.white,
+        //                   size: 18,
+        //                 ).commonAllSidePadding(padding: 8),
+        //               ),
+        //             ),
+        //           ),
+        //
+        //         ],
+        //       ),
+        //     ],
+        //   ).commonAllSidePadding(padding: 15),
+        // ).commonAllSidePadding(),
       ],
     );
   }
@@ -458,7 +517,7 @@ class TrackWaterIntakeModule extends StatelessWidget {
 /// Track Time Spend on Mindfulness
 class TrackTimeSpendOnMindFullnessModule extends StatelessWidget {
   TrackTimeSpendOnMindFullnessModule({Key? key}) : super(key: key);
-  final screenController = Get.find<TrackScrenController>();
+  final screenController = Get.find<TrackScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -543,7 +602,8 @@ class TrackTimeSpendOnMindFullnessModule extends StatelessWidget {
         children: [
           Expanded(
             flex: 75,
-            child: Image.network(singleItem.fitnessImage, fit: BoxFit.cover).commonAllSidePadding(),
+            child: Image.network(singleItem.fitnessImage, fit: BoxFit.cover)
+                .commonAllSidePadding(),
           ),
           // const SizedBox(height: 5),
           Expanded(
@@ -562,5 +622,4 @@ class TrackTimeSpendOnMindFullnessModule extends StatelessWidget {
       ),
     ).commonAllSidePadding(padding: 5);
   }
-
 }

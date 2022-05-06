@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:friend_fitness_app/common/common_widgets.dart';
 import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
 import 'package:get/get.dart';
 import '../../common/common_functions.dart';
@@ -14,23 +15,27 @@ class SignUpScreen extends StatelessWidget {
     return GestureDetector(
       onTap: () => hideKeyboard(),
       child: Scaffold(
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 80),
-                const RegisterHeaderModule(),
+        body: Obx(
+          ()=> signUpScreenController.isLoading.value
+          ? const CustomCircularProgressIndicator()
+          : SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 80),
+                  const RegisterHeaderModule(),
 
-                const SizedBox(height: 80),
-                RegisterFormModule().commonSymmetricPadding(horizontal: 35),
+                  const SizedBox(height: 80),
+                  RegisterFormModule().commonSymmetricPadding(horizontal: 35),
 
-                const SizedBox(height: 25),
-                RegisterButtonModule(),
+                  const SizedBox(height: 25),
+                  RegisterButtonModule(),
 
-                const SizedBox(height: 25),
-                const SignInTextModule()
-              ],
+                  const SizedBox(height: 25),
+                  const SignInTextModule()
+                ],
+              ),
             ),
           ),
         ),
