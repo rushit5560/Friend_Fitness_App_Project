@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/common/constants/app_colors.dart';
 import 'package:friend_fitness_app/screens/group_list_screen/group_list_screen.dart';
+import 'package:friend_fitness_app/screens/track_screen/track_screen.dart';
 import 'package:get/get.dart';
 
 import '../../common/constants/app_images.dart';
@@ -14,6 +15,7 @@ class IndexScreen extends StatelessWidget {
 
   final widgetOptions = [
     HomeScreen(),
+    TrackScreen(),
     CategoryScreen(),
     const GroupListScreen(),
   ];
@@ -48,14 +50,21 @@ class IndexScreen extends StatelessWidget {
                 label: "",
               ),
               BottomNavigationBarItem(
-                icon: Image.asset(AppImages.bottomCategoriesImg, scale: 2.5,
+                icon: Image.asset(
+                  AppImages.bottomHomeImg, scale: 2.5,
                   color: indexScreenController.selectedIndex.value == 1 ? AppColors.colorDarkGrey
                       : Colors.grey,),
                 label: "",
               ),
               BottomNavigationBarItem(
-                icon: Image.asset(AppImages.bottomGroupImg, scale: 2.5,
+                icon: Image.asset(AppImages.bottomCategoriesImg, scale: 2.5,
                   color: indexScreenController.selectedIndex.value == 2 ? AppColors.colorDarkGrey
+                      : Colors.grey,),
+                label: "",
+              ),
+              BottomNavigationBarItem(
+                icon: Image.asset(AppImages.bottomGroupImg, scale: 2.5,
+                  color: indexScreenController.selectedIndex.value == 3 ? AppColors.colorDarkGrey
                       : Colors.grey,),
                 label: "",
               ),

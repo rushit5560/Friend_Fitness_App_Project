@@ -18,57 +18,7 @@ class HomeScreenController extends GetxController {
   List<WaterIntakeModel> waterIntakeList = [];
 
 
-  /// Get Exercise, Movement, Mindfulness List From Firebase Using Postman API
-  getAllFitnessFromFirebaseFunction() async {
-    isLoading(true);
-    String url = "https://fitness-app-f51fa-default-rtdb.firebaseio.com/fitness.json";
-    log("All Fitness API URL : $url");
 
-    try {
-      http.Response response = await http.get(Uri.parse(url));
-      isSuccessStatusCode = response.statusCode.obs;
-      log("isSuccessStatusCode : $isSuccessStatusCode");
-
-      if(isSuccessStatusCode.value == 200) {
-        Map<String, dynamic> newMapResponse = jsonDecode(response.body);
-        // log("newMapResponse : $newMapResponse");
-        List<FitnessModel> allList = [];
-
-        newMapResponse.forEach((key, value)=> allList.add(
-            FitnessModel(
-                fitnessId: value['fitness_id'],
-                fitnessCategoryName: value['fitness_category_name'],
-                fitnessName: value['fitness_name'],
-                fitnessImage: value['fitness_image'],
-                fitnessPoint: double.parse(value['fitness_point'].toString())
-            )));
-
-        // log("allList : $allList");
-        exerciseList.clear();
-        movementList.clear();
-        mindfulnessList.clear();
-
-        for(int i = 0; i < allList.length; i++) {
-          if(allList[i].fitnessCategoryName == "exercise") {
-            exerciseList.add(allList[i]);
-          } else if(allList[i].fitnessCategoryName == "movement") {
-            movementList.add(allList[i]);
-          } else if(allList[i].fitnessCategoryName == "mindfulness") {
-            mindfulnessList.add(allList[i]);
-          }
-        }
-
-      } else {
-        log("getAllFitnessFromFirebaseFunction Else Else");
-      }
-
-    } catch(e) {
-      log("getAllFitnessFromFirebaseFunction Error : $e");
-    } finally {
-      // isLoading(false);
-      await getWaterIntakeFromFirebaseFunction();
-    }
-  }
 
   /// Get Water Intake From Firebase Using postman API
   getWaterIntakeFromFirebaseFunction() async {
@@ -269,7 +219,7 @@ class HomeScreenController extends GetxController {
 
   @override
   void onInit() {
-    getAllFitnessFromFirebaseFunction();
+    //getAllFitnessFromFirebaseFunction();
     super.onInit();
   }
 

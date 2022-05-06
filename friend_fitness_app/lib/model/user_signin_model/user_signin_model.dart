@@ -11,6 +11,7 @@ class UserSignInModel {
     required this.email,
     required this.displayName,
     required this.idToken,
+    required this.profilePicture,
     required this.registered,
     required this.refreshToken,
     required this.expiresIn,
@@ -23,6 +24,7 @@ class UserSignInModel {
   String displayName;
   String idToken;
   bool registered;
+  String profilePicture;
   String refreshToken;
   String expiresIn;
   //SignInErrorModelError error;
@@ -34,6 +36,7 @@ class UserSignInModel {
     displayName: json["displayName"] ?? "",
     idToken: json["idToken"] ?? "",
     registered: json["registered"] ?? false,
+    profilePicture: json["profilePicture"],
     refreshToken: json["refreshToken"] ?? "",
     expiresIn: json["expiresIn"] ?? "",
    // error: SignInErrorModelError.fromJson(json["error"] ?? {})
@@ -46,6 +49,7 @@ class UserSignInModel {
     "displayName": displayName,
     "idToken": idToken,
     "registered": registered,
+    "profilePicture": profilePicture,
     "refreshToken": refreshToken,
     "expiresIn": expiresIn,
     //"error": error.toJson()

@@ -11,8 +11,6 @@ import 'package:http/http.dart' as http;
 
 class EditProfileScreenController extends GetxController{
   File? profileImage;
-  File? beforeImageProfile;
-  File? afterImageprofile;
   RxBool isLoading = false.obs;
   RxInt isSuccessStatusCode = 0.obs;
 

@@ -39,7 +39,7 @@ class ProfileScreen extends StatelessWidget {
                       const SizedBox(height: 30),
                        SaveButtonModule(),
                       const SizedBox(height: 30),
-                      const BeforeAfterImageModule(),
+                      BeforeAfterImageModule(),
                       const SizedBox(height: 20),
                     ],
                   ).commonAllSidePadding(),

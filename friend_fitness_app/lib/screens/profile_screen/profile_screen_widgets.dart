@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/common/constants/app_colors.dart';
 import 'package:friend_fitness_app/common/constants/app_images.dart';
@@ -71,7 +73,8 @@ class ProfileImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return screenController.profile!.path.isNotEmpty ?
+    Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
@@ -84,9 +87,24 @@ class ProfileImage extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.all(30.0),
-        child: screenController.profile!.toString().isNotEmpty ? Image.file(screenController.profile!, scale: 40,) :
-            Image.asset(AppImages.profileImg),
+        child: Image.file(screenController.profile!, scale: 40,)
+
       ),
+    ) : Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.colorLightGrey,
+            blurRadius: 6,
+            blurStyle: BlurStyle.outer,
+          ),
+        ],
+      ),
+      child: Padding(
+          padding: const EdgeInsets.all(30.0),
+          child: Image.asset(AppImages.profileImg),
+    ),
     );
   }
 }
@@ -465,7 +483,8 @@ class SaveButtonModule extends StatelessWidget {
 }
 
 class BeforeAfterImageModule extends StatelessWidget {
-  const BeforeAfterImageModule({Key? key}) : super(key: key);
+  BeforeAfterImageModule({Key? key}) : super(key: key);
+  final screenController = Get.find<ProfileScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -477,28 +496,7 @@ class BeforeAfterImageModule extends StatelessWidget {
             Text("Before", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),),
 
             SizedBox(height: 10),
-            Container(
-              height: Get.height * 0.15,
-              width: Get.width * 0.27,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                boxShadow: [
-                  BoxShadow(
-                    color: AppColors.colorLightGrey,
-                    blurRadius: 2,
-                    blurStyle: BlurStyle.outer,
-                  ),
-                ],
-              ),
-            )
-          ],
-        ),
-        SizedBox(width: 20,),
-        Column(
-          children: [
-            Text("After", style: TextStyle(fontWeight: FontWeight.w500,fontSize: 18),),
-
-            SizedBox(height: 10),
+            screenController.beforeImageProfile!.path.isNotEmpty ?
             Container(
               height: Get.height * 0.15,
               width: Get.width * 0.27,
@@ -512,6 +510,61 @@ class BeforeAfterImageModule extends StatelessWidget {
                   ),
                 ],
               ),
+              child: Image.file(screenController.beforeImageProfile!),
+            ):
+            Container(
+              height: Get.height * 0.15,
+              width: Get.width * 0.27,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.colorLightGrey,
+                    blurRadius: 2,
+                    blurStyle: BlurStyle.outer,
+                  ),
+                ],
+              ),
+              child: Image.asset(AppImages.profileImg),
+            )
+          ],
+        ),
+        SizedBox(width: 20,),
+        Column(
+          children: [
+            Text("After", style: TextStyle(fontWeight: FontWeight.w500,fontSize: 18),),
+
+            SizedBox(height: 10),
+            screenController.afterImageProfile!.path.isNotEmpty ?
+            Container(
+              height: Get.height * 0.15,
+              width: Get.width * 0.27,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.colorLightGrey,
+                    blurRadius: 2,
+                    blurStyle: BlurStyle.outer,
+                  ),
+                ],
+              ),
+              child: Image.file(screenController.afterImageProfile!),
+            ):
+            Container(
+              height: Get.height * 0.15,
+              width: Get.width * 0.27,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.colorLightGrey,
+                    blurRadius: 2,
+                    blurStyle: BlurStyle.outer,
+                  ),
+                ],
+              ),
+              child: Image.asset(AppImages.profileImg),
             )
           ],
         )

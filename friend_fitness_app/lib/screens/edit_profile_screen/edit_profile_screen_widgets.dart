@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:friend_fitness_app/common/common_widgets.dart';
 import 'package:friend_fitness_app/common/constants/app_colors.dart';
 import 'package:friend_fitness_app/common/constants/app_images.dart';
 import 'package:friend_fitness_app/controllers/edit_profile_screen_controller/edit_profile_screen_controller.dart';
@@ -48,68 +49,68 @@ class ProfileImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(()=>
-        screenController.isLoading.value ?
-            CircularProgressIndicator():
-       Stack(
-        clipBehavior: Clip.none,
-        alignment: Alignment.bottomCenter,
-        children: [
-        screenController.profile != null ?
-        Container(
-          height: 150, width: 150,
-          decoration: BoxDecoration(
+    screenController.isLoading.value ?
+        CircularProgressIndicator():
+      Stack(
+          clipBehavior: Clip.none,
+          alignment: Alignment.bottomCenter,
+          children: [
+            screenController.profile!.path.isNotEmpty ?
+          Container(
+            height: 150, width: 150,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                //border: Border.all(color: AppColors.colorLightGrey),
+                boxShadow: [
+                  BoxShadow(
+                      blurRadius: 1,
+                      blurStyle: BlurStyle.outer,
+                      color: Colors.grey.shade500
+                  )
+                ]
+            ),
+            child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
-              //border: Border.all(color: AppColors.colorLightGrey),
-              boxShadow: [
-                BoxShadow(
-                    blurRadius: 1,
-                    blurStyle: BlurStyle.outer,
+              child: Image.file(screenController.profile!,
+                  height: 150, width: 150, fit: BoxFit.fill),
+            ),
+          ) :
+          Container(
+            height: 150, width: 150,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                //border: Border.all(color: AppColors.colorLightGrey),
+                boxShadow: [
+                  BoxShadow(
+                      blurRadius: 1,
+                      blurStyle: BlurStyle.outer,
                     color: Colors.grey.shade500
-                )
-              ]
+                  )
+                ]
+            ),
+            child: ClipRRect(
+              child: Image.asset(AppImages.profileImg, scale: 2,),
+            ),
           ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(10.0),
-            child: Image.file(screenController.profile!,
-                height: 150, width: 150, fit: BoxFit.fill),
-          ),
-        ) :
-        Container(
-          height: 150, width: 150,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10.0),
-              //border: Border.all(color: AppColors.colorLightGrey),
-              boxShadow: [
-                BoxShadow(
-                    blurRadius: 1,
-                    blurStyle: BlurStyle.outer,
-                  color: Colors.grey.shade500
-                )
-              ]
-          ),
-          child: ClipRRect(
-            child: Image.asset(AppImages.profileImg, scale: 2,),
-          ),
-        ),
-          Positioned(
-            top: 135,
-            child: GestureDetector(
-              onTap: (){
-                gallery();
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  color: AppColors.colorDarkGrey
-                ),
-                child: const Padding(
-                  padding: EdgeInsets.all(5.0),
-                  child: Icon(Icons.camera_alt, color: Colors.white, size: 15),
+            Positioned(
+              top: 135,
+              child: GestureDetector(
+                onTap: (){
+                  gallery();
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    color: AppColors.colorDarkGrey
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.all(5.0),
+                    child: Icon(Icons.camera_alt, color: Colors.white, size: 15),
+                  ),
                 ),
               ),
-            ),
-          )
-        ],
+            )
+          ],
       ),
     );
   }
@@ -489,7 +490,7 @@ class SaveButtonModule extends StatelessWidget {
 class BeforeAfterImageModule extends StatelessWidget {
   BeforeAfterImageModule({Key? key}) : super(key: key);
   final ImagePicker imagePicker = ImagePicker();
-  final screenController = Get.find<EditProfileScreenController>();
+  final screenController = Get.find<ProfileScreenController>();
 
 
   @override
@@ -502,66 +503,70 @@ class BeforeAfterImageModule extends StatelessWidget {
             const Text("Before", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),),
 
             const SizedBox(height: 10),
-            Stack(
-              clipBehavior: Clip.none,
-              alignment: Alignment.bottomCenter,
-              children: [
-                screenController.beforeImageProfile != null ?
-                Container(
-                  height: 130, width: 120,
-                  decoration: BoxDecoration(
+            Obx(()=>
+              screenController.isLoading.value ?
+                  const CustomCircularProgressIndicator():
+               Stack(
+                clipBehavior: Clip.none,
+                alignment: Alignment.bottomCenter,
+                children: [
+                  screenController.beforeImageProfile!.path.isNotEmpty ?
+                  Container(
+                    height: 130, width: 120,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        //border: Border.all(color: AppColors.colorLightGrey),
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 1,
+                              blurStyle: BlurStyle.outer,
+                              color: Colors.grey.shade500
+                          )
+                        ]
+                    ),
+                    child: ClipRRect(
                       borderRadius: BorderRadius.circular(10.0),
-                      //border: Border.all(color: AppColors.colorLightGrey),
-                      boxShadow: [
-                        BoxShadow(
-                            blurRadius: 1,
-                            blurStyle: BlurStyle.outer,
-                            color: Colors.grey.shade500
-                        )
-                      ]
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: Image.file(screenController.beforeImageProfile!,
-                        height: 150, width: 150, fit: BoxFit.fill),
-                  ),
-                ) :
-                Container(
-                  height: 130, width: 120,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      //border: Border.all(color: AppColors.colorLightGrey),
-                      boxShadow: [
-                        BoxShadow(
-                            blurRadius: 1,
-                            blurStyle: BlurStyle.outer,
-                            color: Colors.grey.shade500
-                        )
-                      ]
-                  ),
-                  child: ClipRRect(
-                    child: Image.asset(AppImages.profileImg, scale: 2,),
-                  ),
-                ),
-
-                Positioned(
-                  top: 115,
-                  child: GestureDetector(
-                    onTap: (){
-                      beforeGallery();
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: AppColors.colorDarkGrey
-                      ),
-                      child: Container(
-                          padding: const EdgeInsets.all(5.0),
-                          child: const Icon(Icons.camera_alt, color: Colors.white, size: 15)),
+                      child: Image.file(screenController.beforeImageProfile!,
+                          height: 150, width: 150, fit: BoxFit.fill),
+                    ),
+                  ) :
+                  Container(
+                    height: 130, width: 120,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        //border: Border.all(color: AppColors.colorLightGrey),
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 1,
+                              blurStyle: BlurStyle.outer,
+                              color: Colors.grey.shade500
+                          )
+                        ]
+                    ),
+                    child: ClipRRect(
+                      child: Image.asset(AppImages.profileImg, scale: 2,),
                     ),
                   ),
-                )
-              ],
+
+                  Positioned(
+                    top: 115,
+                    child: GestureDetector(
+                      onTap: (){
+                        beforeGallery();
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: AppColors.colorDarkGrey
+                        ),
+                        child: Container(
+                            padding: const EdgeInsets.all(5.0),
+                            child: const Icon(Icons.camera_alt, color: Colors.white, size: 15)),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             )
           ],
         ),
@@ -571,66 +576,70 @@ class BeforeAfterImageModule extends StatelessWidget {
             const Text("After", style: TextStyle(fontWeight: FontWeight.w500,fontSize: 18),),
 
             const SizedBox(height: 10),
-            Stack(
-              clipBehavior: Clip.none,
-              alignment: Alignment.bottomCenter,
-              children: [
-                screenController.afterImageprofile != null ?
-                Container(
-                  height: 130, width: 120,
-                  decoration: BoxDecoration(
+            Obx(()=>
+              screenController.isLoading.value ?
+                  const CustomCircularProgressIndicator():
+              Stack(
+                clipBehavior: Clip.none,
+                alignment: Alignment.bottomCenter,
+                children: [
+                  screenController.afterImageProfile!.path.isNotEmpty ?
+                  Container(
+                    height: 130, width: 120,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        //border: Border.all(color: AppColors.colorLightGrey),
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 1,
+                              blurStyle: BlurStyle.outer,
+                              color: Colors.grey.shade500
+                          )
+                        ]
+                    ),
+                    child: ClipRRect(
                       borderRadius: BorderRadius.circular(10.0),
-                      //border: Border.all(color: AppColors.colorLightGrey),
-                      boxShadow: [
-                        BoxShadow(
-                            blurRadius: 1,
-                            blurStyle: BlurStyle.outer,
-                            color: Colors.grey.shade500
-                        )
-                      ]
-                  ),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(10.0),
-                    child: Image.file(screenController.afterImageprofile!,
-                        height: 150, width: 150, fit: BoxFit.fill),
-                  ),
-                ) :
-                Container(
-                  height: 130, width: 120,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10.0),
-                      //border: Border.all(color: AppColors.colorLightGrey),
-                      boxShadow: [
-                        BoxShadow(
-                            blurRadius: 1,
-                            blurStyle: BlurStyle.outer,
-                            color: Colors.grey.shade500
-                        )
-                      ]
-                  ),
-                  child: ClipRRect(
-                    child: Image.asset(AppImages.profileImg, scale: 2,),
-                  ),
-                ),
-
-                Positioned(
-                  top: 115,
-                  child: GestureDetector(
-                    onTap: (){
-                      afterGallery();
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: AppColors.colorDarkGrey
-                      ),
-                      child: Container(
-                          padding: const EdgeInsets.all(5.0),
-                          child: const Icon(Icons.camera_alt, color: Colors.white, size: 15)),
+                      child: Image.file(screenController.afterImageProfile!,
+                          height: 150, width: 150, fit: BoxFit.fill),
+                    ),
+                  ) :
+                  Container(
+                    height: 130, width: 120,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        //border: Border.all(color: AppColors.colorLightGrey),
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 1,
+                              blurStyle: BlurStyle.outer,
+                              color: Colors.grey.shade500
+                          )
+                        ]
+                    ),
+                    child: ClipRRect(
+                      child: Image.asset(AppImages.profileImg, scale: 2,),
                     ),
                   ),
-                )
-              ],
+
+                  Positioned(
+                    top: 115,
+                    child: GestureDetector(
+                      onTap: (){
+                        afterGallery();
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(8),
+                            color: AppColors.colorDarkGrey
+                        ),
+                        child: Container(
+                            padding: const EdgeInsets.all(5.0),
+                            child: const Icon(Icons.camera_alt, color: Colors.white, size: 15)),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             )
           ],
         )
@@ -649,7 +658,7 @@ class BeforeAfterImageModule extends StatelessWidget {
   void afterGallery() async {
     final image = await imagePicker.pickImage(source: ImageSource.gallery);
     if(image != null){
-      screenController.afterImageprofile = File(image.path);
+      screenController.afterImageProfile = File(image.path);
       screenController.loadUI();
     } else{}
   }
