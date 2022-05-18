@@ -28,14 +28,24 @@ class GroupChatScreenAppBarModule extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(),
+          GestureDetector(
+            onTap: () => Get.back(),
+            child: const SizedBox(
+              width: 42,
+              height: 42,
+              child: Icon(
+                  Icons.arrow_back
+              ),
+            ),
+          ),
           const Text(
             "Group Name",
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
                 fontWeight: FontWeight.bold, fontSize: 20),
           ),
-          Container(),
+          Container(width: 42,
+            height: 42,),
         ],
       ),
     );

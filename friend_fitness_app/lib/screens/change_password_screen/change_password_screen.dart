@@ -34,7 +34,7 @@ class ChangePasswordScreen extends StatelessWidget {
                         const SizedBox(height: 15),
                         ConfirmNewPasswordTextFieldModule(),
                         const SizedBox(height: 25),
-                        PasswordSaveButtonModule(),
+                        SaveButtonModule(),
                         const SizedBox(height: 15),
                       ],
                     ).commonAllSidePadding(padding: 15),

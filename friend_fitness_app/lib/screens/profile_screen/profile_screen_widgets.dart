@@ -12,7 +12,7 @@ import 'package:friend_fitness_app/screens/edit_profile_screen/edit_profile_scre
 import 'package:friend_fitness_app/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:get/get.dart';
 
-class ProfileScreenAppBarModule extends StatelessWidget {
+/*class ProfileScreenAppBarModule extends StatelessWidget {
   ProfileScreenAppBarModule({Key? key}) : super(key: key);
   SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
@@ -40,7 +40,7 @@ class ProfileScreenAppBarModule extends StatelessWidget {
                     width: 42,
                     height: 42,
                     child: Icon(
-                        Icons.arrow_back_ios_rounded
+                        Icons.arrow_back
                     ),
                   ),
                 ),
@@ -51,16 +51,7 @@ class ProfileScreenAppBarModule extends StatelessWidget {
                   style: TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 20),
                 ),
-                GestureDetector(
-                  onTap: (){
-                    sharedPreferenceData.clearUserLoginDetailsFromPrefs();
-                    Get.offAll(() => SignInScreen(), transition: Transition.zoom);
-                    Get.snackbar('You Have Successfully Logout', '');
-                  },
-                    child: const SizedBox(
-                        width: 42,
-                        height: 42,
-                        child: Icon(Icons.logout))),
+                Container(width: 42,)
                 //SizedBox(width: 5),
               ],
             ),
@@ -75,8 +66,7 @@ class ProfileImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return screenController.profile!.path.isNotEmpty ?
-    Container(
+    return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
@@ -89,10 +79,10 @@ class ProfileImage extends StatelessWidget {
       ),
       child: Padding(
         padding: const EdgeInsets.all(30.0),
-        child: Image.file(screenController.profile!, scale: 40,)
+        child: Image.asset(AppImages.profileImg, scale: 4,)
 
       ),
-    ) : Container(
+    );*//*: Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         boxShadow: [
@@ -107,7 +97,7 @@ class ProfileImage extends StatelessWidget {
           padding: const EdgeInsets.all(30.0),
           child: Image.asset(AppImages.profileImg),
     ),
-    );
+    );*//*
   }
 }
 
@@ -353,40 +343,27 @@ class SaveButtonModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        GestureDetector(
-          onTap: (){
-            if(screenController.profileFormKey.currentState!.validate()) {
-              if(screenController.profile == null){
-                Fluttertoast.showToast(msg: "Please Select Profile");
-              } else{
-                Get.to(() => EditProfileScreen(), transition: Transition.zoom);
-              }
+    return GestureDetector(
+      onTap: (){
+        if(screenController.profileFormKey.currentState!.validate()) {
+          if(screenController.profile == null){
+            Fluttertoast.showToast(msg: "Please Select Profile");
+          } else{
+            Get.to(() => EditProfileScreen(), transition: Transition.zoom);
+          }
 
-            }
-          },
-            child: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: AppColors.colorDarkGrey
-              ),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(horizontal: 30, vertical: 13),
-                child: Text("UPDATE", style: TextStyle(color: Colors.white),),
-              ),
-            )
-        ),
-        SizedBox(width: 20,),
-        //Text("CHANGE PASSWORD", style: TextStyle(color: Colors.white),),
-        GestureDetector(
-          onTap: () => Get.to(()=> ChangePasswordScreen(), transition: Transition.zoom)/*!.then((value) async{
-            await screenController.getProfileWithFirebaseAPI();
-          })*/,
-          child: Text("CHANGE PASSWORD ?",style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),),
-        ),
-      ],
+        }
+      },
+        child: Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(20),
+              color: AppColors.colorDarkGrey
+          ),
+          child: const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 13),
+            child: Text("UPDATE", style: TextStyle(color: Colors.white),),
+          ),
+        )
     );
   }
 }
@@ -405,7 +382,7 @@ class BeforeAfterImageModule extends StatelessWidget {
             const Text("Before", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),),
 
             const SizedBox(height: 10),
-            screenController.beforeImageProfile!.path.isNotEmpty ?
+            // screenController.beforeImageProfile!.path.isNotEmpty ?
             Container(
               height: Get.height * 0.15,
               width: Get.width * 0.27,
@@ -419,8 +396,8 @@ class BeforeAfterImageModule extends StatelessWidget {
                   ),
                 ],
               ),
-              child: Image.file(screenController.beforeImageProfile!),
-            ):
+              child: Image.asset(AppImages.profileImg, scale: 4,),
+            )*//*:
             Container(
               height: Get.height * 0.15,
               width: Get.width * 0.27,
@@ -435,7 +412,7 @@ class BeforeAfterImageModule extends StatelessWidget {
                 ],
               ),
               child: Image.asset(AppImages.profileImg),
-            )
+            )*//*
           ],
         ),
         SizedBox(width: 20,),
@@ -444,7 +421,7 @@ class BeforeAfterImageModule extends StatelessWidget {
             const Text("After", style: TextStyle(fontWeight: FontWeight.w500,fontSize: 18),),
 
             const SizedBox(height: 10),
-            screenController.afterImageProfile!.path.isNotEmpty ?
+           // screenController.afterImageProfile!.path.isNotEmpty ?
             Container(
               height: Get.height * 0.15,
               width: Get.width * 0.27,
@@ -458,8 +435,8 @@ class BeforeAfterImageModule extends StatelessWidget {
                   ),
                 ],
               ),
-              child: Image.file(screenController.afterImageProfile!),
-            ):
+              child: Image.asset(AppImages.profileImg, scale: 4,),
+            )*//*:
             Container(
               height: Get.height * 0.15,
               width: Get.width * 0.27,
@@ -474,13 +451,13 @@ class BeforeAfterImageModule extends StatelessWidget {
                 ],
               ),
               child: Image.asset(AppImages.profileImg),
-            )
+            )*//*
           ],
         )
       ],
     );
   }
-}
+}*/
 
 
 

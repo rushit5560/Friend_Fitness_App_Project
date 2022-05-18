@@ -41,8 +41,10 @@ class RegisterFormModule extends StatelessWidget {
           SignUpNameTextFieldModule(),
           const SizedBox(height: 20),
           SignUpEmailTextFieldModule(),
+          // const SizedBox(height: 20),
+          // SignUpPhoneTextFieldModule(),
           const SizedBox(height: 20),
-          SignUpPhoneTextFieldModule(),
+          SignUpRoleTextField(),
           const SizedBox(height: 20),
           SignUpPasswordTextFieldModule(),
           const SizedBox(height: 20),
@@ -164,6 +166,82 @@ class SignUpPhoneTextFieldModule extends StatelessWidget {
     );
   }
 }
+
+/// Role Dropdown
+class SignUpRoleTextField extends StatelessWidget {
+  SignUpRoleTextField({Key? key}) : super(key: key);
+  final screenController = Get.find<SignUpScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          height: 50,
+          decoration: BoxDecoration(
+            //color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+            //border: Border.all(color: AppColors.colorLightGrey),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.colorLightGrey,
+                blurRadius: 5,
+                //spreadRadius: 5,
+                blurStyle: BlurStyle.outer,
+              ),
+            ],
+          ),
+        ),
+
+        Obx(() =>
+            Container(
+              padding: const EdgeInsets.only(left: 10),
+              width: Get.width, //gives the width of the dropdown button
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                //color: Colors.grey.shade200,
+              ),
+              child: Theme(
+                data: Theme.of(context).copyWith(
+                  canvasColor: Colors.grey.shade100,
+                  buttonTheme: ButtonTheme.of(context).copyWith(
+                    alignedDropdown: true,
+                  ),
+                ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+
+                    value: screenController.roleValue.value.toString(),
+
+                    items: <String>[
+                      '1',
+                      '2',
+                      '3'
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      );
+                    }).toList(),
+
+                    onChanged: (value){
+                      screenController.isLoading(true);
+                      screenController.roleValue.value = int.parse(value!);
+                      screenController.isLoading(false);
+                    },
+                  ),
+                ),
+              ),
+            ),
+        ),
+      ],
+    );
+  }
+}
+
 
 /// Password Field
 class SignUpPasswordTextFieldModule extends StatelessWidget {

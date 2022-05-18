@@ -9,7 +9,7 @@ import '../../model/water_intake_record_model/water_intake_record_model.dart';
 
 class WaterIntakeDetailsScreenController extends GetxController {
   /// Data From Water Intake Module
-  WaterIntakeModel waterIntakeData = Get.arguments;
+  //WaterIntakeModel waterIntakeData = Get.arguments;
 
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;

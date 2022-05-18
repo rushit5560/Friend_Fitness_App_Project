@@ -19,20 +19,21 @@ class ExerciseDetailsScreen extends StatelessWidget {
               : Column(
                   children: [
                     ExerciseDetailsScreenAppBarModule(),
-                    // const SizedBox(height: 15),
-                    Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            const ImageModule(),
-                            const SizedBox(height: 15),
-                            const TimerTextModule(),
-                            const SizedBox(height: 20),
-                            PlayButtonModule(),
-                            const SizedBox(height: 20),
-                          ],
-                        ),
-                      ),
+                     const SizedBox(height: 15),
+                    const Expanded(
+                      // child: SingleChildScrollView(
+                      //   child: Column(
+                      //     children: [
+                      //       const ImageModule(),
+                      //       const SizedBox(height: 15),
+                      //       const TimerTextModule(),
+                      //       const SizedBox(height: 20),
+                      //       PlayButtonModule(),
+                      //       const SizedBox(height: 20),
+                      //     ],
+                      //   ),
+                      // ),
+                      child: ExerciseDetailsListModule(),
                     ),
                   ],
                 ),

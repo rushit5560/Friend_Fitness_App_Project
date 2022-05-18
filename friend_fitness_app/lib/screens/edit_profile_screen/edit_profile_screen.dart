@@ -8,8 +8,8 @@ import 'package:get/get.dart';
 class EditProfileScreen extends StatelessWidget {
   //EditProfileScreen({Key? key}) : super(key: key);
   EditProfileScreen({Key? key}) : super(key: key);
-  //final editScreenController = Get.put(EditProfileScreenController());
-  final screenController = Get.find<ProfileScreenController>();
+  final screenController = Get.put(EditProfileScreenController());
+  //final screenController = Get.find<ProfileScreenController>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +23,7 @@ class EditProfileScreen extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Obx(()=>
                 screenController.isLoading.value
-                    ? Center(child: CircularProgressIndicator()):
+                    ? const Center(child: CircularProgressIndicator()):
                   Form(
                     key: screenController.editProfileFormKey,
                     child: Column(
@@ -32,15 +32,29 @@ class EditProfileScreen extends StatelessWidget {
                         const SizedBox(height: 35),
                          NameTextFieldModule(),
                         const SizedBox(height: 20),
-                        EmailTextFieldModule(),
+                        AddressTextFieldModule(),
+                        const SizedBox(height: 20),
+                        GenderTextFieldModule(),
                         const SizedBox(height: 20),
                          WeightTextFieldModule(),
                         const SizedBox(height: 20),
-                         MeasurementTextFieldModule(),
-                        const SizedBox(height: 20),
                          HeightTextFieldModule(),
+                        const SizedBox(height: 20),
+                        ChestTextFieldModule(),
+                        const SizedBox(height: 20),
+                        LeftArmTextFieldModule(),
+                        const SizedBox(height: 20),
+                        RightArmTextFieldModule(),
+                        const SizedBox(height: 20),
+                        WaistTextFieldModule(),
+                        const SizedBox(height: 20),
+                        HipsTextFieldModule(),
+                        const SizedBox(height: 20),
+                        LeftThighTextFieldModule(),
+                        const SizedBox(height: 20),
+                        RightThighTextFieldModule(),
                         const SizedBox(height: 30),
-                         SaveButtonModule(),
+                         UpdateButtonModule(),
                         const SizedBox(height: 30),
                         BeforeAfterImageModule(),
                         const SizedBox(height: 20),

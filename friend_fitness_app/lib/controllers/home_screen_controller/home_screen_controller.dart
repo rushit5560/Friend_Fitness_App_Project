@@ -1,5 +1,9 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:friend_fitness_app/common/constants/api_header.dart';
+import 'package:friend_fitness_app/common/constants/api_url.dart';
+import 'package:friend_fitness_app/common/user_details.dart';
+import 'package:friend_fitness_app/model/get_all_game_members_model/get_all_game_members_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import '../../model/home_screen_models/fitness_model.dart';
@@ -9,19 +13,22 @@ import '../../model/home_screen_models/water_intake_model.dart';
 
 class HomeScreenController extends GetxController {
   RxBool isLoading = false.obs;
-  RxInt isSuccessStatusCode = 0.obs;
+  RxBool isSuccessStatusCode = false.obs;
   RxInt waterIntakeValue = 0.obs;
 
-  List<FitnessModel> exerciseList = [];
-  List<FitnessModel> movementList = [];
-  List<FitnessModel> mindfulnessList = [];
-  List<WaterIntakeModel> waterIntakeList = [];
+  ApiHeader apiHeader = ApiHeader();
+  List<ListElement> getAllGameMembersList = [];
+
+  // List<FitnessModel> exerciseList = [];
+  // List<FitnessModel> movementList = [];
+  // List<FitnessModel> mindfulnessList = [];
+  // List<WaterIntakeModel> waterIntakeList = [];
 
 
 
 
   /// Get Water Intake From Firebase Using postman API
-  getWaterIntakeFromFirebaseFunction() async {
+ /* getWaterIntakeFromFirebaseFunction() async {
     isLoading(true);
     String url = "https://fitness-app-f51fa-default-rtdb.firebaseio.com/water_intake.json";
     log("Water Intake API URL : $url");
@@ -60,7 +67,7 @@ class HomeScreenController extends GetxController {
       isLoading(false);
     }
 
-  }
+  }*/
 
   /// Get Exercise List From Firebase Using Postman API
   /*getExerciseFromFirebaseFunction() async {
@@ -217,9 +224,45 @@ class HomeScreenController extends GetxController {
             .toList());
   }*/
 
+  /// Get All Members Point wise
+  getAllGameMemberFunction()async{
+    isLoading(true);
+    String url = ApiUrl.gameMemberApi + "${UserDetails.gameId}";
+    log('url: $url');
+
+    try{
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      log('getAllGameMembersList Response : ${response.body}');
+      GetAllGameMembersModel getAllGameMembersModel = GetAllGameMembersModel.fromJson(json.decode(response.body));
+      //log('signInModel: ${signUpModel.name}');
+      isSuccessStatusCode = getAllGameMembersModel.success.obs;
+      log('isSuccessStatusCode: $isSuccessStatusCode');
+      //isStatus = signInModel.statusCode.obs;
+
+      if(isSuccessStatusCode.value){
+        log('Success');
+         getAllGameMembersList = getAllGameMembersModel.list;
+         log('getAllGameMembersList : $getAllGameMembersList');
+
+      }else{
+        log('Fail');
+        log('isStatus.value: ${isSuccessStatusCode.value}');
+        //Get.snackbar("User Already Register", '');
+        // if(userSignUpModel.error.email[0].contains("validation.unique")){
+        //   Get.snackbar(userSignUpModel.error.email[0], '');
+        // }
+
+      }
+    }catch(e){
+      log('Error: $e');
+    } finally{
+      isLoading(false);
+    }
+  }
+
   @override
   void onInit() {
-    //getAllFitnessFromFirebaseFunction();
+    getAllGameMemberFunction();
     super.onInit();
   }
 
@@ -228,6 +271,7 @@ class HomeScreenController extends GetxController {
 
 
 
+/*
 class TrackExerciseModel {
   String img;
   String name;
@@ -235,4 +279,4 @@ class TrackExerciseModel {
   TrackExerciseModel({required this.img, required this.name});
 
 
-}
+}*/

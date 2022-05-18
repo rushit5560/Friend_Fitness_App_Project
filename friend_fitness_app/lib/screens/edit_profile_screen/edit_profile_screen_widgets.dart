@@ -35,7 +35,7 @@ class ProfileScreenAppBarModule extends StatelessWidget {
               width: 42,
               height: 42,
               child: Icon(
-                  Icons.arrow_back_ios_rounded
+                  Icons.arrow_back
               ),
             ),
           ),
@@ -56,18 +56,15 @@ class ProfileImage extends StatelessWidget {
   ProfileImage({Key? key}) : super(key: key);
   final ImagePicker imagePicker = ImagePicker();
   //final screenController = Get.find<EditProfileScreenController>();
-  final screenController = Get.find<ProfileScreenController>();
+  final screenController = Get.find<EditProfileScreenController>();
 
   @override
   Widget build(BuildContext context) {
-    return Obx(()=>
-    screenController.isLoading.value ?
-        CircularProgressIndicator():
-      Stack(
+    return Stack(
           clipBehavior: Clip.none,
           alignment: Alignment.bottomCenter,
           children: [
-            screenController.profile!.path.isNotEmpty ?
+            screenController.profile != null  ?
           Container(
             height: 150, width: 150,
             decoration: BoxDecoration(
@@ -83,8 +80,8 @@ class ProfileImage extends StatelessWidget {
             ),
             child: ClipRRect(
               borderRadius: BorderRadius.circular(10.0),
-              child: Image.file(screenController.profile!,
-                  height: 150, width: 150, fit: BoxFit.fill),
+               child: Image.file(screenController.profile!,
+                   height: 150, width: 150, fit: BoxFit.cover),
             ),
           ) :
           Container(
@@ -101,7 +98,7 @@ class ProfileImage extends StatelessWidget {
                 ]
             ),
             child: ClipRRect(
-              child: Image.asset(AppImages.profileImg, scale: 2,),
+              child: Image.network(screenController.userProfile, height: 150, width: 150,fit: BoxFit.cover,),
             ),
           ),
             Positioned(
@@ -123,7 +120,6 @@ class ProfileImage extends StatelessWidget {
               ),
             )
           ],
-      ),
     );
   }
 
@@ -139,7 +135,7 @@ class ProfileImage extends StatelessWidget {
 class NameTextFieldModule extends StatelessWidget {
 
   //final screenController = Get.find<EditProfileScreenController>();
-  final screenController = Get.find<ProfileScreenController>();
+  final screenController = Get.find<EditProfileScreenController>();
   NameTextFieldModule({Key? key}) : super(key: key);
 
   @override
@@ -185,10 +181,10 @@ class NameTextFieldModule extends StatelessWidget {
   }
 }
 
-class EmailTextFieldModule extends StatelessWidget {
-  EmailTextFieldModule({Key? key}) : super(key: key);
+class AddressTextFieldModule extends StatelessWidget {
+  AddressTextFieldModule({Key? key}) : super(key: key);
   //final screenController = Get.find<EditProfileScreenController>();
-  final screenController = Get.find<ProfileScreenController>();
+  final screenController = Get.find<EditProfileScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -196,7 +192,7 @@ class EmailTextFieldModule extends StatelessWidget {
       children: [
         const Expanded(
             flex: 2,
-            child: Text("Email:", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),)
+            child: Text("Address:", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),)
         ),
         Expanded(
             flex: 4,
@@ -216,14 +212,14 @@ class EmailTextFieldModule extends StatelessWidget {
                   ),
                 ),
                 TextFormField(
-                  controller: screenController.emailFieldController,
+                  controller: screenController.addressFieldController,
                   keyboardType: TextInputType.text,
                   cursorColor: Colors.black,
                   decoration: const InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 15),
                     border: InputBorder.none,
                   ),
-                  validator: (value) => FieldValidator().validateEmail(value!),
+                  //validator: (value) => FieldValidator().validateEmail(value!),
                 ),
               ],
             )
@@ -233,9 +229,57 @@ class EmailTextFieldModule extends StatelessWidget {
   }
 }
 
+class GenderTextFieldModule extends StatelessWidget {
+  GenderTextFieldModule({Key? key}) : super(key: key);
+  final screenController = Get.find<EditProfileScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Expanded(
+            flex: 2,
+            child: Text("Gender:", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),)
+        ),
+        Expanded(
+            flex: 4,
+            child: Stack(
+              children: [
+                Container(
+                  height: 45,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.colorLightGrey,
+                        blurRadius: 2,
+                        blurStyle: BlurStyle.outer,
+                      ),
+                    ],
+                  ),
+                ),
+                TextFormField(
+                  controller: screenController.genderFieldController,
+                  keyboardType: TextInputType.text,
+                  cursorColor: Colors.black,
+                  decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                    border: InputBorder.none,
+                  ),
+                  //validator: (value) => FieldValidator().validateEmail(value!),
+                ),
+              ],
+            )
+        )
+      ],
+    );
+  }
+}
+
+
 class WeightTextFieldModule extends StatelessWidget {
   WeightTextFieldModule({Key? key}) : super(key: key);
-  final screenController = Get.find<ProfileScreenController>();
+  final screenController = Get.find<EditProfileScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -280,56 +324,9 @@ class WeightTextFieldModule extends StatelessWidget {
   }
 }
 
-class MeasurementTextFieldModule extends StatelessWidget {
-  MeasurementTextFieldModule({Key? key}) : super(key: key);
-  final screenController = Get.find<ProfileScreenController>();
-
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        const Expanded(
-            flex: 2,
-            child: Text("Measurement:", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),)
-        ),
-        Expanded(
-            flex: 4,
-            child: Stack(
-              children: [
-                Container(
-                  height: 45,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.colorLightGrey,
-                        blurRadius: 2,
-                        blurStyle: BlurStyle.outer,
-                      ),
-                    ],
-                  ),
-                ),
-                TextFormField(
-                  controller: screenController.measurementFieldController,
-                  keyboardType: TextInputType.text,
-                  cursorColor: Colors.black,
-                  decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
-                    border: InputBorder.none,
-                  ),
-                  validator: (value) => FieldValidator().validateMeasurement(value!),
-                ),
-              ],
-            )
-        )
-      ],
-    );
-  }
-}
-
 class HeightTextFieldModule extends StatelessWidget {
    HeightTextFieldModule({Key? key}) : super(key: key);
-  final screenController = Get.find<ProfileScreenController>();
+  final screenController = Get.find<EditProfileScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -374,9 +371,355 @@ class HeightTextFieldModule extends StatelessWidget {
   }
 }
 
-class SaveButtonModule extends StatelessWidget {
-  SaveButtonModule({Key? key}) : super(key: key);
-  final screenController = Get.find<ProfileScreenController>();
+class ChestTextFieldModule extends StatelessWidget {
+  ChestTextFieldModule({Key? key}) : super(key: key);
+  final screenController = Get.find<EditProfileScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Expanded(
+            flex: 2,
+            child: Text("Chest:", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),)
+        ),
+        Expanded(
+            flex: 4,
+            child: Stack(
+              children: [
+                Container(
+                  height: 45,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.colorLightGrey,
+                        blurRadius: 2,
+                        blurStyle: BlurStyle.outer,
+                      ),
+                    ],
+                  ),
+                ),
+                TextFormField(
+                  controller: screenController.chestFieldController,
+                  keyboardType: TextInputType.text,
+                  cursorColor: Colors.black,
+                  decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                    border: InputBorder.none,
+                  ),
+                  validator: (value) => FieldValidator().validateMeasurement(value!),
+                ),
+              ],
+            )
+        )
+      ],
+    );
+  }
+}
+
+class LeftArmTextFieldModule extends StatelessWidget {
+  LeftArmTextFieldModule({Key? key}) : super(key: key);
+  final screenController = Get.find<EditProfileScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Expanded(
+            flex: 2,
+            child: Text("Left arm:", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),)
+        ),
+        Expanded(
+            flex: 4,
+            child: Stack(
+              children: [
+                Container(
+                  height: 45,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.colorLightGrey,
+                        blurRadius: 2,
+                        blurStyle: BlurStyle.outer,
+                      ),
+                    ],
+                  ),
+                ),
+                TextFormField(
+                  controller: screenController.leftArmFieldController,
+                  keyboardType: TextInputType.text,
+                  cursorColor: Colors.black,
+                  decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                    border: InputBorder.none,
+                  ),
+                  validator: (value) => FieldValidator().validateMeasurement(value!),
+                ),
+              ],
+            )
+        )
+      ],
+    );
+  }
+}
+
+class RightArmTextFieldModule extends StatelessWidget {
+  RightArmTextFieldModule({Key? key}) : super(key: key);
+
+  final screenController = Get.find<EditProfileScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Expanded(
+            flex: 2,
+            child: Text("Right Arm:", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),)
+        ),
+        Expanded(
+            flex: 4,
+            child: Stack(
+              children: [
+                Container(
+                  height: 45,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.colorLightGrey,
+                        blurRadius: 2,
+                        blurStyle: BlurStyle.outer,
+                      ),
+                    ],
+                  ),
+                ),
+                TextFormField(
+                  controller: screenController.rightArmFieldController,
+                  keyboardType: TextInputType.text,
+                  cursorColor: Colors.black,
+                  decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                    border: InputBorder.none,
+                  ),
+                  validator: (value) => FieldValidator().validateMeasurement(value!),
+                  // onTap: (){
+                  //   showAlertDialog(context);
+                  // },
+                ),
+              ],
+            )
+        )
+      ],
+    );
+  }
+}
+
+class WaistTextFieldModule extends StatelessWidget {
+   WaistTextFieldModule({Key? key}) : super(key: key);
+  final screenController = Get.find<EditProfileScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Expanded(
+            flex: 2,
+            child: Text("Waist:", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),)
+        ),
+        Expanded(
+            flex: 4,
+            child: Stack(
+              children: [
+                Container(
+                  height: 45,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.colorLightGrey,
+                        blurRadius: 2,
+                        blurStyle: BlurStyle.outer,
+                      ),
+                    ],
+                  ),
+                ),
+                TextFormField(
+                  controller: screenController.waistFieldController,
+                  keyboardType: TextInputType.text,
+                  cursorColor: Colors.black,
+                  decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                    border: InputBorder.none,
+                  ),
+                  validator: (value) => FieldValidator().validateMeasurement(value!),
+                  // onTap: (){
+                  //   showAlertDialog(context);
+                  // },
+                ),
+              ],
+            )
+        )
+      ],
+    );
+  }
+}
+
+class HipsTextFieldModule extends StatelessWidget {
+  HipsTextFieldModule({Key? key}) : super(key: key);
+  final screenController = Get.find<EditProfileScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Expanded(
+            flex: 2,
+            child: Text("Hips:", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),)
+        ),
+        Expanded(
+            flex: 4,
+            child: Stack(
+              children: [
+                Container(
+                  height: 45,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.colorLightGrey,
+                        blurRadius: 2,
+                        blurStyle: BlurStyle.outer,
+                      ),
+                    ],
+                  ),
+                ),
+                TextFormField(
+                  controller: screenController.hipsFieldController,
+                  keyboardType: TextInputType.text,
+                  cursorColor: Colors.black,
+                  decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                    border: InputBorder.none,
+                  ),
+                  validator: (value) => FieldValidator().validateMeasurement(value!),
+                  // onTap: (){
+                  //   showAlertDialog(context);
+                  // },
+                ),
+              ],
+            )
+        )
+      ],
+    );
+  }
+}
+
+class LeftThighTextFieldModule extends StatelessWidget {
+  LeftThighTextFieldModule({Key? key}) : super(key: key);
+  final screenController = Get.find<EditProfileScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Expanded(
+            flex: 2,
+            child: Text("Left Thigh:", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),)
+        ),
+        Expanded(
+            flex: 4,
+            child: Stack(
+              children: [
+                Container(
+                  height: 45,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.colorLightGrey,
+                        blurRadius: 2,
+                        blurStyle: BlurStyle.outer,
+                      ),
+                    ],
+                  ),
+                ),
+                TextFormField(
+                  controller: screenController.leftThighFieldController,
+                  keyboardType: TextInputType.text,
+                  cursorColor: Colors.black,
+                  decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                    border: InputBorder.none,
+                  ),
+                  validator: (value) => FieldValidator().validateMeasurement(value!),
+                  // onTap: (){
+                  //   showAlertDialog(context);
+                  // },
+                ),
+              ],
+            )
+        )
+      ],
+    );
+  }
+}
+
+class RightThighTextFieldModule extends StatelessWidget {
+  RightThighTextFieldModule({Key? key}) : super(key: key);
+  final screenController = Get.find<EditProfileScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Expanded(
+            flex: 2,
+            child: Text("Right Thigh:", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),)
+        ),
+        Expanded(
+            flex: 4,
+            child: Stack(
+              children: [
+                Container(
+                  height: 45,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.colorLightGrey,
+                        blurRadius: 2,
+                        blurStyle: BlurStyle.outer,
+                      ),
+                    ],
+                  ),
+                ),
+                TextFormField(
+                  controller: screenController.rightThighFieldController,
+                  keyboardType: TextInputType.text,
+                  cursorColor: Colors.black,
+                  decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                    border: InputBorder.none,
+                  ),
+                  validator: (value) => FieldValidator().validateMeasurement(value!),
+                  // onTap: (){
+                  //   showAlertDialog(context);
+                  // },
+                ),
+              ],
+            )
+        )
+      ],
+    );
+  }
+}
+
+
+class UpdateButtonModule extends StatelessWidget {
+  UpdateButtonModule({Key? key}) : super(key: key);
+  final screenController = Get.find<EditProfileScreenController>();
 
 
   @override
@@ -391,7 +734,7 @@ class SaveButtonModule extends StatelessWidget {
           } else if(screenController.afterImageProfile == null){
             Fluttertoast.showToast(msg: "please Select After Image Profile");
           } else{
-            screenController.updateProfileWithFirebaseAPI();
+            screenController.updateProfileAPI();
           }
         }
         },
@@ -402,7 +745,7 @@ class SaveButtonModule extends StatelessWidget {
         ),
         child: const Padding(
           padding: EdgeInsets.symmetric(horizontal: 30, vertical: 13),
-          child: Text("SAVE", style: TextStyle(color: Colors.white),),
+          child: Text("UPDATE", style: TextStyle(color: Colors.white),),
         ),
       ),
     );
@@ -412,7 +755,7 @@ class SaveButtonModule extends StatelessWidget {
 class BeforeAfterImageModule extends StatelessWidget {
   BeforeAfterImageModule({Key? key}) : super(key: key);
   final ImagePicker imagePicker = ImagePicker();
-  final screenController = Get.find<ProfileScreenController>();
+  final screenController = Get.find<EditProfileScreenController>();
 
 
   @override
@@ -425,14 +768,14 @@ class BeforeAfterImageModule extends StatelessWidget {
             const Text("Before", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 18),),
 
             const SizedBox(height: 10),
-            Obx(()=>
-              screenController.isLoading.value ?
-                  const CustomCircularProgressIndicator():
+            // Obx(()=>
+            //   screenController.isLoading.value ?
+            //       const CustomCircularProgressIndicator():
                Stack(
                 clipBehavior: Clip.none,
                 alignment: Alignment.bottomCenter,
                 children: [
-                  screenController.beforeImageProfile!.path.isNotEmpty ?
+                  screenController.beforeImageProfile != null ?
                   Container(
                     height: 130, width: 120,
                     decoration: BoxDecoration(
@@ -449,7 +792,7 @@ class BeforeAfterImageModule extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10.0),
                       child: Image.file(screenController.beforeImageProfile!,
-                          height: 150, width: 150, fit: BoxFit.fill),
+                          height: 150, width: 150, fit: BoxFit.cover),
                     ),
                   ) :
                   Container(
@@ -466,7 +809,7 @@ class BeforeAfterImageModule extends StatelessWidget {
                         ]
                     ),
                     child: ClipRRect(
-                      child: Image.asset(AppImages.profileImg, scale: 2,),
+                      child: Image.network(screenController.userBeforeImageProfile, height: 150, width: 150,fit: BoxFit.cover,),
                     ),
                   ),
 
@@ -489,7 +832,6 @@ class BeforeAfterImageModule extends StatelessWidget {
                   )
                 ],
               ),
-            )
           ],
         ),
         const SizedBox(width: 20),
@@ -498,14 +840,14 @@ class BeforeAfterImageModule extends StatelessWidget {
             const Text("After", style: TextStyle(fontWeight: FontWeight.w500,fontSize: 18),),
 
             const SizedBox(height: 10),
-            Obx(()=>
-              screenController.isLoading.value ?
-                  const CustomCircularProgressIndicator():
+            // Obx(()=>
+            //   screenController.isLoading.value ?
+            //       const CustomCircularProgressIndicator():
               Stack(
                 clipBehavior: Clip.none,
                 alignment: Alignment.bottomCenter,
                 children: [
-                  screenController.afterImageProfile!.path.isNotEmpty ?
+                  screenController.afterImageProfile != null ?
                   Container(
                     height: 130, width: 120,
                     decoration: BoxDecoration(
@@ -522,7 +864,7 @@ class BeforeAfterImageModule extends StatelessWidget {
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(10.0),
                       child: Image.file(screenController.afterImageProfile!,
-                          height: 150, width: 150, fit: BoxFit.fill),
+                          height: 150, width: 150, fit: BoxFit.cover),
                     ),
                   ) :
                   Container(
@@ -539,7 +881,7 @@ class BeforeAfterImageModule extends StatelessWidget {
                         ]
                     ),
                     child: ClipRRect(
-                      child: Image.asset(AppImages.profileImg, scale: 2,),
+                      child: Image.network(screenController.userAfterImageProfile, height: 150, width: 150,fit: BoxFit.cover),
                     ),
                   ),
 
@@ -562,7 +904,7 @@ class BeforeAfterImageModule extends StatelessWidget {
                   )
                 ],
               ),
-            )
+            //)
           ],
         )
       ],

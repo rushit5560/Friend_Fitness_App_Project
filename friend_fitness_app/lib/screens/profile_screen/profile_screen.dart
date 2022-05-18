@@ -4,7 +4,7 @@ import 'package:friend_fitness_app/controllers/profile_screen_controller/profile
 import 'package:friend_fitness_app/screens/profile_screen/profile_screen_widgets.dart';
 import 'package:get/get.dart';
 
-class ProfileScreen extends StatelessWidget {
+/*class ProfileScreen extends StatelessWidget {
   ProfileScreen({Key? key}) : super(key: key);
 
   final profileScreenController = Get.put(ProfileScreenController());
@@ -55,4 +55,4 @@ class ProfileScreen extends StatelessWidget {
       ),
     );
   }
-}
+}*/

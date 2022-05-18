@@ -14,9 +14,10 @@ class SplashScreenController extends GetxController{
   goToNextScreen() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     UserDetails.isUserLoggedIn = prefs.getBool(sharedPreferenceData.isUserLoggedInKey) ?? false;
-    UserDetails.userId = prefs.getString(sharedPreferenceData.userIdKey) ?? "";
+    UserDetails.userId = prefs.getInt(sharedPreferenceData.userIdKey) ?? 0;
+    UserDetails.gameId = prefs.getString(sharedPreferenceData.gameIdKey) ?? "";
     UserDetails.userIdToken = prefs.getString(sharedPreferenceData.userIdTokenKey) ?? "";
-    UserDetails.weight = prefs.getString(sharedPreferenceData.userWeightKey) ?? "";
+    //UserDetails.weight = prefs.getString(sharedPreferenceData.userWeightKey) ?? "";
     bool isLoggedIn = UserDetails.isUserLoggedIn;
     log('isLoggedIn: $isLoggedIn');
     if(isLoggedIn == true) {

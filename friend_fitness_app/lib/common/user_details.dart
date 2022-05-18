@@ -1,7 +1,8 @@
 class UserDetails {
   static bool isUserLoggedIn = false;
-  static String userId = "";
+  static int userId = 0;
   static String userIdToken = "";
-  static String userProfile = "";
-  static String weight = "";
+  static String gameId = "";
+  // static String userProfile = "";
+  // static String weight = "";
 }

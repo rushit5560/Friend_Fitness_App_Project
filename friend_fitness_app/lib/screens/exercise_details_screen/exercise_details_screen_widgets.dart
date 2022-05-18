@@ -30,14 +30,15 @@ class ExerciseDetailsScreenAppBarModule extends StatelessWidget {
             child: const SizedBox(
               width: 50,
               child: Icon(
-                Icons.arrow_back_ios_rounded,
+                Icons.arrow_back,
                 size: 25,
               ),
             ),
           ),
           Expanded(
             child: Text(
-              screenController.singleItem.fitnessName,
+              //screenController.singleItem.fitnessName,
+              "Fitness Name",
               textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
@@ -51,6 +52,91 @@ class ExerciseDetailsScreenAppBarModule extends StatelessWidget {
     );
   }
 }
+
+class ExerciseDetailsListModule extends StatelessWidget {
+  const ExerciseDetailsListModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+         exerciseDetailsHeadingModule(),
+        exerciseDetailsList()
+      ],
+    );
+  }
+
+  exerciseDetailsHeadingModule(){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: const [
+        Text(
+          "Date",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+
+        Text(
+          "Points",
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontSize: 16,
+          ),
+        ),
+      ],
+    ).commonSymmetricPadding(horizontal: 10);
+  }
+
+  exerciseDetailsList(){
+    return ListView.builder(
+      itemCount: 3,
+      shrinkWrap: true,
+      physics: const BouncingScrollPhysics(),
+      itemBuilder: (context, i) {
+        //WaterIntakeEntryModel singleItem = screenController.waterIntakeRecordList[i];
+        return _listTile();
+      },
+    );
+  }
+
+  Widget _listTile() {
+    return Container(
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 6,
+            blurStyle: BlurStyle.outer,
+            color: AppColors.colorLightGrey,
+          ),
+        ],
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+
+          Text(
+            "13-05-2022",
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+
+          Text(
+            "1",
+            style: const TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+
+        ],
+      ).commonAllSidePadding(),
+    ).commonSymmetricPadding(vertical: 10);
+  }
+}
+
 
 /// Exercise Image Module
 class ImageModule extends StatelessWidget {

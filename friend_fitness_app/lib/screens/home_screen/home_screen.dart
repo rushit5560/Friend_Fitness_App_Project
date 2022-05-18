@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/common/common_widgets.dart';
+import 'package:friend_fitness_app/common/custom_drawer/custom_drawer.dart';
 import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
 import 'package:get/get.dart';
 
@@ -13,6 +14,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const CustomDrawer(),
       body: SafeArea(
         child: Obx(
           () => homeScreenController.isLoading.value
@@ -21,9 +23,14 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     const HomeScreenAppBarModule(),
                     const SizedBox(height: 15),
-                    const Expanded(
-                      child: LeaderBoardModule(),
+                    Expanded(
+                      child: Column(
+                        children: [
+                          Expanded(
+                              child: LeaderBoardModule()),
+                        ],
                       ).commonSymmetricPadding(horizontal: 10),
+                      ),
                   ],
                 ),
         ),

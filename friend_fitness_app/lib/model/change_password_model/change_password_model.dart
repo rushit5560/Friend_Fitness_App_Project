@@ -10,92 +10,128 @@ String changePasswordModelToJson(ChangePasswordModel data) => json.encode(data.t
 
 class ChangePasswordModel {
   ChangePasswordModel({
-    required this.kind,
-    required this.localId,
-    required this.email,
-    required this.displayName,
-    required this.idToken,
-    required this.providerUserInfo,
-    required this.photoUrl,
-    required this.refreshToken,
-    required this.expiresIn,
-    required this.passwordHash,
-    required this.emailVerified,
+    required this.success,
+    required this.message,
+    required this.list,
   });
 
-  String kind;
-  String localId;
-  String email;
-  String displayName;
-  String idToken;
-  List<ProviderUserInfo> providerUserInfo;
-  String photoUrl;
-  String refreshToken;
-  String expiresIn;
-  String passwordHash;
-  bool emailVerified;
+  bool success;
+  String message;
+  ListClass list;
 
   factory ChangePasswordModel.fromJson(Map<String, dynamic> json) => ChangePasswordModel(
-    kind: json["kind"] ?? "",
-    localId: json["localId"] ?? "",
-    email: json["email"] ?? "",
-    displayName: json["displayName"] ?? "",
-    idToken: json["idToken"] ?? "",
-    providerUserInfo: List<ProviderUserInfo>.from(json["providerUserInfo"].map((x) => ProviderUserInfo.fromJson(x))),
-    photoUrl: json["photoUrl"] ?? "",
-    refreshToken: json["refreshToken"] ?? "",
-    expiresIn: json["expiresIn"] ?? "",
-    passwordHash: json["passwordHash"] ?? "",
-    emailVerified: json["emailVerified"] ?? false,
+    success: json["success"] ?? false,
+    message: json["message"] ?? "",
+    list: ListClass.fromJson(json["list"] ?? {}),
   );
 
   Map<String, dynamic> toJson() => {
-    "kind": kind,
-    "localId": localId,
-    "email": email,
-    "displayName": displayName,
-    "idToken": idToken,
-    "providerUserInfo": List<dynamic>.from(providerUserInfo.map((x) => x.toJson())),
-    "photoUrl": photoUrl,
-    "refreshToken": refreshToken,
-    "expiresIn": expiresIn,
-    "passwordHash": passwordHash,
-    "emailVerified": emailVerified,
+    "success": success,
+    "message": message,
+    "list": list.toJson(),
   };
 }
 
-class ProviderUserInfo {
-  ProviderUserInfo({
-    required this.providerId,
-    required this.displayName,
-    required this.photoUrl,
-    required this.federatedId,
+class ListClass {
+  ListClass({
+    required this.id,
+    required this.name,
     required this.email,
-    required this.rawId,
+    required this.emailVerifiedAt,
+    required this.password,
+    required this.roleid,
+    required this.address,
+    required this.gender,
+    required this.image,
+    required this.beforeimage,
+    required this.afterimage,
+    required this.height,
+    required this.weight,
+    required this.chest,
+    required this.lArm,
+    required this.rArm,
+    required this.walst,
+    required this.hlps,
+    required this.lThigh,
+    required this.rThigh,
+    required this.rememberToken,
+    required this.createdAt,
+    required this.updatedAt,
   });
 
-  String providerId;
-  String displayName;
-  String photoUrl;
-  String federatedId;
+  int id;
+  String name;
   String email;
-  String rawId;
+  String emailVerifiedAt;
+  String password;
+  int roleid;
+  String address;
+  String gender;
+  String image;
+  String beforeimage;
+  String afterimage;
+  String height;
+  String weight;
+  String chest;
+  String lArm;
+  String rArm;
+  String walst;
+  String hlps;
+  String lThigh;
+  String rThigh;
+  String rememberToken;
+  String createdAt;
+  String updatedAt;
 
-  factory ProviderUserInfo.fromJson(Map<String, dynamic> json) => ProviderUserInfo(
-    providerId: json["providerId"] ?? "",
-    displayName: json["displayName"] ?? "",
-    photoUrl: json["photoUrl"] ?? "",
-    federatedId: json["federatedId"] ?? "",
+  factory ListClass.fromJson(Map<String, dynamic> json) => ListClass(
+    id: json["id"] ?? 0,
+    name: json["name"] ?? "",
     email: json["email"] ?? "",
-    rawId: json["rawId"] ?? "",
+    emailVerifiedAt: json["email_verified_at"] ?? "",
+    password: json["password"] ?? "",
+    roleid: json["roleid"] ?? 0,
+    address: json["address"] ?? "",
+    gender: json["gender"] ?? "",
+    image: json["image"] ?? "",
+    beforeimage: json["beforeimage"] ?? "",
+    afterimage: json["afterimage"] ?? "",
+    height: json["height"] ?? "",
+    weight: json["weight"] ?? "",
+    chest: json["chest"] ?? "",
+    lArm: json["l_arm"] ?? "",
+    rArm: json["r_arm"] ?? "",
+    walst: json["walst"] ?? "",
+    hlps: json["hlps"] ?? "",
+    lThigh: json["l_thigh"] ?? "",
+    rThigh: json["r_thigh"] ?? "",
+    rememberToken: json["remember_token"] ?? "",
+    createdAt: json["created_at"] ?? "",
+    updatedAt: json["updated_at"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
-    "providerId": providerId,
-    "displayName": displayName,
-    "photoUrl": photoUrl,
-    "federatedId": federatedId,
+    "id": id,
+    "name": name,
     "email": email,
-    "rawId": rawId,
+    "email_verified_at": emailVerifiedAt,
+    "password": password,
+    "roleid": roleid,
+    "address": address,
+    "gender": gender,
+    "image": image,
+    "beforeimage": beforeimage,
+    "afterimage": afterimage,
+    "height": height,
+    "weight": weight,
+    "chest": chest,
+    "l_arm": lArm,
+    "r_arm": rArm,
+    "walst": walst,
+    "hlps": hlps,
+    "l_thigh": lThigh,
+    "r_thigh": rThigh,
+    "remember_token": rememberToken,
+    "created_at": createdAt,
+    "updated_at": updatedAt,
   };
 }

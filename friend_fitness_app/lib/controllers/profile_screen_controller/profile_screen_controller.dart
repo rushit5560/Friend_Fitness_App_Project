@@ -3,68 +3,86 @@ import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:friend_fitness_app/common/constants/api_header.dart';
+import 'package:friend_fitness_app/common/constants/api_url.dart';
 import 'package:friend_fitness_app/common/sharedpreference_data/sharedpreference_data.dart';
 import 'package:friend_fitness_app/common/user_details.dart';
 import 'package:friend_fitness_app/model/get_profile_model/get_profile_model.dart';
+import 'package:friend_fitness_app/model/get_update_profile_model/get_update_profile_model.dart';
 import 'package:friend_fitness_app/model/update_profile_model/update_profile_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
-class ProfileScreenController extends GetxController{
+class EditProfileScreenController extends GetxController{
 
   RxBool isLoading = false.obs;
-  RxInt isSuccessStatusCode = 0.obs;
+  RxBool isSuccessStatusCode = false.obs;
   //List<User> profileList = [];
   String name = "";
   String email = "";
   File ? profile;
+  String userProfile = "";
+
   File? beforeImageProfile;
+  String userBeforeImageProfile = "";
+
   File? afterImageProfile;
+  String userAfterImageProfile = "";
   GlobalKey<FormState> profileFormKey = GlobalKey();
   GlobalKey<FormState> editProfileFormKey = GlobalKey();
   //RxString profileImage = "".obs;
-
+  ApiHeader apiHeader = ApiHeader();
   TextEditingController nameFieldController = TextEditingController();
-  TextEditingController emailFieldController = TextEditingController();
+  TextEditingController addressFieldController = TextEditingController();
+  TextEditingController genderFieldController = TextEditingController();
   TextEditingController weightFieldController = TextEditingController();
-  TextEditingController measurementFieldController = TextEditingController();
   TextEditingController heightFieldController = TextEditingController();
+  TextEditingController chestFieldController = TextEditingController();
+  TextEditingController leftArmFieldController = TextEditingController();
+  TextEditingController rightArmFieldController = TextEditingController();
+  TextEditingController waistFieldController = TextEditingController();
+  TextEditingController hipsFieldController = TextEditingController();
+  TextEditingController leftThighFieldController = TextEditingController();
+  TextEditingController rightThighFieldController = TextEditingController();
 
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    getProfileWithFirebaseAPI();
+    getProfileAPI();
   }
 
-  getProfileWithFirebaseAPI() async {
+  getProfileAPI() async {
     isLoading(true);
-    String url = "https://fitness-app-f51fa-default-rtdb.firebaseio.com/user.json";
+    String url = ApiUrl.getProfileApi + "${UserDetails.userId}";
     log('url: $url');
+    log('UserDetails.userId: ${UserDetails.userId}');
     log('UserDetails.userIdToken: ${UserDetails.userIdToken}');
     try{
-      // Map<String, dynamic> data = {
-      //   "idToken" : UserDetails.userIdToken
-      // };
-      //
-      // log('data: $data');
-      http.Response response = await http.get(Uri.parse(url));
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
       log('Response : ${response.body}');
-      GetProfileModel getProfileModel = GetProfileModel.fromJson(json.decode(response.body));
+      GetUserProfileModel getUserProfileModel = GetUserProfileModel.fromJson(json.decode(response.body));
       // log('signInModel: ${signUpModel.name}');
-      isSuccessStatusCode = response.statusCode.obs;
+      isSuccessStatusCode = getUserProfileModel.success.obs;
       log('isStatus: $isSuccessStatusCode');
 
-      if(isSuccessStatusCode.value == 200){
+      if(isSuccessStatusCode.value){
         log('Success');
-        nameFieldController.text = getProfileModel.name;
-        emailFieldController.text = getProfileModel.email;
-        weightFieldController.text = getProfileModel.weight;
-        measurementFieldController.text = getProfileModel.measurement;
-        heightFieldController.text = getProfileModel.height;
-        profile = File(getProfileModel.profileImage);
-        beforeImageProfile = File(getProfileModel.beforeImage);
-        afterImageProfile = File(getProfileModel.afterImage);
+        nameFieldController.text = getUserProfileModel.list.name;
+        addressFieldController.text = getUserProfileModel.list.address;
+        genderFieldController.text = getUserProfileModel.list.gender;
+         weightFieldController.text = getUserProfileModel.list.weight;
+         heightFieldController.text =  getUserProfileModel.list.height;
+        chestFieldController.text =  getUserProfileModel.list.chest;
+        leftArmFieldController.text =  getUserProfileModel.list.lArm;
+        rightArmFieldController.text =  getUserProfileModel.list.rArm;
+        waistFieldController.text =  getUserProfileModel.list.walst;
+        hipsFieldController.text =  getUserProfileModel.list.hlps;
+        leftThighFieldController.text =  getUserProfileModel.list.lThigh;
+        rightThighFieldController.text =  getUserProfileModel.list.rThigh;
+        userProfile =  "https://squadgame.omdemo.co.in/asset/uploads/" + getUserProfileModel.list.image;
+        userBeforeImageProfile = "https://squadgame.omdemo.co.in/asset/uploads/" + getUserProfileModel.list.beforeimage;
+        userAfterImageProfile = "https://squadgame.omdemo.co.in/asset/uploads/" + getUserProfileModel.list.afterimage;
 
         //log('profileList: $profileList');
       }else{
@@ -78,42 +96,181 @@ class ProfileScreenController extends GetxController{
     }
   }
 
-  updateProfileWithFirebaseAPI() async {
+  updateProfileAPI() async {
     isLoading(true);
-    String uniqueId = "${DateTime.now().day}${DateTime.now().month}${DateTime.now().year}${DateTime.now().hour}${DateTime.now().minute}${DateTime.now().second}${DateTime.now().millisecond}";
-    String url = "https://fitness-app-f51fa-default-rtdb.firebaseio.com/user.json";
+   // String uniqueId = "${DateTime.now().day}${DateTime.now().month}${DateTime.now().year}${DateTime.now().hour}${DateTime.now().minute}${DateTime.now().second}${DateTime.now().millisecond}";
+    String url = ApiUrl.updateProfileApi;
     log('url: $url');
     log('UserDetails.userId: ${UserDetails.userId}');
     try{
-      Map<String, dynamic> data = {
-        "id" : uniqueId,
-        "user_id": UserDetails.userId,
-        "profile_image" : profile!.path,
-        "name" : nameFieldController.text.trim(),
-        "email" : emailFieldController.text.trim(),
-        "weight" : weightFieldController.text.trim(),
-        "measurement": measurementFieldController.text.trim(),
-        "height" : heightFieldController.text.trim(),
-        "before_image" : beforeImageProfile!.path,
-        "after_image" : afterImageProfile!.path
-      };
+      if(profile != null){
+        var request = http.MultipartRequest('POST', Uri.parse(url));
 
-      log('data: $data');
-      http.Response response = await http.patch(Uri.parse(url), body: jsonEncode(data));
-      log('Response : ${response.body}');
-      UpdateProfileModel getProfileModel = UpdateProfileModel.fromJson(json.decode(response.body));
-      // log('signInModel: ${signUpModel.name}');
-      isSuccessStatusCode = response.statusCode.obs;
-      log('isStatus: $isSuccessStatusCode');
+        var stream = http.ByteStream(profile!.openRead());
+        var beforeStream = http.ByteStream(beforeImageProfile!.openRead());
+        var afterStream = http.ByteStream(afterImageProfile!.openRead());
 
-      if(isSuccessStatusCode.value == 200){
-        log('Success');
-        //UserDetails.weight = weightFieldController.text.trim();
-        //SharedPreferenceData().setUserLoginDetailsInPrefs(weight: UserDetails.weight, userId: "", userProfile: "", userIdToken: "");
-        Fluttertoast.showToast(msg: "Successfully Profile Updated");
-      }else{
-        log('Fail');
+        stream.cast();
+        beforeStream.cast();
+        afterStream.cast();
+
+        var length = await profile!.length();
+        var beforeLength = await beforeImageProfile!.length();
+        var afterLength = await afterImageProfile!.length();
+
+        request.files.add(await http.MultipartFile.fromPath("image", profile!.path));
+        request.files.add(await http.MultipartFile.fromPath("beforeimage", profile!.path));
+        request.files.add(await http.MultipartFile.fromPath("afterimage", profile!.path));
+
+        request.headers.addAll(apiHeader.headers);
+
+        request.fields['id'] = "${UserDetails.userId}";
+        request.fields['name'] = nameFieldController.text.trim();
+        request.fields['address'] = addressFieldController.text.trim();
+        request.fields['gender'] = genderFieldController.text.trim();
+        request.fields['height'] = heightFieldController.text.trim();
+        request.fields['weight'] = weightFieldController.text.trim();
+        request.fields['chest'] = chestFieldController.text.trim();
+        request.fields['l_arm'] = leftArmFieldController.text.trim();
+        request.fields['r_arm'] = rightArmFieldController.text.trim();
+        request.fields['walst'] = waistFieldController.text.trim();
+        request.fields['hlps'] = hipsFieldController.text.trim();
+        request.fields['l_thigh'] = leftThighFieldController.text.trim();
+        request.fields['r_thigh'] = rightThighFieldController.text.trim();
+
+
+        log('request.fields: ${request.fields}');
+        log('request.files: ${request.files}');
+
+        var multiPart = http.MultipartFile(
+          'image',
+          stream,
+          length,
+        );
+        var beforeMultiPart = http.MultipartFile(
+          'beforeimage',
+          beforeStream,
+          beforeLength,
+        );
+        var afterMultiPart = http.MultipartFile(
+          'afterimage',
+          afterStream,
+          afterLength,
+        );
+
+        request.files.add(multiPart);
+        request.files.add(beforeMultiPart);
+        request.files.add(afterMultiPart);
+
+        //var multiPart = http.MultipartFile('file', stream, length);
+        // request.files.add(multiPart);
+        var response = await request.send();
+        log('response: ${response.request}');
+
+        response.stream.transform(utf8.decoder).listen((value) {
+          GetUserUpdateProfileModel response1 = GetUserUpdateProfileModel.fromJson(json.decode(value));
+          log('response1 ::::::${response1}');
+          isSuccessStatusCode = response1.success.obs;
+          log('status : $isSuccessStatusCode');
+          //log('success : ${response1.statusCode}');
+
+          if(isSuccessStatusCode.value){
+            //UserDetails().vendorId = response1.data.id;
+            //log("Vendor Id: ${UserDetails().vendorId}");
+            Fluttertoast.showToast(msg: response1.messege);
+            //clearSignUpFieldsFunction();
+            //Get.off(SignInScreen(), transition: Transition.zoom);
+
+          } else {
+            // Fluttertoast.showToast(msg: "${response1.message}");
+            log('False False');
+          }
+        });
+      }else if(profile == null){
+        var request = http.MultipartRequest('POST', Uri.parse(url));
+
+        // var stream = http.ByteStream(profile!.openRead());
+        // var beforeStream = http.ByteStream(beforeImageProfile!.openRead());
+        // var afterStream = http.ByteStream(afterImageProfile!.openRead());
+        //
+        // stream.cast();
+        // beforeStream.cast();
+        // afterStream.cast();
+        //
+        // var length = await profile!.length();
+        // var beforeLength = await beforeImageProfile!.length();
+        // var afterLength = await afterImageProfile!.length();
+
+        // request.files.add(await http.MultipartFile.fromPath("image", profile!.path));
+        // request.files.add(await http.MultipartFile.fromPath("beforeimage", profile!.path));
+        // request.files.add(await http.MultipartFile.fromPath("afterimage", profile!.path));
+
+        request.headers.addAll(apiHeader.headers);
+
+        request.fields['id'] = "${UserDetails.userId}";
+        request.fields['name'] = nameFieldController.text.trim();
+        request.fields['address'] = addressFieldController.text.trim();
+        request.fields['gender'] = genderFieldController.text.trim();
+        request.fields['height'] = heightFieldController.text.trim();
+        request.fields['weight'] = weightFieldController.text.trim();
+        request.fields['chest'] = chestFieldController.text.trim();
+        request.fields['l_arm'] = leftArmFieldController.text.trim();
+        request.fields['r_arm'] = rightArmFieldController.text.trim();
+        request.fields['walst'] = waistFieldController.text.trim();
+        request.fields['hlps'] = hipsFieldController.text.trim();
+        request.fields['l_thigh'] = leftThighFieldController.text.trim();
+        request.fields['r_thigh'] = rightThighFieldController.text.trim();
+
+
+        log('request.fields: ${request.fields}');
+        log('request.files: ${request.files}');
+
+        // var multiPart = http.MultipartFile(
+        //   'image',
+        //   stream,
+        //   length,
+        // );
+        // var beforeMultiPart = http.MultipartFile(
+        //   'beforeimage',
+        //   beforeStream,
+        //   beforeLength,
+        // );
+        // var afterMultiPart = http.MultipartFile(
+        //   'afterimage',
+        //   afterStream,
+        //   afterLength,
+        // );
+        //
+        // request.files.add(multiPart);
+        // request.files.add(beforeMultiPart);
+        // request.files.add(afterMultiPart);
+
+        //var multiPart = http.MultipartFile('file', stream, length);
+        // request.files.add(multiPart);
+        var response = await request.send();
+        log('response: ${response.request}');
+
+        response.stream.transform(utf8.decoder).listen((value) {
+          GetUserUpdateProfileModel response1 = GetUserUpdateProfileModel.fromJson(json.decode(value));
+          log('response1 ::::::${response1}');
+          isSuccessStatusCode = response1.success.obs;
+          log('status : $isSuccessStatusCode');
+          //log('success : ${response1.statusCode}');
+
+          if(isSuccessStatusCode.value){
+            //UserDetails().vendorId = response1.data.id;
+            //log("Vendor Id: ${UserDetails().vendorId}");
+            Fluttertoast.showToast(msg: response1.messege);
+            //clearSignUpFieldsFunction();
+            //Get.off(SignInScreen(), transition: Transition.zoom);
+
+          } else {
+            // Fluttertoast.showToast(msg: "${response1.message}");
+            log('False False');
+          }
+        });
       }
+
     }catch(e){
       log('Error: $e');
     } finally{

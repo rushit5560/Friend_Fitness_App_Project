@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:friend_fitness_app/common/constants/api_url.dart';
 import 'package:friend_fitness_app/common/sharedpreference_data/sharedpreference_data.dart';
 import 'package:friend_fitness_app/common/user_details.dart';
 import 'package:friend_fitness_app/model/user_signin_model/user_signin_model.dart';
@@ -22,16 +23,15 @@ class SignInScreenController extends GetxController {
   RxBool isPasswordShow = true.obs;
   SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
-  signInWithFirebaseFunction() async {
+  signInFunction() async {
     isLoading(true);
-    String url = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDErCea5X6odORA9eA3SZYtATsXUbVCH0w";
+    String url = ApiUrl.loginApi;
     log('url: $url');
 
     try{
       Map<String, dynamic> data = {
-        "email": emailFieldController.text.trim().toLowerCase(),
+        "email": emailFieldController.text.trim(),
         "password": passwordFieldController.text.trim(),
-        "returnSecureToken" : "true"
       };
       log('data: $data');
       http.Response response = await http.post(Uri.parse(url), body: data);
@@ -45,15 +45,17 @@ class SignInScreenController extends GetxController {
 
       if(isStatus.value == 200){
         log('Success');
-        UserDetails.userId = signInModel.localId;
-        UserDetails.userIdToken = signInModel.idToken;
+        UserDetails.userId = signInModel.list[0].id;
+        UserDetails.userIdToken = signInModel.list[0].rememberToken;
+        UserDetails.gameId = "1";
+        //UserDetails.gameId = "${DateTime.now().day}${DateTime.now().month}${DateTime.now().year}";
         //UserDetails.userProfile = signInModel.profilePicture;
         log('UserDetails.userId: ${UserDetails.userId}');
         log('UserDetails.userIdToken: ${UserDetails.userIdToken}');
-        log('UserDetails.userProfile: ${UserDetails.userProfile}');
-        await sharedPreferenceData.setUserLoginDetailsInPrefs(userId: UserDetails.userId, userIdToken: UserDetails.userIdToken, userProfile: UserDetails.userProfile);
+        await sharedPreferenceData.setUserLoginDetailsInPrefs(userId: UserDetails.userId, userIdToken: UserDetails.userIdToken, gameId: UserDetails.gameId);
         Get.offAll(()=> IndexScreen(), transition: Transition.zoom);
-        Get.snackbar(signInModel.email + " Login Successfully", '');
+        Get.snackbar(signInModel.messege, '');
+        clearSignInFieldsFunction();
 
       }else{
         log('Fail');
@@ -64,6 +66,11 @@ class SignInScreenController extends GetxController {
     } finally{
       isLoading(false);
     }
+  }
+
+  clearSignInFieldsFunction() {
+    emailFieldController.clear();
+    passwordFieldController.clear();
   }
 
 }

@@ -34,9 +34,9 @@ class FieldValidator {
 
   String ? validatePassword(String value) {
     if (value.isEmpty) {
-      return "Please Enter Password";
-    } else if (value.length < 6) {
-      return "Length should be 6 character";
+      return "Please enter password";
+    } else if (value.length < 8) {
+      return "Password length should be minimum 8 character";
     } else {
       return null;
     }
@@ -44,12 +44,12 @@ class FieldValidator {
 
   String ? validateConfirmPassword(String value, String value2) {
     if (value.isEmpty) {
-      return "Please Enter Password";
+      return "Please enter password";
     } else if(value != value2) {
       return "Password & confirm password are not same!";
     }
-    else if (value.length < 6) {
-      return "Length should be 6 character";
+    else if (value.length < 8) {
+      return "Password length should be minimum 8 character";
     } else {
       return null;
     }
@@ -57,7 +57,35 @@ class FieldValidator {
 
   String? validateName(String value) {
     if (value.isEmpty) {
-      return 'Please Enter name';
+      return 'Please enter name';
+    }
+    return null;
+  }
+
+  String? validateDay(String value) {
+    if (value.isEmpty) {
+      return 'Please enter day';
+    }
+    return null;
+  }
+
+  String? validatePerson(String value) {
+    if (value.isEmpty) {
+      return 'Please enter total person';
+    }
+    return null;
+  }
+
+  String? validateAmount(String value) {
+    if (value.isEmpty) {
+      return 'Please enter amount';
+    }
+    return null;
+  }
+
+  String? validateRewardPoint(String value) {
+    if (value.isEmpty) {
+      return 'Please enter reward point';
     }
     return null;
   }

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:friend_fitness_app/common/constants/api_url.dart';
 import 'package:friend_fitness_app/model/user_signup_model/user_signup_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -9,7 +10,7 @@ import 'package:http/http.dart' as http;
 class SignUpScreenController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
-  RxInt isStatus = 0.obs;
+  RxBool isStatus = false.obs;
 
   GlobalKey<FormState> signUpFormKey = GlobalKey();
   TextEditingController nameFieldController = TextEditingController();
@@ -19,41 +20,58 @@ class SignUpScreenController extends GetxController {
   TextEditingController cPasswordFieldController = TextEditingController();
   RxBool isPasswordShow = true.obs;
   RxBool isCPasswordShow = true.obs;
+  RxInt roleValue = 1.obs;
 
   signUpWithFirebaseFunction()async{
     isLoading(true);
-    String url = "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDErCea5X6odORA9eA3SZYtATsXUbVCH0w";
+    String url = ApiUrl.signUpApi;
     log('url: $url');
 
     try{
       Map<String, dynamic> data = {
-        "Name" : nameFieldController.text.trim(),
+        "name" : nameFieldController.text.trim(),
         "email": emailFieldController.text.trim(),
-        "Phone": phoneFieldController.text.trim(),
         "password": passwordFieldController.text.trim(),
-        "returnSecureToken" : "true"
+        "c_password": cPasswordFieldController.text.trim(),
+        //"roleid" : "3"
+        "roleid" : "${roleValue.value}"
       };
       log('data: $data');
       http.Response response = await http.post(Uri.parse(url), body: data);
       log('Response : ${response.body}');
-      UserSignUpModel signUpModel = UserSignUpModel.fromJson(json.decode(response.body));
+      UserSignUpModel userSignUpModel = UserSignUpModel.fromJson(json.decode(response.body));
       //log('signInModel: ${signUpModel.name}');
-      isStatus = response.statusCode.obs;
+      isStatus = userSignUpModel.success.obs;
       log('isStatus: $isStatus');
       //isStatus = signInModel.statusCode.obs;
 
-      if(isStatus.value == 200){
+      if(isStatus.value){
         log('Success');
-        Get.snackbar(signUpModel.email + " Registered Successfully", '');
+        Get.snackbar(userSignUpModel.messege, '');
+        clearSignUpFieldsFunction();
+        Get.back();
 
       }else{
         log('Fail');
-        Get.snackbar("Email Already Exists", '');
+        log('isStatus.value: ${isStatus.value}');
+        Get.snackbar("User Already Register", '');
+        // if(userSignUpModel.error.email[0].contains("validation.unique")){
+        //   Get.snackbar(userSignUpModel.error.email[0], '');
+        // }
+
       }
     }catch(e){
       log('Error: $e');
     } finally{
       isLoading(false);
     }
+  }
+
+  clearSignUpFieldsFunction() {
+    nameFieldController.clear();
+    emailFieldController.clear();
+    passwordFieldController.clear();
+    cPasswordFieldController.clear();
+    //roleValue(0);
   }
 }

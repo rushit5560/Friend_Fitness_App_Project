@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/common/constants/app_colors.dart';
+import 'package:friend_fitness_app/common/constants/app_images.dart';
 import 'package:friend_fitness_app/controllers/splash_screen_controller/splash_screen_controller.dart';
 import 'package:get/get.dart';
 
@@ -12,9 +13,9 @@ class SplashScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.colorLightGrey,
-      body: const SafeArea(
+      body:  SafeArea(
         child: Center(
-          child: Text("Friend Fitness"),
+          child: Image.asset(AppImages.logoImg, scale: 3,),
         ),
       ),
     );

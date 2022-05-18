@@ -2,7 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/common/constants/app_images.dart';
 import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
+import 'package:friend_fitness_app/screens/forgot_password_screen/forgot_password_screen.dart';
 import 'package:friend_fitness_app/screens/home_screen/home_screen.dart';
+import 'package:friend_fitness_app/screens/index_screen/index_screen.dart';
 import 'package:friend_fitness_app/screens/sign_up_screen/sign_up_screen.dart';
 import 'package:get/get.dart';
 import '../../common/constants/app_colors.dart';
@@ -23,6 +25,17 @@ class LoginHeaderModule extends StatelessWidget {
         fontSize: 35,
       ),
     ).commonSymmetricPadding(horizontal: 40);
+  }
+}
+
+/// Squad Goal Text
+class SquadGoalText extends StatelessWidget {
+  SquadGoalText({Key? key}) : super(key: key);
+  final screenController = Get.find<SignInScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return const Text("Squad Goal", style: TextStyle(fontSize: 33, fontWeight: FontWeight.bold),);
   }
 }
 
@@ -131,7 +144,7 @@ class ForgotPasswordTextModule extends StatelessWidget {
       children: [
         GestureDetector(
           onTap: () {
-            // Get.to(()=> ForgotPasswordScreen(), transition: Transition.rightToLeft);
+             Get.to(()=> ForgotPasswordScreen(), transition: Transition.rightToLeft);
           },
           child: const Text(
             "FORGOT PASSWORD?",
@@ -159,8 +172,8 @@ class LoginButtonModule extends StatelessWidget {
           onTap: () {
             if (screenController.signInFormKey.currentState!.validate()) {
               // log("");
-             // Get.offAll(()=> HomeScreen(), transition: Transition.zoom);
-              screenController.signInWithFirebaseFunction();
+              //Get.offAll(()=> IndexScreen(), transition: Transition.zoom);
+              screenController.signInFunction();
             }
           },
           child: Container(

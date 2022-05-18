@@ -24,13 +24,23 @@ class ChangePasswordScreenAppBarModule extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(),
+          GestureDetector(
+            onTap: () => Get.back(),
+            child: const SizedBox(
+              width: 42,
+              height: 42,
+              child: Icon(
+                  Icons.arrow_back
+              ),
+            ),
+          ),
           const Text(
             "Change Password",
             overflow: TextOverflow.ellipsis,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
-          Container(),
+          Container(width: 42,
+            height: 42),
         ],
       ),
     );
@@ -161,8 +171,8 @@ class ConfirmNewPasswordTextFieldModule extends StatelessWidget {
 }
 
 /// Save Button
-class PasswordSaveButtonModule extends StatelessWidget {
-  PasswordSaveButtonModule({Key? key}) : super(key: key);
+class SaveButtonModule extends StatelessWidget {
+  SaveButtonModule({Key? key}) : super(key: key);
   final screenController = Get.find<ChangePasswordScreenController>();
 
   @override

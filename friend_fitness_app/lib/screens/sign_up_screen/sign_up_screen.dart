@@ -19,22 +19,24 @@ class SignUpScreen extends StatelessWidget {
           ()=> signUpScreenController.isLoading.value
           ? const CustomCircularProgressIndicator()
           : SafeArea(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const SizedBox(height: 80),
-                  const RegisterHeaderModule(),
+            child: Center(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    //const SizedBox(height: 80),
+                    const RegisterHeaderModule(),
 
-                  const SizedBox(height: 80),
-                  RegisterFormModule().commonSymmetricPadding(horizontal: 35),
+                    const SizedBox(height: 80),
+                    RegisterFormModule().commonSymmetricPadding(horizontal: 35),
 
-                  const SizedBox(height: 25),
-                  RegisterButtonModule(),
+                    const SizedBox(height: 25),
+                    RegisterButtonModule(),
 
-                  const SizedBox(height: 25),
-                  const SignInTextModule()
-                ],
+                    const SizedBox(height: 25),
+                    const SignInTextModule()
+                  ],
+                ),
               ),
             ),
           ),

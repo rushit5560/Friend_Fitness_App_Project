@@ -26,13 +26,23 @@ class ForgotPasswordScreenAppBarModule extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Container(),
+          GestureDetector(
+            onTap: () => Get.back(),
+            child: const SizedBox(
+              width: 42,
+              height: 42,
+              child: Icon(
+                  Icons.arrow_back
+              ),
+            ),
+          ),
           const Text(
             "Forgot Password",
             overflow: TextOverflow.ellipsis,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
-          Container(),
+          SizedBox(width: 42,
+            height: 42),
         ],
       ),
     );

@@ -38,7 +38,7 @@ class WaterIntakeDetailsScreenAppBarModule extends StatelessWidget {
             ),
           ),
           Text(
-            screenController.waterIntakeData.waterIntakeName,
+            "Water",
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
@@ -64,12 +64,13 @@ class WaterIntakeListModule extends StatelessWidget {
         const WaterIntakeHeadingModule(),
         Expanded(
           child: ListView.builder(
-            itemCount: screenController.waterIntakeRecordList.length,
+            itemCount: 3,
+            //itemCount: screenController.waterIntakeRecordList.length,
             shrinkWrap: true,
             physics: const BouncingScrollPhysics(),
             itemBuilder: (context, i) {
-              WaterIntakeEntryModel singleItem = screenController.waterIntakeRecordList[i];
-              return _listTile(singleItem);
+             // WaterIntakeEntryModel singleItem = screenController.waterIntakeRecordList[i];
+              return _listTile(/*singleItem*/);
             },
           ),
         ),
@@ -77,7 +78,7 @@ class WaterIntakeListModule extends StatelessWidget {
     );
   }
 
-  Widget _listTile(WaterIntakeEntryModel singleItem) {
+  Widget _listTile(/*WaterIntakeEntryModel singleItem*/) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -94,14 +95,14 @@ class WaterIntakeListModule extends StatelessWidget {
         children: [
 
           Text(
-            singleItem.date,
+            "14-05-22",
             style: const TextStyle(
               fontWeight: FontWeight.bold,
             ),
           ),
 
           Text(
-            singleItem.point.toString(),
+            "1",
             style: const TextStyle(
               fontWeight: FontWeight.bold,
             ),

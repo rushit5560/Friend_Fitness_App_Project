@@ -1,29 +1,49 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:friend_fitness_app/common/constants/api_header.dart';
+import 'package:friend_fitness_app/common/constants/api_url.dart';
 import 'package:friend_fitness_app/common/user_details.dart';
+import 'package:friend_fitness_app/model/category_model/category_model.dart';
+import 'package:friend_fitness_app/model/get_all_negative_category_model/get_all_negative_category_model.dart';
+import 'package:friend_fitness_app/model/get_all_positive_category/get_all_positive_category.dart';
 import 'package:friend_fitness_app/model/home_screen_models/water_intake_model.dart';
+import 'package:friend_fitness_app/model/negative_category_point_model/negative_category_point_model.dart';
+import 'package:friend_fitness_app/model/positive_category_point_model/positive_category_point_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:friend_fitness_app/model/home_screen_models/fitness_model.dart';
 import 'package:get/get.dart';
 
 class TrackScreenController extends GetxController{
   RxBool isLoading = false.obs;
-  RxInt isSuccessStatusCode = 0.obs;
+  RxBool isSuccessStatusCode = false.obs;
   RxInt waterIntakeValue = 0.obs;
+  RxInt positiveCategoryValue = 0.obs;
+
+  RxBool isPositiveSelected = true.obs;
+  RxBool isNegativeSelected = false.obs;
 
   List<FitnessModel> exerciseList = [];
   List<FitnessModel> movementList = [];
   List<FitnessModel> mindfulnessList = [];
   List<WaterIntakeModel> waterIntakeList = [];
 
+  List<CategoryModel> categoryList = [];
+
+  ApiHeader apiHeader= ApiHeader();
+  List<ListElement> getAllPositiveCategoryList = [];
+  List<ListElement1> getAllNegativeCategoryList = [];
+
   @override
   void onInit() {
-    getAllFitnessFromFirebaseFunction();
+    //getAllFitnessFromFirebaseFunction();
+    getAllPositiveCategoryFromFirebaseFunction();
+    getAllNegativeCategoryFromFirebaseFunction();
     super.onInit();
   }
 
   /// Get Exercise, Movement, Mindfulness List From Firebase Using Postman API
-  getAllFitnessFromFirebaseFunction() async {
+  /*getAllFitnessFromFirebaseFunction() async {
     isLoading(true);
     String url = "https://fitness-app-f51fa-default-rtdb.firebaseio.com/fitness.json";
     log("All Fitness API URL : $url");
@@ -72,10 +92,10 @@ class TrackScreenController extends GetxController{
       // isLoading(false);
       await getWaterIntakeFromFirebaseFunction();
     }
-  }
+  }*/
 
   /// Get Water Intake From Firebase Using postman API
-  getWaterIntakeFromFirebaseFunction() async {
+  /*getWaterIntakeFromFirebaseFunction() async {
     isLoading(true);
     String url = "https://fitness-app-f51fa-default-rtdb.firebaseio.com/water_intake.json";
     log("Water Intake API URL : $url");
@@ -118,9 +138,9 @@ class TrackScreenController extends GetxController{
     }
 
   }
-
+*/
   /// Add Water Intake Record In Firebase Using Postman API
-  addWaterIntakeRecordInFirebaseFunction() async {
+  /*addWaterIntakeRecordInFirebaseFunction() async {
     // isLoading(true);
     String uniqueId = "${DateTime.now().day}${DateTime.now().month}${DateTime.now().year}${DateTime.now().hour}${DateTime.now().minute}${DateTime.now().second}${DateTime.now().millisecond}";
     String date = "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}";
@@ -144,6 +164,174 @@ class TrackScreenController extends GetxController{
 
     } catch(e) {
       log("addWaterIntakeRecordInFirebaseFunction Error ::: $e");
+    } finally {
+      // isLoading(false);
+    }
+
+  }*/
+
+  /// Get All Positive Category
+  getAllPositiveCategoryFromFirebaseFunction() async {
+    isLoading(true);
+    String url = ApiUrl.getAllPositiveCategoryApi;
+    log("Category API URL : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      log('Response:  ${response.body}');
+
+      GetAllPositiveCategoryModel getAllPositiveCategoryModel = GetAllPositiveCategoryModel.fromJson(json.decode(response.body));
+      // log('signInModel: ${signUpModel.name}');
+      isSuccessStatusCode = getAllPositiveCategoryModel.success.obs;
+      log('isStatus: $isSuccessStatusCode');
+
+      if(isSuccessStatusCode.value) {
+        /*Map<String, dynamic> newMapResponse = jsonDecode(response.body);
+        log("newMapResponse : $newMapResponse");
+
+        newMapResponse.forEach((k, v) => categoryList.add(CategoryModel(
+            categoryId: v['category_id'],
+            categoryName: v['category_name'],
+            categoryImg: v['category_image'],
+            categoryPoint: v['category_point']
+        )));
+
+        for(int i =0; i < categoryList.length; i++) {
+          log(categoryList[i].categoryId.toString());
+          log(categoryList[i].categoryName);
+        }*/
+
+        getAllPositiveCategoryList = getAllPositiveCategoryModel.list;
+        log('getAllPositiveCategoryList : $getAllPositiveCategoryList');
+
+      }
+
+    } catch(e) {
+      log("getAllPositiveCategoryList Error ::: $e");
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  /// Get All Positive Category
+  getAllNegativeCategoryFromFirebaseFunction() async {
+    isLoading(true);
+    String url = ApiUrl.getAllNegativeCategoryApi;
+    log("Category API URL : $url");
+
+    try {
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      log('Response:  ${response.body}');
+
+      GetAllNegativeCategoryModel getAllNegativeCategoryModel = GetAllNegativeCategoryModel.fromJson(json.decode(response.body));
+      // log('signInModel: ${signUpModel.name}');
+      isSuccessStatusCode = getAllNegativeCategoryModel.success.obs;
+      log('isStatus: $isSuccessStatusCode');
+
+      if(isSuccessStatusCode.value) {
+
+        getAllNegativeCategoryList = getAllNegativeCategoryModel.list;
+        log('getAllNegativeCategoryList : $getAllNegativeCategoryList');
+
+      }
+
+    } catch(e) {
+      log("getAllNegativeCategoryList Error ::: $e");
+    } finally {
+      isLoading(false);
+    }
+  }
+
+  /// Add Positive Category Point Entry UserWise
+  addPositiveCategoryPointEntry({required int catId, required double point}) async {
+    Fluttertoast.showToast(msg: "Please wait!");
+    //String gameId = "${DateTime.now().day}${DateTime.now().month}${DateTime.now().year}";
+    String date = "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}";
+    // isLoading(true);
+    String url = ApiUrl.addPositivePointApi;
+    log("Add Category Point Entry API URL : $url");
+
+    try {
+      Map<String, dynamic> data = {
+        "gameid" : UserDetails.gameId,
+        "userid" : "${UserDetails.userId}",
+        "categoryid" : "$catId",
+        "point" : "$point",
+        "date" : date
+
+      };
+
+      // Map<String, dynamic> data = {
+      //   "gameid": "1",
+      //   "userid" :"9",
+      //   "categoryid" :"1",
+      //   "point" : "6.5",
+      //   "date" :"16-05-2022"
+      // };
+      log("Category Entry Data : $data");
+
+      http.Response response = await http.post(Uri.parse(url), body: data, headers: apiHeader.headers);
+      log("Response : ${response.body}");
+
+      CategoryAddPositivePointModel categoryAddPositivePointModel = CategoryAddPositivePointModel.fromJson(json.decode(response.body));
+      // log('signInModel: ${signUpModel.name}');
+      isSuccessStatusCode = categoryAddPositivePointModel.success.obs;
+      log('isStatus: $isSuccessStatusCode');
+
+      if(isSuccessStatusCode.value) {
+        //getAllPositiveCategoryFromFirebaseFunction();
+        Fluttertoast.showToast(msg: categoryAddPositivePointModel.messege);
+
+      } else {
+        log("addCategoryPointEntryToFirebaseFunction Else Else");
+      }
+
+    } catch(e) {
+      log("addCategoryPointEntryToFirebaseFunction Error ::: $e");
+    } finally {
+      // isLoading(false);
+    }
+
+  }
+
+  /// Add Negative Category Point Entry UserWise
+  addNegativeCategoryPointEntry({required int catId, required double point}) async {
+    Fluttertoast.showToast(msg: "Please wait!");
+    //String gameId = "${DateTime.now().day}${DateTime.now().month}${DateTime.now().year}";
+    String date = "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}";
+    // isLoading(true);
+    String url = ApiUrl.addNegativePointApi;
+    log("Add Category Point Entry API URL : $url");
+
+    try {
+      Map<String, dynamic> data = {
+        "gameid" : UserDetails.gameId,
+        "userid" : "${UserDetails.userId}",
+        "categoryid" : "$catId",
+        "point" : "$point",
+        "date" : date
+
+      };
+      log("Negative Category Entry Data : $data");
+
+      http.Response response = await http.post(Uri.parse(url), body: data, headers: apiHeader.headers);
+      log("Response : ${response.body}");
+
+      CategoryAddNegativePointModel categoryAddNegativePointModel = CategoryAddNegativePointModel.fromJson(json.decode(response.body));
+      // log('signInModel: ${signUpModel.name}');
+      isSuccessStatusCode = categoryAddNegativePointModel.success.obs;
+      log('isStatus: $isSuccessStatusCode');
+
+      if(isSuccessStatusCode.value) {
+        //getAllPositiveCategoryFromFirebaseFunction();
+        Fluttertoast.showToast(msg: categoryAddNegativePointModel.messege);
+
+      } else {
+        log("addNegativeCategoryPointEntryTFunction Else Else");
+      }
+
+    } catch(e) {
+      log("addNegativeCategoryPointEntryTFunction Error ::: $e");
     } finally {
       // isLoading(false);
     }

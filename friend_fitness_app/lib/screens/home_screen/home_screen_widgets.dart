@@ -27,36 +27,32 @@ class HomeScreenAppBarModule extends StatelessWidget {
           color: AppColors.colorLightGrey
         //color: Colors.grey
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 10),
-            child: GestureDetector(
-              onTap: () {
-                Get.to(()=> ProfileScreen(), transition: Transition.leftToRight);
-              },
-              child: Container(
-                height: 42,
-                width: 42,
-                decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
-                  image: DecorationImage(
-                    image: AssetImage(AppImages.profileImg),
-                  ),
-                ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GestureDetector(
+              onTap: () => Scaffold.of(context).openDrawer(),
+              child: Icon(
+                Icons.menu_rounded,
+                color: Colors.grey.shade600,
+                size: 28,
               ),
             ),
-          ),
-          const Text(
-            "",
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-                fontWeight: FontWeight.bold, fontSize: 20),
-          ),
-          Container(),
-        ],
+            const Text(
+              "LeaderBoard",
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            Container(width: 42,
+              height: 42,),
+          ],
+        ),
       ),
     );
   }
@@ -64,7 +60,34 @@ class HomeScreenAppBarModule extends StatelessWidget {
 
 /// Leader Board
 class LeaderBoardModule extends StatelessWidget {
-  const LeaderBoardModule({Key? key}) : super(key: key);
+  LeaderBoardModule({Key? key}) : super(key: key);
+  final screenController = Get.find<HomeScreenController>();
+
+  List<String> memberName= [
+    "person1",
+    "person2",
+    "person3",
+    "person4",
+    "person5",
+    "person6",
+    "person7",
+    "person8",
+    "person9",
+    "person10"
+  ];
+
+  List<String> point = [
+    "10",
+    "9",
+    "8",
+    "7",
+    "6",
+    "5",
+    "4",
+    "3",
+    "2",
+    "1"
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +95,7 @@ class LeaderBoardModule extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          "LeaderBoard",
+          "Group Name (Game)",
           maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
@@ -80,62 +103,39 @@ class LeaderBoardModule extends StatelessWidget {
             fontSize: 20,
           ),
         ),
-        const SizedBox(height: 15),
-        Container(
-          //height: 250,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 6,
-                blurStyle: BlurStyle.outer,
-                color: AppColors.colorLightGrey,
-              ),
-            ],
-          ),
-          child: Column(
-            children: [
-              SizedBox(
-                //height: 200,
-                child: ListView.builder(
-                  itemCount: 3,
-                  shrinkWrap: true,
-                  physics: const BouncingScrollPhysics(),
-                  itemBuilder: (context, i) {
-                    return _leaderBoardListTile();
-                  },
-                ).commonAllSidePadding(padding: 8),
-              ),
-              // const SizedBox(height: 5),
-              SizedBox(
-                height: 50,
-                child: Center(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: AppColors.colorDarkGrey,
-                    ),
-                    child: Text(
-                      "See All",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.colorLightGrey,
-                        fontSize: 14,
-                      ),
-                    ).commonSymmetricPadding(horizontal: 20, vertical: 10),
-                  ),
+        const SizedBox(height: 20),
+        Expanded(
+          child: Container(
+            //height: 250,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(10),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 6,
+                  blurStyle: BlurStyle.outer,
+                  color: AppColors.colorLightGrey,
                 ),
-              ),
-            ],
+              ],
+            ),
+            child: SizedBox(
+              //height: 200,
+              child: ListView.builder(
+                itemCount: screenController.getAllGameMembersList.length,
+                shrinkWrap: true,
+                physics: const AlwaysScrollableScrollPhysics(),
+                itemBuilder: (context, i) {
+                  return _leaderBoardListTile(i);
+                },
+              ).commonAllSidePadding(padding: 8),
+            ),
           ),
         ),
       ],
     ).commonSymmetricPadding(horizontal: 10);
   }
 
-  Widget _leaderBoardListTile() {
+  Widget _leaderBoardListTile(i) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
@@ -155,19 +155,19 @@ class LeaderBoardModule extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 10),
-          const Expanded(
+          Expanded(
             child: Text(
-              "John Doe",
-              style: TextStyle(
+              memberName[i],
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 17,
               ),
             ),
           ),
           const SizedBox(width: 10),
-          const Text(
-            "1",
-            style: TextStyle(
+          Text(
+            screenController.getAllGameMembersList[i].point.toString(),
+            style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 17,
             ),
@@ -178,7 +178,7 @@ class LeaderBoardModule extends StatelessWidget {
   }
 }
 
-/// Track Exercise
+/*/// Track Exercise
 class TrackExerciseModule extends StatelessWidget {
   TrackExerciseModule({Key? key}) : super(key: key);
   final screenController = Get.find<HomeScreenController>();
@@ -479,7 +479,7 @@ class TrackWaterIntakeModule extends StatelessWidget {
           ).commonAllSidePadding(padding: 15),
         ).commonAllSidePadding(),
 
-        /*Container(
+        *//*Container(
           width: Get.width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -587,7 +587,7 @@ class TrackWaterIntakeModule extends StatelessWidget {
               ),
             ],
           ).commonAllSidePadding(padding: 15),
-        ).commonAllSidePadding(),*/
+        ).commonAllSidePadding(),*//*
       ],
     );
   }
@@ -701,5 +701,5 @@ class TrackTimeSpendOnMindFullnessModule extends StatelessWidget {
     ).commonAllSidePadding(padding: 5);
   }
 
-}
+}*/
 
