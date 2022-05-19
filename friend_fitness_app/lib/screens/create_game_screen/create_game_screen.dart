@@ -32,6 +32,8 @@ class CreateGameScreen extends StatelessWidget {
                       AmountTextFieldModule(),
                       const SizedBox(height: 20),
                       RewardPointsTextFieldModule(),
+                      const SizedBox(height: 20),
+                      SelectDayDropDownModule(),
                       const SizedBox(height: 25),
                       CreateGameButtonModule()
                     ],

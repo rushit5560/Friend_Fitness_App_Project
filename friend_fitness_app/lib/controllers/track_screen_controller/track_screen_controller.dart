@@ -283,6 +283,7 @@ class TrackScreenController extends GetxController{
         Fluttertoast.showToast(msg: categoryAddPositivePointModel.messege);
 
       } else {
+        Fluttertoast.showToast(msg: categoryAddPositivePointModel.messege);
         log("addCategoryPointEntryToFirebaseFunction Else Else");
       }
 
@@ -327,6 +328,7 @@ class TrackScreenController extends GetxController{
         Fluttertoast.showToast(msg: categoryAddNegativePointModel.messege);
 
       } else {
+        Fluttertoast.showToast(msg: categoryAddNegativePointModel.messege);
         log("addNegativeCategoryPointEntryTFunction Else Else");
       }
 

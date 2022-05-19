@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/common/common_widgets.dart';
+import 'package:friend_fitness_app/common/custom_drawer/custom_drawer.dart';
 import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
 import 'package:friend_fitness_app/controllers/track_screen_controller/track_screen_controller.dart';
 import 'package:friend_fitness_app/screens/track_screen/track_screen_widgets.dart';
@@ -12,6 +13,7 @@ class TrackScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: CustomDrawer(),
       body: Obx(
         () => trackScreenController.isLoading.value
             ? const CustomCircularProgressIndicator()

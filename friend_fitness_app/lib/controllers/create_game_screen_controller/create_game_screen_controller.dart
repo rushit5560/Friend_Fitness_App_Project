@@ -22,6 +22,7 @@ class CreateGameScreenController extends GetxController{
 
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
+  RxString weekDayValue = 'Sunday'.obs;
 
   createGameFunction()async{
     isLoading(true);
@@ -35,16 +36,15 @@ class CreateGameScreenController extends GetxController{
         "person": personFieldController.text.trim(),
         "amount": amountFieldController.text.trim(),
         "rewardpoints": rewardPointFieldController.text.trim(),
-        "userid" : "${UserDetails.userId}"
+        "userid" : "${UserDetails.userId}",
+        "cheatday": weekDayValue.value
       };
       log('data: $data');
       http.Response response = await http.post(Uri.parse(url), body: data, headers: apiHeader.headers);
       log('Response : ${response.body}');
       CreateGameModel createGameModel = CreateGameModel.fromJson(json.decode(response.body));
-      //log('signInModel: ${signUpModel.name}');
       isSuccessStatus = createGameModel.success.obs;
       log('isSuccessStatus: $isSuccessStatus');
-      //isStatus = signInModel.statusCode.obs;
 
       if(isSuccessStatus.value){
         log('Success');
@@ -52,12 +52,9 @@ class CreateGameScreenController extends GetxController{
         clearCreateGameFieldsFunction();
 
       }else{
+        Fluttertoast.showToast(msg: createGameModel.messege);
         log('Fail');
         log('isStatus.value: ${isSuccessStatus.value}');
-        //Get.snackbar("User Already Register", '');
-        // if(userSignUpModel.error.email[0].contains("validation.unique")){
-        //   Get.snackbar(userSignUpModel.error.email[0], '');
-        // }
 
       }
     }catch(e){

@@ -14,7 +14,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const CustomDrawer(),
+      drawer: CustomDrawer(),
       body: SafeArea(
         child: Obx(
           () => homeScreenController.isLoading.value
@@ -27,7 +27,9 @@ class HomeScreen extends StatelessWidget {
                       child: Column(
                         children: [
                           Expanded(
-                              child: LeaderBoardModule()),
+                              child: homeScreenController.isLoading.value
+                                  ? const CustomCircularProgressIndicator() :
+                              LeaderBoardModule()),
                         ],
                       ).commonSymmetricPadding(horizontal: 10),
                       ),

@@ -15,8 +15,8 @@ class GroupListScreen extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            GroupListScreenAppBarModule(),
-            SizedBox(height: 15),
+            const GroupListScreenAppBarModule(),
+            const SizedBox(height: 15),
             Expanded(
               child: groupScreenController.isLoading.value ?
                    const Center(child: CustomCircularProgressIndicator()):

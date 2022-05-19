@@ -41,7 +41,7 @@ class HomeScreenAppBarModule extends StatelessWidget {
               ),
             ),
             const Text(
-              "LeaderBoard",
+              "Leader Board",
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
               style: TextStyle(
@@ -118,9 +118,10 @@ class LeaderBoardModule extends StatelessWidget {
                 ),
               ],
             ),
-            child: SizedBox(
-              //height: 200,
-              child: ListView.builder(
+            child: RefreshIndicator(
+              child: screenController.getAllGameMembersList.isEmpty ?
+                  const Center(child: Text("No Members")) :
+              ListView.builder(
                 itemCount: screenController.getAllGameMembersList.length,
                 shrinkWrap: true,
                 physics: const AlwaysScrollableScrollPhysics(),
@@ -128,6 +129,13 @@ class LeaderBoardModule extends StatelessWidget {
                   return _leaderBoardListTile(i);
                 },
               ).commonAllSidePadding(padding: 8),
+              onRefresh: (){
+                //return screenController.getAllGameMemberFunction();
+                return Future.delayed(
+                    const Duration(seconds: 1),(){
+                  screenController.getAllGameMemberFunction();
+                });
+              },
             ),
           ),
         ),
@@ -157,7 +165,7 @@ class LeaderBoardModule extends StatelessWidget {
           const SizedBox(width: 10),
           Expanded(
             child: Text(
-              memberName[i],
+              screenController.getAllGameMembersList[i].gamename,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 17,

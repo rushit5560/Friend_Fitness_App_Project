@@ -45,14 +45,19 @@ class SignInScreenController extends GetxController {
 
       if(isStatus.value == 200){
         log('Success');
+        // for(int i =0; i < signInModel.list.length; i++){
+        //
+        // }
         UserDetails.userId = signInModel.list[0].id;
         UserDetails.userIdToken = signInModel.list[0].rememberToken;
-        UserDetails.gameId = "1";
+        UserDetails.roleId = signInModel.list[0].roleid;
+        //UserDetails.gameId = "7";
         //UserDetails.gameId = "${DateTime.now().day}${DateTime.now().month}${DateTime.now().year}";
-        //UserDetails.userProfile = signInModel.profilePicture;
         log('UserDetails.userId: ${UserDetails.userId}');
         log('UserDetails.userIdToken: ${UserDetails.userIdToken}');
-        await sharedPreferenceData.setUserLoginDetailsInPrefs(userId: UserDetails.userId, userIdToken: UserDetails.userIdToken, gameId: UserDetails.gameId);
+        log('UserDetails.roleId: ${UserDetails.roleId}');
+        log('UserDetails.gameId: ${UserDetails.gameId}');
+        await sharedPreferenceData.setUserLoginDetailsInPrefs(userId: UserDetails.userId, userIdToken: UserDetails.userIdToken, gameId: UserDetails.gameId, roleId: UserDetails.roleId);
         Get.offAll(()=> IndexScreen(), transition: Transition.zoom);
         Get.snackbar(signInModel.messege, '');
         clearSignInFieldsFunction();

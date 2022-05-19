@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/common/constants/enums.dart';
+import 'package:friend_fitness_app/common/custom_drawer/custom_drawer_controller.dart';
 import 'package:friend_fitness_app/common/sharedpreference_data/sharedpreference_data.dart';
 import 'package:friend_fitness_app/screens/change_password_screen/change_password_screen.dart';
 import 'package:friend_fitness_app/screens/create_game_screen/create_game_screen.dart';
@@ -21,6 +22,7 @@ class CustomDrawerSingleItemModule extends StatelessWidget {
   }) : super(key: key);
 
   SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
+  final screenController = Get.find<CustomDrawerController>();
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,7 @@ class CustomDrawerSingleItemModule extends StatelessWidget {
               Expanded(
                 child: Row(
                   children: [
-                    Image.asset(img, scale: 5),
+                    Image.asset(img, height: 25, width: 25),
                     const SizedBox(width: 20),
                     Expanded(
                       child: Text(
@@ -79,8 +81,13 @@ class CustomDrawerSingleItemModule extends StatelessWidget {
       Get.to(() => ChangePasswordScreen(), transition: Transition.rightToLeft);
     } else if (customDrawerScreenOption == CustomDrawerOption.createGame) {
       Get.to(() => CreateGameScreen(), transition: Transition.rightToLeft);
-    }
-    else if (customDrawerScreenOption == CustomDrawerOption.logout) {
+    } else if (customDrawerScreenOption == CustomDrawerOption.startGame) {
+      screenController.startGameFunction();
+      //Get.to(() => CreateGameScreen(), transition: Transition.rightToLeft);
+    } else if (customDrawerScreenOption == CustomDrawerOption.endGame) {
+      screenController.endGameFunction();
+      //Get.to(() => CreateGameScreen(), transition: Transition.rightToLeft);
+    } else if (customDrawerScreenOption == CustomDrawerOption.logout) {
       sharedPreferenceData.clearUserLoginDetailsFromPrefs();
       Get.offAll(() => SignInScreen(), transition: Transition.zoom);
       Get.snackbar('You Have Successfully Logout', '');

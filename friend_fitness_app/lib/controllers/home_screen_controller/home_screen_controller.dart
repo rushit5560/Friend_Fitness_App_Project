@@ -227,8 +227,8 @@ class HomeScreenController extends GetxController {
   /// Get All Members Point wise
   getAllGameMemberFunction()async{
     isLoading(true);
-    String url = ApiUrl.gameMemberApi + "${UserDetails.gameId}";
-    log('url: $url');
+    String url = ApiUrl.gameMemberApi + UserDetails.gameId;
+    log('Game Member url: $url');
 
     try{
       http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
@@ -247,14 +247,10 @@ class HomeScreenController extends GetxController {
       }else{
         log('Fail');
         log('isStatus.value: ${isSuccessStatusCode.value}');
-        //Get.snackbar("User Already Register", '');
-        // if(userSignUpModel.error.email[0].contains("validation.unique")){
-        //   Get.snackbar(userSignUpModel.error.email[0], '');
-        // }
 
       }
     }catch(e){
-      log('Error: $e');
+      log('getAllGameMembersList Error: $e');
     } finally{
       isLoading(false);
     }

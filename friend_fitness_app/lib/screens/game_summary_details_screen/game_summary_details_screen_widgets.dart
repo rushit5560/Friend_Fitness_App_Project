@@ -42,16 +42,24 @@ class GameSummaryDetailsModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text("Date: 14-05-2022", style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),),
-        SizedBox(height: 10),
-        positivePointModule(),
+    return RefreshIndicator(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+           Text("Date:" + screenController.currentDate, style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),),
+           const SizedBox(height: 10),
+          positivePointModule(),
 
-        SizedBox(height: 10),
-        negativePointModule()
-      ],
+          const SizedBox(height: 10),
+          negativePointModule()
+        ],
+      ),
+      onRefresh: (){
+        return Future.delayed(
+            const Duration(seconds: 1),(){
+          screenController.getAllUserWisePointApi();
+        });
+      },
     );
   }
 
@@ -59,8 +67,8 @@ class GameSummaryDetailsModule extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Positive Points:", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),),
-        SizedBox(height: 10),
+        const Text("Positive Points:", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),),
+        const SizedBox(height: 10),
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -74,7 +82,7 @@ class GameSummaryDetailsModule extends StatelessWidget {
           ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
+            /*child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -116,6 +124,33 @@ class GameSummaryDetailsModule extends StatelessWidget {
                   ],
                 ),
               ],
+            ),*/
+            child: Column(
+              children: [
+                screenController.getUserWisePositivePointList.isEmpty ?
+                    const Center(child: Text("No Positive Points")) :
+                ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: screenController.getUserWisePositivePointList.length,
+                    itemBuilder: (context, index){
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(screenController.getUserWisePositivePointList[index].categoryname),
+                          Text(screenController.getUserWisePositivePointList[index].point.toString())
+                        ],
+                      );
+                    }),
+                const Divider(thickness: 2.0,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text("Total:"),
+                    Text(screenController.totalPositivePoint.toString())
+                  ],
+                ),
+              ],
             ),
           ),
         )
@@ -128,8 +163,8 @@ class GameSummaryDetailsModule extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text("Negative Points:", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),),
-        SizedBox(height: 10),
+        const Text("Negative Points:", style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),),
+        const SizedBox(height: 10),
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
@@ -143,12 +178,12 @@ class GameSummaryDetailsModule extends StatelessWidget {
           ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Column(
+            /*child: Column(
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Dairy Product"),
+                    Text("Exercise"),
                     Text("2")
                   ],
                 ),
@@ -156,7 +191,7 @@ class GameSummaryDetailsModule extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Alcohol"),
+                    Text("Movement"),
                     Text("1")
                   ],
                 ),
@@ -164,7 +199,7 @@ class GameSummaryDetailsModule extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Pasta"),
+                    Text("Water"),
                     Text("1")
                   ],
                 ),
@@ -172,23 +207,7 @@ class GameSummaryDetailsModule extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text("Pizza"),
-                    Text("1")
-                  ],
-                ),
-                SizedBox(height: 5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Candy"),
-                    Text("1")
-                  ],
-                ),
-                SizedBox(height: 5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Soda"),
+                    Text("Mindfulness"),
                     Text("1")
                   ],
                 ),
@@ -197,7 +216,34 @@ class GameSummaryDetailsModule extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text("Total:"),
-                    Text("7")
+                    Text("5")
+                  ],
+                ),
+              ],
+            ),*/
+            child: Column(
+              children: [
+                screenController.getUserWiseNegativePointList.isEmpty ?
+                const Center(child: Text("No Negative Points")) :
+                ListView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: screenController.getUserWiseNegativePointList.length,
+                    itemBuilder: (context, index){
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(screenController.getUserWiseNegativePointList[index].categoryname),
+                          Text(screenController.getUserWiseNegativePointList[index].point.toString())
+                        ],
+                      );
+                    }),
+                const Divider(thickness: 2.0,),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text("Total:"),
+                    Text(screenController.totalNegativePoint.toString())
                   ],
                 ),
               ],

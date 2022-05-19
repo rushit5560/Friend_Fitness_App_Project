@@ -59,23 +59,23 @@ class ListElement {
     required this.categoryimage,
   });
 
-  String id;
-  String gameid;
-  String userid;
+  int id;
+  int gameid;
+  int userid;
   String categoryid;
   int point;
   String joindate;
   String name;
-  String days;
-  String person;
-  String amount;
-  String rewardpoints;
+  int days;
+  int person;
+  int amount;
+  int rewardpoints;
   String startdate;
   String gamename;
-  String gamedays;
-  String gameperson;
-  String gameamount;
-  String gamerewardpoints;
+  int gamedays;
+  int gameperson;
+  int gameamount;
+  int gamerewardpoints;
   String gamestartdate;
   String categoryname;
   String categorytime;
@@ -84,23 +84,23 @@ class ListElement {
   String categoryimage;
 
   factory ListElement.fromJson(Map<String, dynamic> json) => ListElement(
-    id: json["id"] ?? "",
-    gameid: json["gameid"] ?? "",
-    userid: json["userid"] ?? "",
+    id: json["id"] ?? 0,
+    gameid: json["gameid"] ?? 0,
+    userid: json["userid"] ?? 0,
     categoryid: json["categoryid"] ?? "",
     point: json["point"] ?? 0,
     joindate: json["joindate"] ?? "",
     name: json["name"] ?? "",
-    days: json["days"] ?? "",
-    person: json["person"] ?? "",
-    amount: json["amount"] ?? "",
-    rewardpoints: json["rewardpoints"] ?? "",
+    days: json["days"] ?? 0,
+    person: json["person"] ?? 0,
+    amount: json["amount"] ?? 0,
+    rewardpoints: json["rewardpoints"] ?? 0,
     startdate: json["startdate"] ?? "",
     gamename: json["gamename"] ?? "",
-    gamedays: json["gamedays"] ?? "",
-    gameperson: json["gameperson"] ?? "",
-    gameamount: json["gameamount"] ?? "",
-    gamerewardpoints: json["gamerewardpoints"] ?? "",
+    gamedays: json["gamedays"] ?? 0,
+    gameperson: json["gameperson"] ?? 0,
+    gameamount: json["gameamount"] ?? 0,
+    gamerewardpoints: json["gamerewardpoints"] ?? 0,
     gamestartdate: json["gamestartdate"] ?? "",
     categoryname: json["categoryname"] ?? "",
     categorytime: json["categorytime"] ?? "",

@@ -10,29 +10,69 @@ String getUserWisePointModelToJson(GetUserWisePointModel data) => json.encode(da
 
 class GetUserWisePointModel {
   GetUserWisePointModel({
-    required this.the0,
     required this.success,
     required this.messege,
     required this.list,
+    required this.date
   });
 
-  int the0;
   bool success;
   String messege;
-  List<ListElement> list;
+  GetUserWisePointModelList list;
+  String date;
 
   factory GetUserWisePointModel.fromJson(Map<String, dynamic> json) => GetUserWisePointModel(
-    the0: json["0"] ?? 0,
     success: json["success"] ?? false,
     messege: json["messege"] ?? "",
-    list: List<ListElement>.from(json["list"].map((x) => ListElement.fromJson(x)) ?? {}),
+    list: GetUserWisePointModelList.fromJson(json["list"] ?? {}),
+    date: json["Date"],
   );
 
   Map<String, dynamic> toJson() => {
-    "0": the0,
     "success": success,
     "messege": messege,
+    "list": list.toJson(),
+    "Date": date,
+  };
+}
+
+class GetUserWisePointModelList {
+  GetUserWisePointModelList({
+    required this.negative,
+    required this.positive,
+  });
+
+  Tive negative;
+  Tive positive;
+
+  factory GetUserWisePointModelList.fromJson(Map<String, dynamic> json) => GetUserWisePointModelList(
+    negative: Tive.fromJson(json["negative"] ?? {}),
+    positive: Tive.fromJson(json["positive"] ?? {}),
+  );
+
+  Map<String, dynamic> toJson() => {
+    "negative": negative.toJson(),
+    "positive": positive.toJson(),
+  };
+}
+
+class Tive {
+  Tive({
+    required this.list,
+    required this.total,
+  });
+
+  List<ListElement> list;
+  int total;
+
+  factory Tive.fromJson(Map<String, dynamic> json) => Tive(
+    list: List<ListElement>.from(json["list"].map((x) => ListElement.fromJson(x)) ?? {}),
+    total: json["total"] ?? 0,
+  );
+
+  Map<String, dynamic> toJson() => {
     "list": List<dynamic>.from(list.map((x) => x.toJson())),
+    "total": total,
   };
 }
 
@@ -82,7 +122,7 @@ class ListElement {
   int gamerewardpoints;
   String gamestartdate;
   String categoryname;
-  double categorytime;
+  int categorytime;
   String categorytype;
   int categorypoint;
   String categoryimage;
@@ -105,9 +145,9 @@ class ListElement {
     gameperson: json["gameperson"] ?? 0,
     gameamount: json["gameamount"] ?? 0,
     gamerewardpoints: json["gamerewardpoints"] ?? 0,
-    gamestartdate: json["gamestartdate"] ?? "",
+    gamestartdate: json["gamestartdate"] ??"",
     categoryname: json["categoryname"] ?? "",
-    categorytime: json["categorytime"].toDouble(),
+    categorytime: json["categorytime"] ?? 0,
     categorytype: json["categorytype"] ?? "",
     categorypoint: json["categorypoint"] ?? 0,
     categoryimage: json["categoryimage"] ?? "",

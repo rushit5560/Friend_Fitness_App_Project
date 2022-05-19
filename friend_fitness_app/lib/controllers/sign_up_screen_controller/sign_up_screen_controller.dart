@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:friend_fitness_app/common/constants/api_url.dart';
 import 'package:friend_fitness_app/model/user_signup_model/user_signup_model.dart';
 import 'package:get/get.dart';
@@ -36,6 +37,14 @@ class SignUpScreenController extends GetxController {
         //"roleid" : "3"
         "roleid" : "${roleValue.value}"
       };
+      // Map<String, dynamic> data = {
+      //   "name": "jyoti1",
+      //   "email": "sdfsd123@gmail.com",
+      //   "password": "12345678",
+      //   "c_password": "12345678",
+      //   "roleid": "3",
+      //   "address": "fkfkfk"
+      // };
       log('data: $data');
       http.Response response = await http.post(Uri.parse(url), body: data);
       log('Response : ${response.body}');
@@ -48,16 +57,14 @@ class SignUpScreenController extends GetxController {
       if(isStatus.value){
         log('Success');
         Get.snackbar(userSignUpModel.messege, '');
+        Fluttertoast.showToast(msg: userSignUpModel.messege);
         clearSignUpFieldsFunction();
         Get.back();
 
       }else{
         log('Fail');
         log('isStatus.value: ${isStatus.value}');
-        Get.snackbar("User Already Register", '');
-        // if(userSignUpModel.error.email[0].contains("validation.unique")){
-        //   Get.snackbar(userSignUpModel.error.email[0], '');
-        // }
+        Fluttertoast.showToast(msg: userSignUpModel.messege);
 
       }
     }catch(e){

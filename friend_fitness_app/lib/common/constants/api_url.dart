@@ -27,11 +27,20 @@ class ApiUrl {
   static const getAllGameApi = apiMainPath + "api/game";
 
   /// Get User wise Point(Game Summary)
-  static const getAllUserWisePointApi = apiMainPath + "api/userpoint/";
+  static const getAllUserWisePointApi = apiMainPath + "api/todaypoint/";
 
   /// Create Game
   static const createGameApi = apiMainPath + "api/gameinsert";
 
   /// LeaderBoard (Show All Members)
   static const gameMemberApi = apiMainPath + "api/gamemember/";
+
+  /// Member Join Game
+  static const memberJoinGameApi = apiMainPath + "api/gamememberadd";
+
+  /// Start Game
+  static const startGameApi = apiMainPath + "api/startgame";
+
+  /// End Game
+  static const endGameApi = apiMainPath + "api/endgame";
 }

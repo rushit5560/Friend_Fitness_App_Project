@@ -13,17 +13,21 @@ class GameSummaryDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            GameSummaryDetailsScreenAppBarModule(),
-            Expanded(
-              child: Column(
-                children: [
-                  Expanded(child: GameSummaryDetailsModule())
-                ],
-              ).commonAllSidePadding(padding: 15),
-            )
-          ],
+        child: Obx(()=>
+          gameSummaryDetailsScreenController.isLoading.value ?
+              const Center(child: CircularProgressIndicator()) :
+           Column(
+            children: [
+              GameSummaryDetailsScreenAppBarModule(),
+              Expanded(
+                child: Column(
+                  children: [
+                    Expanded(child: GameSummaryDetailsModule())
+                  ],
+                ).commonAllSidePadding(padding: 15),
+              )
+            ],
+          ),
         ),
       ),
     );

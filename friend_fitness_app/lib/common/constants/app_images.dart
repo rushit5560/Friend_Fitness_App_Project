@@ -18,6 +18,11 @@ class AppImages{
   static const glassImg = root + "glass.png";
   static const journalImg = root + "journal.png";
   static const meditationImg = root + "meditation.png";
+  static const pointImg = root + "badge.png";
+  static const padlockImg = root + "padlock.png";
+  static const createGameImg = root + "create_game.png";
+  static const startGameImg = root + "start_game.png";
+  static const logoutImg = root + "logout.png";
 
   static const bottomHomeImg = root + "bottom_home.png";
   static const bottomCategoriesImg = root + "bottom_categories.png";

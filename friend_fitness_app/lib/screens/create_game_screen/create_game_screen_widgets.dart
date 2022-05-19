@@ -231,6 +231,86 @@ class RewardPointsTextFieldModule extends StatelessWidget {
   }
 }
 
+/// Select day Drop Down Module
+class SelectDayDropDownModule extends StatelessWidget {
+  SelectDayDropDownModule({Key? key}) : super(key: key);
+  final screenController = Get.find<CreateGameScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Container(
+          height: 50,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+            //border: Border.all(color: AppColors.colorLightGrey),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.colorLightGrey,
+                blurRadius: 5,
+                //spreadRadius: 5,
+                blurStyle: BlurStyle.outer,
+              ),
+            ],
+          ),
+        ),
+
+        Obx(() =>
+            Container(
+              padding: const EdgeInsets.only(left: 10),
+              width: Get.width, //gives the width of the dropdown button
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                color: Colors.white,
+              ),
+              child: Theme(
+                data: Theme.of(context).copyWith(
+                  //canvasColor: Colors.grey.shade100,
+                  buttonTheme: ButtonTheme.of(context).copyWith(
+                    alignedDropdown: true,
+                  ),
+                ),
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+
+                    value: screenController.weekDayValue.value.toString(),
+
+                    items: <String>[
+                      'Sunday',
+                      'Monday',
+                      'Tuesday',
+                      'Wednesday',
+                      'Thursday',
+                      'Friday',
+                      'Saturday'
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: TextStyle(color: Colors.grey),
+                        ),
+                      );
+                    }).toList(),
+
+                    onChanged: (value){
+                      screenController.isLoading(true);
+                      screenController.weekDayValue.value = value!;
+                      screenController.isLoading(false);
+                    },
+                  ),
+                ),
+              ),
+            ),
+        ),
+      ],
+    );
+  }
+}
+
+
 /// Create game Button Module
 class CreateGameButtonModule extends StatelessWidget {
   CreateGameButtonModule({Key? key}) : super(key: key);

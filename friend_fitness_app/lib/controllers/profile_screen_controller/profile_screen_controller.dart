@@ -30,8 +30,8 @@ class EditProfileScreenController extends GetxController{
   String userAfterImageProfile = "";
   GlobalKey<FormState> profileFormKey = GlobalKey();
   GlobalKey<FormState> editProfileFormKey = GlobalKey();
-  //RxString profileImage = "".obs;
   ApiHeader apiHeader = ApiHeader();
+
   TextEditingController nameFieldController = TextEditingController();
   TextEditingController addressFieldController = TextEditingController();
   TextEditingController genderFieldController = TextEditingController();
@@ -62,7 +62,6 @@ class EditProfileScreenController extends GetxController{
       http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
       log('Response : ${response.body}');
       GetUserProfileModel getUserProfileModel = GetUserProfileModel.fromJson(json.decode(response.body));
-      // log('signInModel: ${signUpModel.name}');
       isSuccessStatusCode = getUserProfileModel.success.obs;
       log('isStatus: $isSuccessStatusCode');
 
@@ -84,13 +83,11 @@ class EditProfileScreenController extends GetxController{
         userBeforeImageProfile = "https://squadgame.omdemo.co.in/asset/uploads/" + getUserProfileModel.list.beforeimage;
         userAfterImageProfile = "https://squadgame.omdemo.co.in/asset/uploads/" + getUserProfileModel.list.afterimage;
 
-        //log('profileList: $profileList');
       }else{
-        Fluttertoast.showToast(msg: "Token Expired, Please Login Again");
         log('Fail');
       }
     }catch(e){
-      log('Error: $e');
+      log('Get Profile Error: $e');
     } finally{
       isLoading(false);
     }
@@ -98,7 +95,6 @@ class EditProfileScreenController extends GetxController{
 
   updateProfileAPI() async {
     isLoading(true);
-   // String uniqueId = "${DateTime.now().day}${DateTime.now().month}${DateTime.now().year}${DateTime.now().hour}${DateTime.now().minute}${DateTime.now().second}${DateTime.now().millisecond}";
     String url = ApiUrl.updateProfileApi;
     log('url: $url');
     log('UserDetails.userId: ${UserDetails.userId}');
@@ -169,20 +165,14 @@ class EditProfileScreenController extends GetxController{
 
         response.stream.transform(utf8.decoder).listen((value) {
           GetUserUpdateProfileModel response1 = GetUserUpdateProfileModel.fromJson(json.decode(value));
-          log('response1 ::::::${response1}');
+          log('response1 ::::::$response1');
           isSuccessStatusCode = response1.success.obs;
           log('status : $isSuccessStatusCode');
-          //log('success : ${response1.statusCode}');
 
           if(isSuccessStatusCode.value){
-            //UserDetails().vendorId = response1.data.id;
-            //log("Vendor Id: ${UserDetails().vendorId}");
             Fluttertoast.showToast(msg: response1.messege);
-            //clearSignUpFieldsFunction();
-            //Get.off(SignInScreen(), transition: Transition.zoom);
 
           } else {
-            // Fluttertoast.showToast(msg: "${response1.message}");
             log('False False');
           }
         });
@@ -252,20 +242,14 @@ class EditProfileScreenController extends GetxController{
 
         response.stream.transform(utf8.decoder).listen((value) {
           GetUserUpdateProfileModel response1 = GetUserUpdateProfileModel.fromJson(json.decode(value));
-          log('response1 ::::::${response1}');
+          log('response1 ::::::$response1');
           isSuccessStatusCode = response1.success.obs;
           log('status : $isSuccessStatusCode');
           //log('success : ${response1.statusCode}');
 
           if(isSuccessStatusCode.value){
-            //UserDetails().vendorId = response1.data.id;
-            //log("Vendor Id: ${UserDetails().vendorId}");
             Fluttertoast.showToast(msg: response1.messege);
-            //clearSignUpFieldsFunction();
-            //Get.off(SignInScreen(), transition: Transition.zoom);
-
           } else {
-            // Fluttertoast.showToast(msg: "${response1.message}");
             log('False False');
           }
         });

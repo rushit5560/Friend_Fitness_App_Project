@@ -59,7 +59,7 @@ class IndexScreen extends StatelessWidget {
                 label: "",
               ),
               BottomNavigationBarItem(
-                icon: Image.asset(AppImages.bottomCategoriesImg, scale: 2.5,
+                icon: Image.asset(AppImages.pointImg, scale: 16,
                   color: indexScreenController.selectedIndex.value == 2 ? AppColors.colorDarkGrey
                       : Colors.grey,),
                 label: "",

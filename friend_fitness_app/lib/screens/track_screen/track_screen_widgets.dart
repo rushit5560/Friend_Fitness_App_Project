@@ -190,7 +190,7 @@ class NegativePointModule extends StatelessWidget {
     return ListView.builder(
       itemCount: screenController.getAllNegativeCategoryList.length,
       shrinkWrap: true,
-      physics: const BouncingScrollPhysics(),
+      physics: const AlwaysScrollableScrollPhysics(),
       itemBuilder: (context, i) {
         //CategoryModel singleCategory = screenController.categoryList[i];
         return categoryListTile(/*singleCategory*/i)

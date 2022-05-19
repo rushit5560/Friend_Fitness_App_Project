@@ -27,7 +27,6 @@ class ChangePasswordScreenController extends GetxController {
     isLoading(true);
     String url = ApiUrl.changePasswordApi;
     log('url: $url');
-    log('UserDetails.userIdToken: ${UserDetails.userIdToken}');
     try{
       Map<String, dynamic> data = {
         "oldpassword" : oldPasswordFieldController.text.trim(),

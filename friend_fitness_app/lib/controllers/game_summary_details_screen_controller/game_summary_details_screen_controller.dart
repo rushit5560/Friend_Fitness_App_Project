@@ -11,8 +11,12 @@ import 'package:http/http.dart' as http;
 class GameSummaryDetailsScreenController extends GetxController{
   RxBool isLoading = false.obs;
   RxBool isSuccessStatusCode = false.obs;
-  List<ListElement> getUserWisePointList = [];
+  List<ListElement> getUserWisePositivePointList = [];
+  List<ListElement> getUserWiseNegativePointList = [];
 
+  int totalPositivePoint = 0;
+  int totalNegativePoint = 0;
+  String currentDate = "";
   ApiHeader apiHeader= ApiHeader();
 
   @override
@@ -32,15 +36,20 @@ class GameSummaryDetailsScreenController extends GetxController{
       log('Get All User Wise Response:  ${response.body}');
 
       GetUserWisePointModel getUserWisePointModel = GetUserWisePointModel.fromJson(json.decode(response.body));
-      // log('signInModel: ${signUpModel.name}');
       isSuccessStatusCode = getUserWisePointModel.success.obs;
       log('isStatus: $isSuccessStatusCode');
 
       if(isSuccessStatusCode.value) {
 
-        getUserWisePointList = getUserWisePointModel.list;
-        log('getUserWisePointList : $getUserWisePointList');
+        getUserWisePositivePointList = getUserWisePointModel.list.positive.list;
+        log('getUserWisePositivePointList : $getUserWisePositivePointList');
 
+        getUserWiseNegativePointList = getUserWisePointModel.list.negative.list;
+        log('getUserWiseNegativePointList : $getUserWiseNegativePointList');
+
+        totalPositivePoint = getUserWisePointModel.list.positive.total;
+        totalNegativePoint = getUserWisePointModel.list.negative.total;
+        currentDate = getUserWisePointModel.date;
       }
 
     } catch(e) {
