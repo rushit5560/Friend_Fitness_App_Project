@@ -22,7 +22,7 @@ class CreateGameScreenController extends GetxController{
 
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
-  RxString weekDayValue = 'Sunday'.obs;
+  RxString weekDayValue = 'Monday'.obs;
 
   createGameFunction()async{
     isLoading(true);

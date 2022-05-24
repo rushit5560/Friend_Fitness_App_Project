@@ -227,7 +227,7 @@ class HomeScreenController extends GetxController {
   /// Get All Members Point wise
   getAllGameMemberFunction()async{
     isLoading(true);
-    String url = ApiUrl.gameMemberApi + UserDetails.gameId;
+    String url = ApiUrl.gameMemberApi+ "${UserDetails.gameId}";
     log('Game Member url: $url');
 
     try{

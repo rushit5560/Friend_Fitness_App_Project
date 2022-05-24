@@ -5,6 +5,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:friend_fitness_app/common/constants/app_colors.dart';
 import 'package:friend_fitness_app/common/constants/app_images.dart';
 import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
+import 'package:friend_fitness_app/common/user_details.dart';
 import 'package:friend_fitness_app/controllers/category_screen_controller/category_screen_controller.dart';
 import 'package:friend_fitness_app/controllers/track_screen_controller/track_screen_controller.dart';
 import 'package:friend_fitness_app/model/category_model/category_model.dart';
@@ -145,14 +146,17 @@ class PositivePointModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
+    log('positive gameid : ${UserDetails.gameId}');
+    return /*(int.parse(UserDetails.gameId) == 0) ?
+        const Center(child: Text("First join the game")) :*/
+      SingleChildScrollView(
       child: Column(
         children: [
           TrackExerciseModule(),
-          const SizedBox(height: 5),
+          //const SizedBox(height: 5),
           //TrackMovementModule(),
          // const SizedBox(height: 10),
-          TrackWaterIntakeModule(),
+          //TrackWaterIntakeModule(),
          // const SizedBox(height: 10),
           //TrackTimeSpendOnMindFullnessModule(),
          // const SizedBox(height: 10),
@@ -187,7 +191,9 @@ class NegativePointModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    return /*(int.parse(UserDetails.gameId) == 0) ?
+    const Center(child: Text("First join the game")) :*/
+      ListView.builder(
       itemCount: screenController.getAllNegativeCategoryList.length,
       shrinkWrap: true,
       physics: const AlwaysScrollableScrollPhysics(),
@@ -569,15 +575,31 @@ class TrackExerciseModule extends StatelessWidget {
                       // log("${screenController.positiveCategoryValue}");
                       // screenController.addCategoryPointEntry();
                       // }
-                      screenController.addPositiveCategoryPointEntry(
-                        catId: screenController.getAllPositiveCategoryList[i].id,
-                          point: screenController.getAllPositiveCategoryList[i].point,
-                      );
+
                     //   screenController.addCategoryPointEntry(
                     //   // catId: singleCategory.categoryId,
                     //   // catName: singleCategory.categoryName,
                     //   // point: singleCategory.categoryPoint.toDouble(),
                     // );
+
+                      // screenController.addPositiveCategoryPointEntry(
+                      //   catId: screenController.getAllPositiveCategoryList[i].id,
+                      //   point: screenController.getAllPositiveCategoryList[i].point,
+                      // );
+
+                      if(screenController.getAllPositiveCategoryList[i].id == 20){
+                        log("water intake Point Add API");
+                        screenController.addWaterIntakeCategoryPointEntry(
+                          catId: screenController.getAllPositiveCategoryList[i].id,
+                          point: screenController.getAllPositiveCategoryList[i].point,
+                        );
+                      } else{
+                        log("Positive Point Add API");
+                        screenController.addPositiveCategoryPointEntry(
+                          catId: screenController.getAllPositiveCategoryList[i].id,
+                          point: screenController.getAllPositiveCategoryList[i].point,
+                        );
+                      }
                     },
                     child: Container(
                       // height: 70,

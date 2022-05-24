@@ -275,22 +275,22 @@ class SelectDayDropDownModule extends StatelessWidget {
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
 
-                    value: screenController.weekDayValue.value.toString(),
+                    value: screenController.weekDayValue.value,
 
                     items: <String>[
-                      'Sunday',
                       'Monday',
                       'Tuesday',
                       'Wednesday',
                       'Thursday',
                       'Friday',
-                      'Saturday'
+                      'Saturday',
+                      'Sunday'
                     ].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(
                           value,
-                          style: TextStyle(color: Colors.grey),
+                          style: const TextStyle(color: Colors.grey),
                         ),
                       );
                     }).toList(),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/common/constants/app_colors.dart';
+import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
 import 'package:friend_fitness_app/controllers/game_summary_details_screen_controller/game_summary_details_screen_controller.dart';
 import 'package:get/get.dart';
 
@@ -43,23 +44,40 @@ class GameSummaryDetailsModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-           Text("Date:" + screenController.currentDate, style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),),
-           const SizedBox(height: 10),
-          positivePointModule(),
-
-          const SizedBox(height: 10),
-          negativePointModule()
-        ],
-      ),
       onRefresh: (){
         return Future.delayed(
             const Duration(seconds: 1),(){
           screenController.getAllUserWisePointApi();
         });
       },
+      child: SingleChildScrollView(
+        physics: const BouncingScrollPhysics(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+             Text("Date:" + screenController.currentDate, style: const TextStyle(fontSize: 19, fontWeight: FontWeight.bold),),
+             const SizedBox(height: 10),
+            positivePointModule(),
+
+            const SizedBox(height: 10),
+            negativePointModule(),
+
+            const SizedBox(height: 250),
+
+            // const SizedBox(height: 10),
+            // negativePointModule(),
+            // const SizedBox(height: 10),
+            // negativePointModule(),
+            // const SizedBox(height: 10),
+            // negativePointModule(),
+            // const SizedBox(height: 10),
+            // negativePointModule(),
+            // const SizedBox(height: 10),
+            // negativePointModule(),
+          ],
+        ),
+      ),
     );
   }
 
@@ -131,18 +149,23 @@ class GameSummaryDetailsModule extends StatelessWidget {
                     const Center(child: Text("No Positive Points")) :
                 ListView.builder(
                   shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(),
                   itemCount: screenController.getUserWisePositivePointList.length,
                     itemBuilder: (context, index){
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(screenController.getUserWisePositivePointList[index].categoryname),
-                          Text(screenController.getUserWisePositivePointList[index].point.toString())
-                        ],
-                      );
+                        return gameSummaryListTile(index).commonSymmetricPadding(vertical: 5, horizontal: 5);
+                     /* return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(screenController.getUserWisePositivePointList[index].categoryname),
+                            Text(screenController.getUserWisePositivePointList[index].point.toString())
+                          ],
+                        ),
+                      );*/
                     }),
-                const Divider(thickness: 2.0,),
+                const Divider(thickness: 2.0),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -155,6 +178,16 @@ class GameSummaryDetailsModule extends StatelessWidget {
           ),
         )
 
+      ],
+    );
+  }
+
+  Widget gameSummaryListTile(index){
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(screenController.getUserWisePositivePointList[index].categoryname),
+        Text(screenController.getUserWisePositivePointList[index].point.toString())
       ],
     );
   }
@@ -178,49 +211,6 @@ class GameSummaryDetailsModule extends StatelessWidget {
           ),
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            /*child: Column(
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Exercise"),
-                    Text("2")
-                  ],
-                ),
-                SizedBox(height: 5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Movement"),
-                    Text("1")
-                  ],
-                ),
-                SizedBox(height: 5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Water"),
-                    Text("1")
-                  ],
-                ),
-                SizedBox(height: 5),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Mindfulness"),
-                    Text("1")
-                  ],
-                ),
-                Divider(thickness: 2.0,),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("Total:"),
-                    Text("5")
-                  ],
-                ),
-              ],
-            ),*/
             child: Column(
               children: [
                 screenController.getUserWiseNegativePointList.isEmpty ?
@@ -230,12 +220,15 @@ class GameSummaryDetailsModule extends StatelessWidget {
                     physics: const NeverScrollableScrollPhysics(),
                     itemCount: screenController.getUserWiseNegativePointList.length,
                     itemBuilder: (context, index){
-                      return Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(screenController.getUserWiseNegativePointList[index].categoryname),
-                          Text(screenController.getUserWiseNegativePointList[index].point.toString())
-                        ],
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 5, vertical: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(screenController.getUserWiseNegativePointList[index].categoryname),
+                            Text(screenController.getUserWiseNegativePointList[index].point.toString())
+                          ],
+                        ),
                       );
                     }),
                 const Divider(thickness: 2.0,),

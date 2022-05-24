@@ -35,7 +35,12 @@ class SquadGoalText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Text("Squad Goal", style: TextStyle(fontSize: 33, fontWeight: FontWeight.bold),);
+    return Column(
+      children: [
+        Image.asset(AppImages.logoImg, scale: 3,),
+       // const Text("Squad Goal", style: TextStyle(fontSize: 33, fontWeight: FontWeight.bold),),
+      ],
+    );
   }
 }
 

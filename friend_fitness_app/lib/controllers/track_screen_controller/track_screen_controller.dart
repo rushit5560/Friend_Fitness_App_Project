@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:friend_fitness_app/common/constants/api_header.dart';
 import 'package:friend_fitness_app/common/constants/api_url.dart';
 import 'package:friend_fitness_app/common/user_details.dart';
+import 'package:friend_fitness_app/model/add_water_intake_point_model/add_water_intake_point_model.dart';
 import 'package:friend_fitness_app/model/category_model/category_model.dart';
 import 'package:friend_fitness_app/model/get_all_negative_category_model/get_all_negative_category_model.dart';
 import 'package:friend_fitness_app/model/get_all_positive_category/get_all_positive_category.dart';
@@ -13,6 +14,7 @@ import 'package:friend_fitness_app/model/positive_category_point_model/positive_
 import 'package:http/http.dart' as http;
 import 'package:friend_fitness_app/model/home_screen_models/fitness_model.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 
 class TrackScreenController extends GetxController{
   RxBool isLoading = false.obs;
@@ -38,7 +40,7 @@ class TrackScreenController extends GetxController{
   void onInit() {
     //getAllFitnessFromFirebaseFunction();
     getAllPositiveCategoryFromFirebaseFunction();
-    getAllNegativeCategoryFromFirebaseFunction();
+
     super.onInit();
   }
 
@@ -209,7 +211,8 @@ class TrackScreenController extends GetxController{
     } catch(e) {
       log("getAllPositiveCategoryList Error ::: $e");
     } finally {
-      isLoading(false);
+      //isLoading(false);
+      getAllNegativeCategoryFromFirebaseFunction();
     }
   }
 
@@ -244,21 +247,24 @@ class TrackScreenController extends GetxController{
 
   /// Add Positive Category Point Entry UserWise
   addPositiveCategoryPointEntry({required int catId, required double point}) async {
+    isLoading(true);
     Fluttertoast.showToast(msg: "Please wait!");
-    //String gameId = "${DateTime.now().day}${DateTime.now().month}${DateTime.now().year}";
-    String date = "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}";
-    // isLoading(true);
+    //var formatter = DateFormat('MM');
+    //String date = "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}";
+    final DateTime now = DateTime.now();
+    final DateFormat formatter = DateFormat('dd-MM-yyyy');
+    final String date = formatter.format(now);
+    log(date);
     String url = ApiUrl.addPositivePointApi;
     log("Add Category Point Entry API URL : $url");
 
     try {
       Map<String, dynamic> data = {
-        "gameid" : UserDetails.gameId,
+        "gameid" : "${UserDetails.gameId}",
         "userid" : "${UserDetails.userId}",
         "categoryid" : "$catId",
         "point" : "$point",
         "date" : date
-
       };
 
       // Map<String, dynamic> data = {
@@ -290,7 +296,7 @@ class TrackScreenController extends GetxController{
     } catch(e) {
       log("addCategoryPointEntryToFirebaseFunction Error ::: $e");
     } finally {
-      // isLoading(false);
+       isLoading(false);
     }
 
   }
@@ -299,14 +305,18 @@ class TrackScreenController extends GetxController{
   addNegativeCategoryPointEntry({required int catId, required double point}) async {
     Fluttertoast.showToast(msg: "Please wait!");
     //String gameId = "${DateTime.now().day}${DateTime.now().month}${DateTime.now().year}";
-    String date = "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}";
+    //String date = "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}";
+    final DateTime now = DateTime.now();
+    final DateFormat formatter = DateFormat('dd-MM-yyyy');
+    final String date = formatter.format(now);
+    log(date);
     // isLoading(true);
     String url = ApiUrl.addNegativePointApi;
     log("Add Category Point Entry API URL : $url");
 
     try {
       Map<String, dynamic> data = {
-        "gameid" : UserDetails.gameId,
+        "gameid" : "${UserDetails.gameId}",
         "userid" : "${UserDetails.userId}",
         "categoryid" : "$catId",
         "point" : "$point",
@@ -334,6 +344,59 @@ class TrackScreenController extends GetxController{
 
     } catch(e) {
       log("addNegativeCategoryPointEntryTFunction Error ::: $e");
+    } finally {
+      // isLoading(false);
+    }
+
+  }
+
+  /// Add Water Intake Category Point Entry UserWise
+  addWaterIntakeCategoryPointEntry({required int catId, required double point}) async {
+    Fluttertoast.showToast(msg: "Please wait!");
+    //String gameId = "${DateTime.now().day}${DateTime.now().month}${DateTime.now().year}";
+    String date = "${DateTime.now().day}-${DateTime.now().month}-${DateTime.now().year}";
+    // isLoading(true);
+    String url = ApiUrl.addWaterIntakePositivePointApi;
+    log("Add Category Point Entry API URL : $url");
+
+    try {
+      Map<String, dynamic> data = {
+        "gameid" : "${UserDetails.gameId}",
+        "userid" : "${UserDetails.userId}",
+        "categoryid" : "$catId",
+        "point" : "$point",
+        "date" : date
+
+      };
+
+      // Map<String, dynamic> data = {
+      //   "gameid": "1",
+      //   "userid" :"9",
+      //   "categoryid" :"1",
+      //   "point" : "6.5",
+      //   "date" :"16-05-2022"
+      // };
+      log("Water Intake Category Entry Data : $data");
+
+      http.Response response = await http.post(Uri.parse(url), body: data, headers: apiHeader.headers);
+      log("Response : ${response.body}");
+
+      AddWaterIntakePointListModel addWaterIntakePointListModel = AddWaterIntakePointListModel.fromJson(json.decode(response.body));
+      // log('signInModel: ${signUpModel.name}');
+      isSuccessStatusCode = addWaterIntakePointListModel.success.obs;
+      log('isStatus: $isSuccessStatusCode');
+
+      if(isSuccessStatusCode.value) {
+        //getAllPositiveCategoryFromFirebaseFunction();
+        Fluttertoast.showToast(msg: addWaterIntakePointListModel.messege);
+
+      } else {
+        Fluttertoast.showToast(msg: addWaterIntakePointListModel.messege);
+        log("addWaterIntakeCategoryPointEntryFunction Else Else");
+      }
+
+    } catch(e) {
+      log("addWaterIntakeCategoryPointEntryFunction Error ::: $e");
     } finally {
       // isLoading(false);
     }

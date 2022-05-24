@@ -19,13 +19,7 @@ class GameSummaryDetailsScreen extends StatelessWidget {
            Column(
             children: [
               GameSummaryDetailsScreenAppBarModule(),
-              Expanded(
-                child: Column(
-                  children: [
-                    Expanded(child: GameSummaryDetailsModule())
-                  ],
-                ).commonAllSidePadding(padding: 15),
-              )
+              Expanded(child: GameSummaryDetailsModule().commonAllSidePadding(padding: 15)),
             ],
           ),
         ),

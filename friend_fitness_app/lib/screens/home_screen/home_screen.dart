@@ -24,14 +24,7 @@ class HomeScreen extends StatelessWidget {
                     const HomeScreenAppBarModule(),
                     const SizedBox(height: 15),
                     Expanded(
-                      child: Column(
-                        children: [
-                          Expanded(
-                              child: homeScreenController.isLoading.value
-                                  ? const CustomCircularProgressIndicator() :
-                              LeaderBoardModule()),
-                        ],
-                      ).commonSymmetricPadding(horizontal: 10),
+                      child: LeaderBoardModule().commonSymmetricPadding(horizontal: 10),
                       ),
                   ],
                 ),

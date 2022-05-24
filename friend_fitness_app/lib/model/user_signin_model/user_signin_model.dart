@@ -43,6 +43,7 @@ class ListElement {
     required this.email,
     required this.roleid,
     required this.rememberToken,
+    required this.joingameid,
   });
 
   int id;
@@ -50,6 +51,7 @@ class ListElement {
   String email;
   int roleid;
   String rememberToken;
+  int joingameid;
 
   factory ListElement.fromJson(Map<String, dynamic> json) => ListElement(
     id: json["id"] ?? 0,
@@ -57,6 +59,7 @@ class ListElement {
     email: json["email"] ?? "",
     roleid: json["roleid"] ?? 0,
     rememberToken: json["remember_token"] ?? "",
+    joingameid: json["joingameid"] ?? 0,
   );
 
   Map<String, dynamic> toJson() => {
@@ -65,5 +68,6 @@ class ListElement {
     "email": email,
     "roleid": roleid,
     "remember_token": rememberToken,
+    "joingameid": joingameid,
   };
 }

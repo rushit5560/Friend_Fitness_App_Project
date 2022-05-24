@@ -19,13 +19,13 @@ class GetAllGameListModel {
   int the0;
   bool success;
   String messege;
-  List<ListElement> list;
+  List<ListElement1> list;
 
   factory GetAllGameListModel.fromJson(Map<String, dynamic> json) => GetAllGameListModel(
     the0: json["0"]?? 0,
     success: json["success"] ?? false,
     messege: json["messege"] ?? "",
-    list: List<ListElement>.from(json["list"].map((x) => ListElement.fromJson(x)) ?? {}),
+    list: List<ListElement1>.from(json["list"].map((x) => ListElement1.fromJson(x)) ?? {}),
   );
 
   Map<String, dynamic> toJson() => {
@@ -36,8 +36,8 @@ class GetAllGameListModel {
   };
 }
 
-class ListElement {
-  ListElement({
+class ListElement1 {
+  ListElement1({
     required this.id,
     required this.name,
     required this.days,
@@ -45,6 +45,10 @@ class ListElement {
     required this.amount,
     required this.rewardpoints,
     required this.startdate,
+    required this.enddate,
+    required this.userid,
+    required this.status,
+    required this.cheatday,
   });
 
   int id;
@@ -54,8 +58,12 @@ class ListElement {
   int amount;
   int rewardpoints;
   String startdate;
+  String enddate;
+  int userid;
+  String status;
+  String cheatday;
 
-  factory ListElement.fromJson(Map<String, dynamic> json) => ListElement(
+  factory ListElement1.fromJson(Map<String, dynamic> json) => ListElement1(
     id: json["id"] ?? 0,
     name: json["name"] ?? "",
     days: json["days"] ?? 0,
@@ -63,6 +71,10 @@ class ListElement {
     amount: json["amount"] ?? 0,
     rewardpoints: json["rewardpoints"] ?? 0,
     startdate: json["startdate"] ?? "",
+    enddate: json["enddate"] ?? "",
+    userid: json["userid"] ?? 0,
+    status: json["status"] ?? "",
+    cheatday: json["cheatday"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
@@ -73,5 +85,9 @@ class ListElement {
     "amount": amount,
     "rewardpoints": rewardpoints,
     "startdate": startdate == null ? null : startdate,
+    "enddate": enddate == null ? null : enddate,
+    "userid": userid,
+    "status": status,
+    "cheatday": cheatday == null ? null : cheatday,
   };
 }

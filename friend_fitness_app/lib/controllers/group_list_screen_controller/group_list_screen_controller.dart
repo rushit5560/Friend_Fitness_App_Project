@@ -14,7 +14,7 @@ import 'package:http/http.dart' as http;
 class GroupListScreenController extends GetxController{
   RxBool isLoading = false.obs;
   RxBool isSuccessStatusCode = false.obs;
-  List<ListElement> getGameList = [];
+  List<ListElement1> getGameList = [];
 
   ApiHeader apiHeader= ApiHeader();
   SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
@@ -41,15 +41,14 @@ class GroupListScreenController extends GetxController{
 
       if(isSuccessStatusCode.value) {
 
-        for(int i=0 ; i < getAllGameListModel.list.length; i++){
-          UserDetails.gameId = getAllGameListModel.list[i].id.toString();
-          log('UserDetails.gameId : ${UserDetails.gameId}');
-          await sharedPreferenceData.setUserLoginDetailsInPrefs(userId: UserDetails.userId, userIdToken: UserDetails.userIdToken, gameId: UserDetails.gameId, roleId: UserDetails.roleId);
-        }
+        // for(int i=0 ; i < getAllGameListModel.list.length; i++){
+        //   UserDetails.gameId = getAllGameListModel.list[i].id.toString();
+        //   log('UserDetails.gameId : ${UserDetails.gameId}');
+        //   await sharedPreferenceData.setUserLoginDetailsInPrefs(userId: UserDetails.userId, userIdToken: UserDetails.userIdToken, gameId: UserDetails.gameId, roleId: UserDetails.roleId);
+        // }
 
         getGameList = getAllGameListModel.list;
         log('getGameList : $getGameList');
-
       }
 
     } catch(e) {
@@ -59,7 +58,7 @@ class GroupListScreenController extends GetxController{
     }
   }
 
-  memberJoinGame({required int gameId, required int totalPerson}) async {
+  memberJoinGame({required int gameId, required int totalPerson, required int userId}) async {
     isLoading(true);
     String url = ApiUrl.memberJoinGameApi;
     log("Get All Member Join Game API URL : $url");
@@ -70,7 +69,7 @@ class GroupListScreenController extends GetxController{
     Map<String, dynamic> data = {
       "person": "$totalPerson",
       "gameid" : "$gameId",
-      "userid" : "${UserDetails.userId}",
+      "userid" : "$userId",//"${UserDetails.userId}"
       "joindate" : date
     };
     log('data: $data');

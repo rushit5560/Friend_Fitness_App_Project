@@ -17,6 +17,9 @@ class ApiUrl {
   static const addPositivePointApi = apiMainPath + "api/positivepointadd";
   static const addNegativePointApi = apiMainPath + "api/negativepointadd";
 
+  /// Add water intake Point wise Category
+  static const addWaterIntakePositivePointApi = apiMainPath + "api/waterpointadd";
+
   /// Get Positive Category
   static const getAllPositiveCategoryApi = apiMainPath + "api/positivecategory";
 
@@ -43,4 +46,9 @@ class ApiUrl {
 
   /// End Game
   static const endGameApi = apiMainPath + "api/endgame";
+
+  /// Forgot Password
+  static const forgotPasswordApi = apiMainPath + "api/forgetpasswrod";
+  static const verifyOtpApi = apiMainPath + "api/forgetpasswordotp";
+  static const resetPasswordApi = apiMainPath + "api/forgetpasswordrest";
 }

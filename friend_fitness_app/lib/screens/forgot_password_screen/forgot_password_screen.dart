@@ -21,18 +21,26 @@ class ForgotPasswordScreen extends StatelessWidget {
               const ForgotPasswordScreenAppBarModule(),
               const SizedBox(height: 15),
               Expanded(
-                child: Form(
-                  key: forgotPasswordScreenController.forgotPassFormKey,
+                child: SingleChildScrollView(
                   child: Column(
                     children: [
+                      Form(
+                        key: forgotPasswordScreenController.forgotPassFormKey,
+                        child: Column(
+                          children: [
+                            const SizedBox(height: 10),
+                            ForgotPasswordEmailTextFieldModule(),
+                            const SizedBox(height: 50),
+                            SendOtpButtonModule(),
+
+                          ],
+                        ),
+                      ).commonSymmetricPadding(horizontal: 25),
                       const SizedBox(height: 50),
-                      ForgotPasswordEmailTextFieldModule(),
-                      const SizedBox(height: 50),
-                      SendOtpButtonModule(),
-                      const SizedBox(height: 15),
+
                     ],
                   ),
-                ).commonSymmetricPadding(horizontal: 25),
+                ),
               ),
             ],
           ),

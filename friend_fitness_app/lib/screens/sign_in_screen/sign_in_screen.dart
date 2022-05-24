@@ -26,7 +26,7 @@ class SignInScreen extends StatelessWidget {
                         //mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           SquadGoalText(),
-                          const SizedBox(height: 70),
+                          //const SizedBox(height: 10),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

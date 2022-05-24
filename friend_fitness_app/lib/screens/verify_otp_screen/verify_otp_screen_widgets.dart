@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:friend_fitness_app/common/constants/app_colors.dart';
 import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
+import 'package:friend_fitness_app/common/field_validation.dart';
+import 'package:friend_fitness_app/controllers/verify_otp_screen_controller/verify_otp_screen_controller.dart';
 import 'package:get/get.dart';
-import '../../common/constants/app_colors.dart';
-import '../../common/field_validation.dart';
-import '../../controllers/forgot_password_screen_controller/forgot_password_screen_controller.dart';
-
-
 
 /// AppBar
-class ForgotPasswordScreenAppBarModule extends StatelessWidget {
-  const ForgotPasswordScreenAppBarModule({Key? key}) : super(key: key);
+class VerifyOtpScreenAppBarModule extends StatelessWidget {
+   VerifyOtpScreenAppBarModule({Key? key}) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +20,8 @@ class ForgotPasswordScreenAppBarModule extends StatelessWidget {
               bottomRight: Radius.circular(25),
               bottomLeft: Radius.circular(25)),
           color: AppColors.colorLightGrey
-          //color: Colors.grey
-          ),
+        //color: Colors.grey
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -37,22 +36,22 @@ class ForgotPasswordScreenAppBarModule extends StatelessWidget {
             ),
           ),
           const Text(
-            "Forgot Password",
+            "Verify OTP",
             overflow: TextOverflow.ellipsis,
             style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
           ),
           SizedBox(width: 42,
-            height: 42),
+              height: 42),
         ],
       ),
     );
   }
 }
 
-/// Email Field
-class ForgotPasswordEmailTextFieldModule extends StatelessWidget {
-  ForgotPasswordEmailTextFieldModule({Key? key}) : super(key: key);
-  final screenController = Get.find<ForgotPasswordScreenController>();
+/// Otp Field
+class OtpTextFieldModule extends StatelessWidget {
+  OtpTextFieldModule({Key? key}) : super(key: key);
+  final screenController = Get.find<VerifyOtpScreenController>();
   final FieldValidator fieldValidator = FieldValidator();
 
   @override
@@ -73,28 +72,51 @@ class ForgotPasswordEmailTextFieldModule extends StatelessWidget {
           ),
         ),
         TextFormField(
-          controller: screenController.emailFieldController,
+          controller: screenController.otpFieldController,
           keyboardType: TextInputType.emailAddress,
           cursorColor: Colors.grey,
-          decoration: emailInputDecoration(hintText: "Email"),
-          validator: (value) => fieldValidator.validateEmail(value!),
+          decoration: emailInputDecoration(hintText: "Otp"),
+          //validator: (value) => fieldValidator.validateEmail(value!),
         ),
       ],
     );
   }
+
+  InputDecoration emailInputDecoration({required String hintText}) {
+    return InputDecoration(
+      hintText: hintText,
+      hintStyle: const TextStyle(color: Colors.grey),
+      isDense: true,
+      contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 17),
+      filled: true,
+      fillColor: Colors.white,
+      enabledBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          borderSide: BorderSide(color: Colors.grey.shade200)),
+      focusedBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          borderSide: BorderSide(color: Colors.grey.shade200)),
+      errorBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          borderSide: BorderSide(color: Colors.grey.shade200)),
+      focusedErrorBorder: OutlineInputBorder(
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          borderSide: BorderSide(color: Colors.grey.shade200)),
+    );
+  }
 }
 
-/// Sent Otp Button
-class SendOtpButtonModule extends StatelessWidget {
-  SendOtpButtonModule({Key? key}) : super(key: key);
-  final screenController = Get.find<ForgotPasswordScreenController>();
+/// Verify Otp Button
+class VerifyOtpButtonModule extends StatelessWidget {
+  VerifyOtpButtonModule({Key? key}) : super(key: key);
+  final screenController = Get.find<VerifyOtpScreenController>();
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        if (screenController.forgotPassFormKey.currentState!.validate()) {
-          screenController.forgotPasswordFunction();
+        if (screenController.verifyOtpFormKey.currentState!.validate()) {
+          screenController.verifyOtpFunction();
         }
       },
       child: Container(
@@ -110,35 +132,10 @@ class SendOtpButtonModule extends StatelessWidget {
           ],
         ),
         child: const Text(
-          "SEND OTP",
+          "VERIFY OTP",
           style: TextStyle(color: Colors.white, fontSize: 18),
         ).commonSymmetricPadding(horizontal: 28, vertical: 14),
       ),
     );
   }
-}
-
-
-/// Forgot Password Fields Decoration
-InputDecoration emailInputDecoration({required String hintText}) {
-  return InputDecoration(
-    hintText: hintText,
-    hintStyle: const TextStyle(color: Colors.grey),
-    isDense: true,
-    contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 17),
-    filled: true,
-    fillColor: Colors.white,
-    enabledBorder: OutlineInputBorder(
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        borderSide: BorderSide(color: Colors.grey.shade200)),
-    focusedBorder: OutlineInputBorder(
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        borderSide: BorderSide(color: Colors.grey.shade200)),
-    errorBorder: OutlineInputBorder(
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        borderSide: BorderSide(color: Colors.grey.shade200)),
-    focusedErrorBorder: OutlineInputBorder(
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        borderSide: BorderSide(color: Colors.grey.shade200)),
-  );
 }

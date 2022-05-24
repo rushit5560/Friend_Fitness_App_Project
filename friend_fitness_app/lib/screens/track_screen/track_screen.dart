@@ -26,7 +26,7 @@ class TrackScreen extends StatelessWidget {
                     Expanded(
                       child: Container(
                         child: trackScreenController.isPositiveSelected.value ?
-                          const PositivePointModule() :
+                        PositivePointModule() :
                         NegativePointModule()
                       ),
                     )

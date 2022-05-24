@@ -51,11 +51,12 @@ class SignInScreenController extends GetxController {
         UserDetails.userId = signInModel.list[0].id;
         UserDetails.userIdToken = signInModel.list[0].rememberToken;
         UserDetails.roleId = signInModel.list[0].roleid;
-        //UserDetails.gameId = "7";
+        UserDetails.gameId = signInModel.list[0].joingameid.toString();
+        //UserDetails.gameId = "8";
         //UserDetails.gameId = "${DateTime.now().day}${DateTime.now().month}${DateTime.now().year}";
         log('UserDetails.userId: ${UserDetails.userId}');
-        log('UserDetails.userIdToken: ${UserDetails.userIdToken}');
-        log('UserDetails.roleId: ${UserDetails.roleId}');
+        //log('UserDetails.userIdToken: ${UserDetails.userIdToken}');
+       // log('UserDetails.roleId: ${UserDetails.roleId}');
         log('UserDetails.gameId: ${UserDetails.gameId}');
         await sharedPreferenceData.setUserLoginDetailsInPrefs(userId: UserDetails.userId, userIdToken: UserDetails.userIdToken, gameId: UserDetails.gameId, roleId: UserDetails.roleId);
         Get.offAll(()=> IndexScreen(), transition: Transition.zoom);

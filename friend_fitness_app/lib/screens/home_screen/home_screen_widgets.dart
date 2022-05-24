@@ -91,34 +91,41 @@ class LeaderBoardModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "Group Name (Game)",
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
-          ),
-        ),
-        const SizedBox(height: 20),
-        Expanded(
-          child: Container(
-            //height: 250,
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 6,
-                  blurStyle: BlurStyle.outer,
-                  color: AppColors.colorLightGrey,
-                ),
-              ],
+    return RefreshIndicator(
+      onRefresh: (){
+        //return screenController.getAllGameMemberFunction();
+        return Future.delayed(
+            const Duration(seconds: 1),(){
+          screenController.getAllGameMemberFunction();
+        });
+      },
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          const Text(
+            "Group Name (Game)",
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
             ),
-            child: RefreshIndicator(
+          ),
+          const SizedBox(height: 20),
+          Expanded(
+            child: Container(
+              //height: 250,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(10),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 6,
+                    blurStyle: BlurStyle.outer,
+                    color: AppColors.colorLightGrey,
+                  ),
+                ],
+              ),
               child: screenController.getAllGameMembersList.isEmpty ?
                   const Center(child: Text("No Members")) :
               ListView.builder(
@@ -129,18 +136,12 @@ class LeaderBoardModule extends StatelessWidget {
                   return _leaderBoardListTile(i);
                 },
               ).commonAllSidePadding(padding: 8),
-              onRefresh: (){
-                //return screenController.getAllGameMemberFunction();
-                return Future.delayed(
-                    const Duration(seconds: 1),(){
-                  screenController.getAllGameMemberFunction();
-                });
-              },
             ),
           ),
-        ),
-      ],
-    ).commonSymmetricPadding(horizontal: 10);
+
+        ],
+      ).commonSymmetricPadding(horizontal: 10),
+    );
   }
 
   Widget _leaderBoardListTile(i) {

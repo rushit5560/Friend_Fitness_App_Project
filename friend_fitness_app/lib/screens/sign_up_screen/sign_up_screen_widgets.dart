@@ -211,25 +211,25 @@ class SignUpRoleTextField extends StatelessWidget {
                 child: DropdownButtonHideUnderline(
                   child: DropdownButton<String>(
 
-                    value: screenController.roleValue.value.toString(),
+                    value: screenController.roleValue.value,
 
                     items: <String>[
-                      '1',
-                      '2',
-                      '3'
+                      'Member',
+                      'Captain'
                     ].map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text(
                           value,
-                          style: TextStyle(color: Colors.grey),
+                          style: const TextStyle(color: Colors.grey),
                         ),
                       );
                     }).toList(),
 
                     onChanged: (value){
                       screenController.isLoading(true);
-                      screenController.roleValue.value = int.parse(value!);
+                      //screenController.roleValue.value = int.parse(value!);
+                       screenController.roleValue.value = value!;
                       screenController.isLoading(false);
                     },
                   ),

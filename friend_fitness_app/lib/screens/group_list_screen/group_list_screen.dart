@@ -18,9 +18,11 @@ class GroupListScreen extends StatelessWidget {
             const GroupListScreenAppBarModule(),
             const SizedBox(height: 15),
             Expanded(
-              child: groupScreenController.isLoading.value ?
-                   const Center(child: CustomCircularProgressIndicator()):
-              GroupListModule(),
+              child: Obx(()=>
+                 groupScreenController.isLoading.value ?
+                     const Center(child: CustomCircularProgressIndicator()):
+                GroupListModule(),
+              ),
             ),
           ],
         ),

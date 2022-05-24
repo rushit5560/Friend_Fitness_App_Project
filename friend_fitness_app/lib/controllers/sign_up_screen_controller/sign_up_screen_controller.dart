@@ -21,7 +21,7 @@ class SignUpScreenController extends GetxController {
   TextEditingController cPasswordFieldController = TextEditingController();
   RxBool isPasswordShow = true.obs;
   RxBool isCPasswordShow = true.obs;
-  RxInt roleValue = 1.obs;
+  RxString roleValue = 'Member'.obs;
 
   signUpWithFirebaseFunction()async{
     isLoading(true);
@@ -29,13 +29,19 @@ class SignUpScreenController extends GetxController {
     log('url: $url');
 
     try{
+      String roleId = "";
+      if(roleValue.value == "Member") {
+        roleId = "2";
+      } else if(roleValue.value == "Captain") {
+        roleId = "3";
+      }
+
       Map<String, dynamic> data = {
         "name" : nameFieldController.text.trim(),
         "email": emailFieldController.text.trim(),
         "password": passwordFieldController.text.trim(),
         "c_password": cPasswordFieldController.text.trim(),
-        //"roleid" : "3"
-        "roleid" : "${roleValue.value}"
+        "roleid" : roleId
       };
       // Map<String, dynamic> data = {
       //   "name": "jyoti1",

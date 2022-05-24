@@ -4,6 +4,7 @@ import 'package:friend_fitness_app/common/constants/app_images.dart';
 import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
 import 'package:friend_fitness_app/common/user_details.dart';
 import 'package:friend_fitness_app/controllers/group_list_screen_controller/group_list_screen_controller.dart';
+import 'package:friend_fitness_app/screens/game_wise_view_members_list_screen/game_wise_view_members_list_screen.dart';
 import 'package:friend_fitness_app/screens/group_chat_screen/group_chat_screen.dart';
 import 'package:get/get.dart';
 import '../../common/constants/app_colors.dart';
@@ -173,6 +174,27 @@ class GroupListModule extends StatelessWidget {
                     ),
                   ],
                 ),
+                const SizedBox(height: 5),
+                Row(
+                  children: [
+                    const Text(
+                      "Cheat day: ",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 15,fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    Text(
+                      screenController.getGameList[i].cheatday,
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
+                  ],
+                ),
               ],
             ),
 
@@ -181,7 +203,7 @@ class GroupListModule extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    screenController.memberJoinGame(gameId: screenController.getGameList[i].id, totalPerson: screenController.getGameList[i].person);
+                    screenController.memberJoinGame(gameId: screenController.getGameList[i].id, totalPerson: screenController.getGameList[i].person, userId: screenController.getGameList[i].userid);
                   },
                   child: Container(
                     width: 130,
@@ -202,32 +224,34 @@ class GroupListModule extends StatelessWidget {
                     ),
                   ),
                 ),
-                UserDetails.roleId == 3 ? const SizedBox(height: 10) : Container(),
 
-                UserDetails.roleId == 3 ?
-                GestureDetector(
-                  onTap: () {
-                    //screenController.memberJoinGame(gameId: screenController.getGameList[i].id, totalPerson: screenController.getGameList[i].person);
-                  },
-                  child: Container(
-                    width: 130,
-                    height: 35,
-                    decoration: BoxDecoration(
-                      color: AppColors.colorDarkGrey,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        "VIEW MEMBER",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontSize: 13,
-                        ),
-                      ),
-                    ),
-                  ),
-                ) : Container(),
+                // UserDetails.roleId == 3 ? const SizedBox(height: 10) : Container(),
+                //
+                // UserDetails.roleId == 3 ?
+                // GestureDetector(
+                //   onTap: () {
+                //     Get.to(() => GameWiseViewMembersListScreen(), arguments: screenController.getGameList[i].id);
+                //     //screenController.memberJoinGame(gameId: screenController.getGameList[i].id, totalPerson: screenController.getGameList[i].person);
+                //   },
+                //   child: Container(
+                //     width: 130,
+                //     height: 35,
+                //     decoration: BoxDecoration(
+                //       color: AppColors.colorDarkGrey,
+                //       borderRadius: BorderRadius.circular(20),
+                //     ),
+                //     child: const Center(
+                //       child: Text(
+                //         "VIEW MEMBER",
+                //         style: TextStyle(
+                //           fontWeight: FontWeight.bold,
+                //           color: Colors.white,
+                //           fontSize: 13,
+                //         ),
+                //       ),
+                //     ),
+                //   ),
+                // ) : Container(),
               ],
             )
           ],
