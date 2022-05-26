@@ -71,7 +71,12 @@ class GroupListModule extends StatelessWidget {
   Widget _groupListTile(i) {
     return GestureDetector(
       onTap: () {
-        //Get.to(()=> GroupChatScreen());
+        Get.to(()=> GroupChatScreen(),
+            arguments: [
+              screenController.getGameList[i].id.toString(),
+              screenController.getGameList[i].userid.toString(),
+              screenController.getGameList[i].name,
+            ]);
       },
       child: Container(
         decoration: BoxDecoration(
@@ -203,7 +208,7 @@ class GroupListModule extends StatelessWidget {
               children: [
                 GestureDetector(
                   onTap: () {
-                    screenController.memberJoinGame(gameId: screenController.getGameList[i].id, totalPerson: screenController.getGameList[i].person, userId: screenController.getGameList[i].userid);
+                    screenController.memberJoinGame(gameId: screenController.getGameList[i].id, totalPerson: screenController.getGameList[i].person);
                   },
                   child: Container(
                     width: 130,

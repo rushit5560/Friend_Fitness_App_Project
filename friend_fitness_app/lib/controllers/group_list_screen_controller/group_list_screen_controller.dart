@@ -58,7 +58,7 @@ class GroupListScreenController extends GetxController{
     }
   }
 
-  memberJoinGame({required int gameId, required int totalPerson, required int userId}) async {
+  memberJoinGame({required int gameId, required int totalPerson}) async {
     isLoading(true);
     String url = ApiUrl.memberJoinGameApi;
     log("Get All Member Join Game API URL : $url");
@@ -69,7 +69,7 @@ class GroupListScreenController extends GetxController{
     Map<String, dynamic> data = {
       "person": "$totalPerson",
       "gameid" : "$gameId",
-      "userid" : "$userId",//"${UserDetails.userId}"
+      "userid" : "${UserDetails.userId}",
       "joindate" : date
     };
     log('data: $data');

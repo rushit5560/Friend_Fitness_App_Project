@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -60,66 +61,76 @@ class ProfileImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-          clipBehavior: Clip.none,
-          alignment: Alignment.bottomCenter,
-          children: [
-            screenController.profile != null  ?
-          Container(
-            height: 150, width: 150,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                //border: Border.all(color: AppColors.colorLightGrey),
-                boxShadow: [
-                  BoxShadow(
-                      blurRadius: 1,
-                      blurStyle: BlurStyle.outer,
-                      color: Colors.grey.shade500
-                  )
-                ]
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10.0),
-               child: Image.file(screenController.profile!,
-                   height: 150, width: 150, fit: BoxFit.cover),
-            ),
-          ) :
-          Container(
-            height: 150, width: 150,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10.0),
-                //border: Border.all(color: AppColors.colorLightGrey),
-                boxShadow: [
-                  BoxShadow(
-                      blurRadius: 1,
-                      blurStyle: BlurStyle.outer,
-                    color: Colors.grey.shade500
-                  )
-                ]
-            ),
-            child: ClipRRect(
-              child: Image.network(screenController.userProfile, height: 150, width: 150,fit: BoxFit.cover,),
-            ),
-          ),
-            Positioned(
-              top: 135,
-              child: GestureDetector(
-                onTap: (){
-                  gallery();
-                },
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                    color: AppColors.colorDarkGrey
-                  ),
-                  child: const Padding(
-                    padding: EdgeInsets.all(5.0),
-                    child: Icon(Icons.camera_alt, color: Colors.white, size: 15),
-                  ),
+    log('screenController.isAddStarSuccessStatusCode.value: ${screenController.isAddStarSuccessStatusCode.value}');
+    return Row(
+      children: [
+
+        Stack(
+              clipBehavior: Clip.none,
+              alignment: Alignment.bottomCenter,
+              children: [
+                screenController.profile != null  ?
+              Container(
+                height: 150, width: 150,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    //border: Border.all(color: AppColors.colorLightGrey),
+                    boxShadow: [
+                      BoxShadow(
+                          blurRadius: 1,
+                          blurStyle: BlurStyle.outer,
+                          color: Colors.grey.shade500
+                      )
+                    ]
+                ),
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10.0),
+                   child: Image.file(screenController.profile!,
+                       height: 150, width: 150, fit: BoxFit.cover),
+                ),
+              ) :
+              Container(
+                height: 150, width: 150,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    //border: Border.all(color: AppColors.colorLightGrey),
+                    boxShadow: [
+                      BoxShadow(
+                          blurRadius: 1,
+                          blurStyle: BlurStyle.outer,
+                        color: Colors.grey.shade500
+                      )
+                    ]
+                ),
+                child: ClipRRect(
+                  child: Image.network(screenController.userProfile, height: 150, width: 150,fit: BoxFit.cover,),
                 ),
               ),
-            )
-          ],
+                Positioned(
+                  top: 135,
+                  child: GestureDetector(
+                    onTap: (){
+                      gallery();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: AppColors.colorDarkGrey
+                      ),
+                      child: const Padding(
+                        padding: EdgeInsets.all(5.0),
+                        child: Icon(Icons.camera_alt, color: Colors.white, size: 15),
+                      ),
+                    ),
+                  ),
+                )
+              ],
+        ),
+
+        screenController.isAddStarSuccessStatusCode.value == "true" ?
+        Icon(Icons.star) : Container()
+
+      ],
     );
   }
 
@@ -128,7 +139,8 @@ class ProfileImage extends StatelessWidget {
     if(image != null){
       screenController.profile = File(image.path);
       screenController.loadUI();
-    } else{}
+    } else{
+    }
   }
 }
 

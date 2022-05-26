@@ -7,6 +7,7 @@ import 'package:friend_fitness_app/common/constants/api_header.dart';
 import 'package:friend_fitness_app/common/constants/api_url.dart';
 import 'package:friend_fitness_app/common/sharedpreference_data/sharedpreference_data.dart';
 import 'package:friend_fitness_app/common/user_details.dart';
+import 'package:friend_fitness_app/model/add_star_point_model/add_star_point_model.dart';
 import 'package:friend_fitness_app/model/get_profile_model/get_profile_model.dart';
 import 'package:friend_fitness_app/model/get_update_profile_model/get_update_profile_model.dart';
 import 'package:friend_fitness_app/model/update_profile_model/update_profile_model.dart';
@@ -17,6 +18,7 @@ class EditProfileScreenController extends GetxController{
 
   RxBool isLoading = false.obs;
   RxBool isSuccessStatusCode = false.obs;
+  RxBool isAddStarSuccessStatusCode = false.obs;
   //List<User> profileList = [];
   String name = "";
   String email = "";
@@ -50,6 +52,7 @@ class EditProfileScreenController extends GetxController{
     // TODO: implement onInit
     super.onInit();
     getProfileAPI();
+    addStarPointAPI();
   }
 
   getProfileAPI() async {
@@ -176,7 +179,8 @@ class EditProfileScreenController extends GetxController{
             log('False False');
           }
         });
-      }else if(profile == null){
+      }
+      else if(profile == null){
         var request = http.MultipartRequest('POST', Uri.parse(url));
 
         // var stream = http.ByteStream(profile!.openRead());
@@ -257,6 +261,39 @@ class EditProfileScreenController extends GetxController{
 
     }catch(e){
       log('Error: $e');
+    } finally{
+      isLoading(false);
+      //addStarPointAPI();
+    }
+  }
+
+  addStarPointAPI() async {
+    isLoading(true);
+    String url = ApiUrl.addStarPointApi;
+    log('url: $url');
+    log('UserDetails.userId: ${UserDetails.userId}');
+    log('UserDetails.userIdToken: ${UserDetails.userIdToken}');
+
+    Map<String, dynamic> data= {
+      "userid" : "${UserDetails.userId}",
+      "gameid" : "${UserDetails.gameId}"
+    };
+    try{
+      http.Response response = await http.post(Uri.parse(url), body: data, headers: apiHeader.headers);
+      log('Response : ${response.body}');
+      AddStarPointModel addStarPointModel = AddStarPointModel.fromJson(json.decode(response.body));
+      isAddStarSuccessStatusCode = addStarPointModel.success.obs;
+      log('isStatus: $isAddStarSuccessStatusCode');
+
+      if(isAddStarSuccessStatusCode.value){
+        log('Success');
+        Fluttertoast.showToast(msg: addStarPointModel.messege);
+      }else{
+        Fluttertoast.showToast(msg: addStarPointModel.messege);
+        log('Fail');
+      }
+    }catch(e){
+      log('Get Profile Error: $e');
     } finally{
       isLoading(false);
     }

@@ -51,4 +51,11 @@ class ApiUrl {
   static const forgotPasswordApi = apiMainPath + "api/forgetpasswrod";
   static const verifyOtpApi = apiMainPath + "api/forgetpasswordotp";
   static const resetPasswordApi = apiMainPath + "api/forgetpasswordrest";
+
+  /// Add star point
+  static const addStarPointApi = apiMainPath + "api/starpointadd";
+
+  /// send message and Get message
+  static const sendMessageApi = apiMainPath + "api/sendmeassage";
+  static const getAllMessageApi = apiMainPath + "api/messageall";
 }

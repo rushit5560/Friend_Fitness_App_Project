@@ -1,9 +1,11 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:friend_fitness_app/common/constants/api_header.dart';
 import 'package:friend_fitness_app/common/constants/api_url.dart';
 import 'package:friend_fitness_app/common/user_details.dart';
+import 'package:friend_fitness_app/model/add_star_point_model/add_star_point_model.dart';
 import 'package:friend_fitness_app/model/get_user_wise_point_model/get_user_wise_point_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -24,6 +26,7 @@ class GameSummaryDetailsScreenController extends GetxController{
     // TODO: implement onInit
     super.onInit();
     getAllUserWisePointApi();
+    //addStarPointAPI();
   }
 
   getAllUserWisePointApi()async{
@@ -55,6 +58,38 @@ class GameSummaryDetailsScreenController extends GetxController{
     } catch(e) {
       log("getUserWisePointList Error ::: $e");
     } finally {
+      isLoading(false);
+    }
+  }
+
+  addStarPointAPI() async {
+    isLoading(true);
+    String url = ApiUrl.addStarPointApi;
+    log('url: $url');
+    log('UserDetails.userId: ${UserDetails.userId}');
+    log('UserDetails.userIdToken: ${UserDetails.userIdToken}');
+
+    Map<String, dynamic> data= {
+      "userid" : "${UserDetails.userId}",
+      "gameid" : "${UserDetails.gameId}"
+    };
+    try{
+      http.Response response = await http.post(Uri.parse(url), body: data, headers: apiHeader.headers);
+      log('Response : ${response.body}');
+      AddStarPointModel addStarPointModel = AddStarPointModel.fromJson(json.decode(response.body));
+      isSuccessStatusCode = addStarPointModel.success.obs;
+      log('isStatus: $isSuccessStatusCode');
+
+      if(isSuccessStatusCode.value){
+        log('Success');
+        Fluttertoast.showToast(msg: addStarPointModel.messege);
+      }else{
+        Fluttertoast.showToast(msg: addStarPointModel.messege);
+        log('Fail');
+      }
+    }catch(e){
+      log('Get Profile Error: $e');
+    } finally{
       isLoading(false);
     }
   }

@@ -18,7 +18,7 @@ class GameSummaryDetailsScreen extends StatelessWidget {
               const Center(child: CircularProgressIndicator()) :
            Column(
             children: [
-              GameSummaryDetailsScreenAppBarModule(),
+              const GameSummaryDetailsScreenAppBarModule(),
               Expanded(child: GameSummaryDetailsModule().commonAllSidePadding(padding: 15)),
             ],
           ),

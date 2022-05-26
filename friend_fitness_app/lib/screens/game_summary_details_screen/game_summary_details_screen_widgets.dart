@@ -63,6 +63,9 @@ class GameSummaryDetailsModule extends StatelessWidget {
             const SizedBox(height: 10),
             negativePointModule(),
 
+            // const SizedBox(height: 10),
+            // showStarPointModule(),
+
             const SizedBox(height: 250),
 
             // const SizedBox(height: 10),
@@ -246,6 +249,11 @@ class GameSummaryDetailsModule extends StatelessWidget {
 
       ],
     );
+  }
+
+  showStarPointModule(){
+    return screenController.getUserWiseNegativePointList.isEmpty && screenController.getUserWisePositivePointList.isNotEmpty?
+        Icon(Icons.star) : Container();
   }
 }
 

@@ -11,7 +11,8 @@ import '../../controllers/group_chat_screen_controller/group_chat_screen_control
 
 
 class GroupChatScreenAppBarModule extends StatelessWidget {
-  const GroupChatScreenAppBarModule({Key? key}) : super(key: key);
+  GroupChatScreenAppBarModule({Key? key}) : super(key: key);
+  final screenController = Get.find<GroupChatScreenController>();
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +39,8 @@ class GroupChatScreenAppBarModule extends StatelessWidget {
               ),
             ),
           ),
-          const Text(
-            "Group Name",
+          Text(
+            screenController.name,
             overflow: TextOverflow.ellipsis,
             style: TextStyle(
                 fontWeight: FontWeight.bold, fontSize: 20),
@@ -58,74 +59,48 @@ class GroupChatListModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: screenController.userChatList.length,
+    return screenController.getAllMessageList.isEmpty ?
+        const Center(child: Text("No message")):
+      ListView.builder(
+      itemCount: screenController.getAllMessageList.length,
+      shrinkWrap: true,
+      physics: const AlwaysScrollableScrollPhysics(),
       itemBuilder: (context, i) {
-        return SingleMessageBubble(
+        /*return SingleMessageBubble(
           isSendByMe: screenController.userChatList[i].isSendByMe,
           message: screenController.userChatList[i].message,
-        );
+        );*/
+        return messageList(i);
       },
     ).commonSymmetricPadding(horizontal: 15);
   }
-}
 
-
-class SingleMessageBubble extends StatelessWidget {
-  final bool isSendByMe;
-  final String message;
-
-  const SingleMessageBubble(
-      {Key? key, required this.isSendByMe, required this.message})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
+  Widget messageList(i){
     return Container(
-      margin: const EdgeInsets.all(5),
-      padding: isSendByMe
-          ? const EdgeInsets.only(left: 40)
-          : const EdgeInsets.only(right: 40),
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        // color: AppColors.colorLightGrey,
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 3,
+            blurStyle: BlurStyle.outer,
+            color: AppColors.colorLightGrey,
+          ),
+        ],
+        borderRadius: const BorderRadius.only(
+          topRight: Radius.circular(15),
+          topLeft: Radius.circular(15),
+          bottomRight: Radius.circular(15),
+          bottomLeft: Radius.circular(15),
+        ),
+      ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Column(
-            mainAxisAlignment:
-            isSendByMe ? MainAxisAlignment.end : MainAxisAlignment.start,
-            crossAxisAlignment:
-            isSendByMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
-            children: [
-              Container(
-                padding: const EdgeInsets.all(15),
-                decoration: BoxDecoration(
-                  // color: AppColors.colorLightGrey,
-                  boxShadow: [
-                    BoxShadow(
-                      blurRadius: 6,
-                      blurStyle: BlurStyle.outer,
-                      color: AppColors.colorLightGrey,
-                    ),
-                  ],
-                  borderRadius: BorderRadius.only(
-                    topRight: const Radius.circular(15),
-                    topLeft: const Radius.circular(15),
-                    bottomRight: Radius.circular(isSendByMe ? 0 : 15),
-                    bottomLeft: Radius.circular(isSendByMe ? 15 : 0),
-                  ),
-                ),
-                child: Column(
-                  crossAxisAlignment: isSendByMe
-                      ? CrossAxisAlignment.end
-                      : CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      message,
-                      style: const TextStyle(fontSize: 12),
-                    ),
-                  ],
-                ),
-              ),
-            ],
+          Text(
+            screenController.getAllMessageList[i].message!,
+            style: const TextStyle(fontSize: 12),
           ),
         ],
       ),
@@ -134,8 +109,114 @@ class SingleMessageBubble extends StatelessWidget {
 }
 
 
+// class SingleMessageBubble extends StatelessWidget {
+//   final bool isSendByMe;
+//   final String message;
+//
+//   const SingleMessageBubble(
+//       {Key? key, required this.isSendByMe, required this.message})
+//       : super(key: key);
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Container(
+//       margin: const EdgeInsets.all(5),
+//       padding: isSendByMe
+//           ? const EdgeInsets.only(left: 40)
+//           : const EdgeInsets.only(right: 40),
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.stretch,
+//         children: [
+//           Column(
+//             mainAxisAlignment:
+//             isSendByMe ? MainAxisAlignment.end : MainAxisAlignment.start,
+//             crossAxisAlignment:
+//             isSendByMe ? CrossAxisAlignment.end : CrossAxisAlignment.start,
+//             children: [
+//               Container(
+//                 padding: const EdgeInsets.all(15),
+//                 decoration: BoxDecoration(
+//                   // color: AppColors.colorLightGrey,
+//                   boxShadow: [
+//                     BoxShadow(
+//                       blurRadius: 6,
+//                       blurStyle: BlurStyle.outer,
+//                       color: AppColors.colorLightGrey,
+//                     ),
+//                   ],
+//                   borderRadius: BorderRadius.only(
+//                     topRight: const Radius.circular(15),
+//                     topLeft: const Radius.circular(15),
+//                     bottomRight: Radius.circular(isSendByMe ? 0 : 15),
+//                     bottomLeft: Radius.circular(isSendByMe ? 15 : 0),
+//                   ),
+//                 ),
+//                 child: Column(
+//                   crossAxisAlignment: isSendByMe
+//                       ? CrossAxisAlignment.end
+//                       : CrossAxisAlignment.start,
+//                   children: [
+//                     Text(
+//                       message,
+//                       style: const TextStyle(fontSize: 12),
+//                     ),
+//                   ],
+//                 ),
+//               ),
+//             ],
+//           ),
+//         ],
+//       ),
+//     );
+//   }
+// }
+
+/*class MessagesList extends StatelessWidget {
+  //MessagesList({Key? key, required this.i}) : super(key: key);
+  int index;
+  MessagesList({required this.index});
+
+  final screenController = Get.find<GroupChatScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.all(15),
+      decoration: BoxDecoration(
+        // color: AppColors.colorLightGrey,
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 6,
+            blurStyle: BlurStyle.outer,
+            color: AppColors.colorLightGrey,
+          ),
+        ],
+        borderRadius: BorderRadius.only(
+          topRight: const Radius.circular(15),
+          topLeft: const Radius.circular(15),
+          bottomRight: Radius.circular(15),
+          bottomLeft: Radius.circular(15),
+        ),
+      ),
+      child: Column(
+        //crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text(
+            screenController.getAllMessageList[index].message!,
+            style: const TextStyle(fontSize: 12),
+          ),
+        ],
+      ),
+    );
+  }
+}*/
+
+
+
 /// Email Field
 class SendMessageModule extends StatelessWidget {
+  //SendMessageModule({Key? key}) : super(key: key);
+
   SendMessageModule({Key? key}) : super(key: key);
   final screenController = Get.find<GroupChatScreenController>();
   final FieldValidator fieldValidator = FieldValidator();
@@ -175,11 +256,13 @@ class SendMessageModule extends StatelessWidget {
 
         GestureDetector(
           onTap: () {
-            if(screenController.userMessageFieldController.text.isEmpty) {
-              log("Message : ${screenController.userMessageFieldController.text}");
-            } else {
-              log("Message1 : ${screenController.userMessageFieldController.text}");
-            }
+            // if(screenController.userMessageFieldController.text.isEmpty) {
+            //   log("Message : ${screenController.userMessageFieldController.text}");
+            // } else {
+            //   log("Message1 : ${screenController.userMessageFieldController.text}");
+            // }
+            screenController.sendMessageApi();
+            screenController.userMessageFieldController.clear();
           },
           child: Container(
             height: 52,
