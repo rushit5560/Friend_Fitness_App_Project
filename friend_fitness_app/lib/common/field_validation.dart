@@ -2,11 +2,11 @@ class FieldValidator {
 
   String? validateEmail(String value) {
     if (value.isEmpty) {
-      return "Please Enter Email";
+      return "Please enter email";
     } else if (!RegExp(
             r"[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
         .hasMatch(value)) {
-      return "Invalid Email";
+      return "Invalid email";
     } else {
       return null;
     }
@@ -18,9 +18,51 @@ class FieldValidator {
     return null;
   }
 
-  String? validateMeasurement(String value) {
+  String? validateChest(String value) {
     if (value.isEmpty) {
-      return 'Please Enter Measurement';
+      return 'Please Enter Chest Measurement';
+    }
+    return null;
+  }
+
+  String? validateLeftArm(String value) {
+    if (value.isEmpty) {
+      return 'Please Enter Left Arm Measurement';
+    }
+    return null;
+  }
+
+  String? validateRightArm(String value) {
+    if (value.isEmpty) {
+      return 'Please Enter Right Arm Measurement';
+    }
+    return null;
+  }
+
+  String? validateWaist(String value) {
+    if (value.isEmpty) {
+      return 'Please Enter Waist Measurement';
+    }
+    return null;
+  }
+
+  String? validateHips(String value) {
+    if (value.isEmpty) {
+      return 'Please Enter Hips Measurement';
+    }
+    return null;
+  }
+
+  String? validateLeftThight(String value) {
+    if (value.isEmpty) {
+      return 'Please Enter Left Thigh Measurement';
+    }
+    return null;
+  }
+
+  String? validateRightThight(String value) {
+    if (value.isEmpty) {
+      return 'Please Enter Right Thigh Measurement';
     }
     return null;
   }
@@ -36,7 +78,7 @@ class FieldValidator {
     if (value.isEmpty) {
       return "Please enter password";
     } else if (value.length < 8) {
-      return "Password length should be minimum 8 character";
+      return "Length should be 8 character";
     } else {
       return null;
     }
@@ -58,6 +100,13 @@ class FieldValidator {
   String? validateName(String value) {
     if (value.isEmpty) {
       return 'Please enter name';
+    }
+    return null;
+  }
+
+  String? validateAddress(String value) {
+    if (value.isEmpty) {
+      return 'Please Enter Address';
     }
     return null;
   }

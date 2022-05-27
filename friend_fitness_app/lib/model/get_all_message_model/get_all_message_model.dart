@@ -2,8 +2,9 @@ class GetAllMessageModel {
   bool? success;
   String? messege;
   List<List1>? list;
+  String? errorMessage;
 
-  GetAllMessageModel({this.success, this.messege, this.list});
+  GetAllMessageModel({this.success, this.messege, this.list, this.errorMessage});
 
   GetAllMessageModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
@@ -14,6 +15,7 @@ class GetAllMessageModel {
         list!.add(new List1.fromJson(v));
       });
     }
+    errorMessage = json['error'];
   }
 
   Map<String, dynamic> toJson() {
@@ -23,6 +25,7 @@ class GetAllMessageModel {
     if (this.list != null) {
       data['list'] = this.list!.map((v) => v.toJson()).toList();
     }
+    data['error'] = this.errorMessage;
     return data;
   }
 }

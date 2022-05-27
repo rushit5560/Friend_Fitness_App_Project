@@ -12,18 +12,22 @@ class AddStarPointModel {
   AddStarPointModel({
     required this.success,
     required this.messege,
+    required this.errorMessage,
   });
 
   bool success;
   String messege;
+  String errorMessage;
 
   factory AddStarPointModel.fromJson(Map<String, dynamic> json) => AddStarPointModel(
     success: json["success"] ?? false,
     messege: json["messege"] ?? "",
+    errorMessage: json["error"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
     "success": success,
     "messege": messege,
+    "error" : errorMessage,
   };
 }

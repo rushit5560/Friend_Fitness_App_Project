@@ -32,6 +32,8 @@ class EditProfileScreen extends StatelessWidget {
                         const SizedBox(height: 35),
                          NameTextFieldModule(),
                         const SizedBox(height: 20),
+                        EmailTextFieldModule(),
+                        const SizedBox(height: 20),
                         AddressTextFieldModule(),
                         const SizedBox(height: 20),
                         GenderTextFieldModule(),

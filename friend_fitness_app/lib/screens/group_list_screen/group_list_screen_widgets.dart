@@ -49,22 +49,31 @@ class GroupListModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RefreshIndicator(
-      child: screenController.getGameList.isEmpty ?
-          const Center(child: Text("No Game")):
-        ListView.builder(
-        itemCount: screenController.getGameList.length,
-        shrinkWrap: true,
-        physics: const BouncingScrollPhysics(),
-        itemBuilder: (context, i) {
-          return _groupListTile(i).commonSymmetricPadding(vertical: 6, horizontal: 14);
-        },
-      ),
       onRefresh: (){
         return Future.delayed(
             const Duration(seconds: 1),(){
           screenController.getAllGameList();
         });
       },
+      child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        child: Column(
+          children: [
+            const SizedBox(height: 30),
+            screenController.getGameList.isEmpty ?
+                const Center(child: Text("No Game")):
+              ListView.builder(
+              itemCount: screenController.getGameList.length,
+              shrinkWrap: true,
+              physics: const AlwaysScrollableScrollPhysics(),
+              itemBuilder: (context, i) {
+                return _groupListTile(i).commonSymmetricPadding(vertical: 6, horizontal: 14);
+              },
+            ),
+          ],
+        ),
+      ),
+
     );
   }
 

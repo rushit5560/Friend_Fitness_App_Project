@@ -14,18 +14,21 @@ class GetAllPositiveCategoryModel {
     required this.success,
     required this.messege,
     required this.list,
+    required this.errorMessage
   });
 
   int the0;
   bool success;
   String messege;
   List<ListElement> list;
+  String errorMessage;
 
   factory GetAllPositiveCategoryModel.fromJson(Map<String, dynamic> json) => GetAllPositiveCategoryModel(
     the0: json["0"]?? 0,
     success: json["success"] ?? false,
     messege: json["messege"] ?? "",
     list: List<ListElement>.from(json["list"].map((x) => ListElement.fromJson(x)) ?? {}),
+    errorMessage: json["error"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
@@ -33,6 +36,7 @@ class GetAllPositiveCategoryModel {
     "success": success,
     "messege": messege,
     "list": List<dynamic>.from(list.map((x) => x.toJson())),
+    "error" : errorMessage,
   };
 }
 

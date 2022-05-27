@@ -63,6 +63,7 @@ class ProfileImage extends StatelessWidget {
   Widget build(BuildContext context) {
     log('screenController.isAddStarSuccessStatusCode.value: ${screenController.isAddStarSuccessStatusCode.value}');
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
 
         Stack(
@@ -193,6 +194,55 @@ class NameTextFieldModule extends StatelessWidget {
   }
 }
 
+class EmailTextFieldModule extends StatelessWidget {
+  EmailTextFieldModule({Key? key}) : super(key: key);
+
+  final screenController = Get.find<EditProfileScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        const Expanded(
+            flex: 2,
+            child: Text("Email:", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),)
+        ),
+        Expanded(
+            flex: 4,
+            child: Stack(
+              children: [
+                Container(
+                  height: 45,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(15),
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.colorLightGrey,
+                        blurRadius: 2,
+                        blurStyle: BlurStyle.outer,
+                      ),
+                    ],
+                  ),
+                ),
+                TextFormField(
+                  controller: screenController.emailFieldController,
+                  keyboardType: TextInputType.emailAddress,
+                  cursorColor: Colors.black,
+                  decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                    border: InputBorder.none,
+                  ),
+                  validator: (value) => FieldValidator().validateEmail(value!),
+                ),
+              ],
+            )
+        )
+      ],
+    );
+  }
+}
+
+
 class AddressTextFieldModule extends StatelessWidget {
   AddressTextFieldModule({Key? key}) : super(key: key);
   //final screenController = Get.find<EditProfileScreenController>();
@@ -231,7 +281,7 @@ class AddressTextFieldModule extends StatelessWidget {
                     contentPadding: EdgeInsets.symmetric(horizontal: 15),
                     border: InputBorder.none,
                   ),
-                  //validator: (value) => FieldValidator().validateEmail(value!),
+                  validator: (value) => FieldValidator().validateAddress(value!),
                 ),
               ],
             )
@@ -256,32 +306,70 @@ class GenderTextFieldModule extends StatelessWidget {
         Expanded(
             flex: 4,
             child: Stack(
-              children: [
-                Container(
-                  height: 45,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      BoxShadow(
-                        color: AppColors.colorLightGrey,
-                        blurRadius: 2,
-                        blurStyle: BlurStyle.outer,
-                      ),
-                    ],
+        children: [
+        Container(
+        height: 50,
+          decoration: BoxDecoration(
+            //color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+            //border: Border.all(color: AppColors.colorLightGrey),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.colorLightGrey,
+                blurRadius: 5,
+                //spreadRadius: 5,
+                blurStyle: BlurStyle.outer,
+              ),
+            ],
+          ),
+        ),
+
+        Obx(() =>
+            Container(
+              padding: const EdgeInsets.only(left: 10),
+              width: Get.width, //gives the width of the dropdown button
+              decoration: const BoxDecoration(
+                borderRadius: BorderRadius.all(Radius.circular(10)),
+                //color: Colors.grey.shade200,
+              ),
+              child: Theme(
+                data: Theme.of(context).copyWith(
+                  canvasColor: Colors.grey.shade100,
+                  buttonTheme: ButtonTheme.of(context).copyWith(
+                    alignedDropdown: true,
                   ),
                 ),
-                TextFormField(
-                  controller: screenController.genderFieldController,
-                  keyboardType: TextInputType.text,
-                  cursorColor: Colors.black,
-                  decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
-                    border: InputBorder.none,
+                child: DropdownButtonHideUnderline(
+                  child: DropdownButton<String>(
+
+                    value: screenController.genderValue.value,
+
+                    items: <String>[
+                      'Female',
+                      'Male'
+                    ].map<DropdownMenuItem<String>>((String value) {
+                      return DropdownMenuItem<String>(
+                        value: value,
+                        child: Text(
+                          value,
+                          style: const TextStyle(color: Colors.grey),
+                        ),
+                      );
+                    }).toList(),
+
+                    onChanged: (value){
+                      screenController.isLoading(true);
+                      //screenController.roleValue.value = int.parse(value!);
+                      screenController.genderValue.value = value!;
+                      screenController.isLoading(false);
+                    },
                   ),
-                  //validator: (value) => FieldValidator().validateEmail(value!),
                 ),
-              ],
-            )
+              ),
+            ),
+        ),
+      ],
+    )
         )
       ],
     );
@@ -320,11 +408,17 @@ class WeightTextFieldModule extends StatelessWidget {
                 ),
                 TextFormField(
                   controller: screenController.weightFieldController,
-                  keyboardType: TextInputType.text,
+                  keyboardType: TextInputType.number,
                   cursorColor: Colors.black,
-                  decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(top: 10, left: 10, right: 10),
                     border: InputBorder.none,
+                    suffixIcon: Column(
+                      children: [
+                        SizedBox(height: 12),
+                        Text("kg"),
+                      ],
+                    )
                   ),
                   validator: (value) => FieldValidator().validateWeight(value!),
                 ),
@@ -367,11 +461,17 @@ class HeightTextFieldModule extends StatelessWidget {
                 ),
                 TextFormField(
                   controller: screenController.heightFieldController,
-                  keyboardType: TextInputType.text,
+                  keyboardType: TextInputType.number,
                   cursorColor: Colors.black,
-                  decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(top: 10, left: 10, right: 10),
                     border: InputBorder.none,
+                      suffixIcon: Column(
+                        children: [
+                          SizedBox(height: 12),
+                          Text("inch"),
+                        ],
+                      )
                   ),
                   validator: (value) => FieldValidator().validateHeight(value!),
                 ),
@@ -414,13 +514,13 @@ class ChestTextFieldModule extends StatelessWidget {
                 ),
                 TextFormField(
                   controller: screenController.chestFieldController,
-                  keyboardType: TextInputType.text,
+                  keyboardType: TextInputType.number,
                   cursorColor: Colors.black,
                   decoration: const InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 15),
                     border: InputBorder.none,
                   ),
-                  validator: (value) => FieldValidator().validateMeasurement(value!),
+                  validator: (value) => FieldValidator().validateChest(value!),
                 ),
               ],
             )
@@ -461,13 +561,13 @@ class LeftArmTextFieldModule extends StatelessWidget {
                 ),
                 TextFormField(
                   controller: screenController.leftArmFieldController,
-                  keyboardType: TextInputType.text,
+                  keyboardType: TextInputType.number,
                   cursorColor: Colors.black,
                   decoration: const InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 15),
                     border: InputBorder.none,
                   ),
-                  validator: (value) => FieldValidator().validateMeasurement(value!),
+                  validator: (value) => FieldValidator().validateLeftArm(value!),
                 ),
               ],
             )
@@ -509,13 +609,13 @@ class RightArmTextFieldModule extends StatelessWidget {
                 ),
                 TextFormField(
                   controller: screenController.rightArmFieldController,
-                  keyboardType: TextInputType.text,
+                  keyboardType: TextInputType.number,
                   cursorColor: Colors.black,
                   decoration: const InputDecoration(
                     contentPadding: EdgeInsets.symmetric(horizontal: 15),
                     border: InputBorder.none,
                   ),
-                  validator: (value) => FieldValidator().validateMeasurement(value!),
+                  validator: (value) => FieldValidator().validateRightArm(value!),
                   // onTap: (){
                   //   showAlertDialog(context);
                   // },
@@ -559,13 +659,19 @@ class WaistTextFieldModule extends StatelessWidget {
                 ),
                 TextFormField(
                   controller: screenController.waistFieldController,
-                  keyboardType: TextInputType.text,
+                  keyboardType: TextInputType.number,
                   cursorColor: Colors.black,
-                  decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                  decoration:  InputDecoration(
+                      contentPadding: EdgeInsets.only(top: 10, left: 10, right: 10),
                     border: InputBorder.none,
+                      suffixIcon: Column(
+                        children: [
+                          SizedBox(height: 12),
+                          Text("cm"),
+                        ],
+                      )
                   ),
-                  validator: (value) => FieldValidator().validateMeasurement(value!),
+                  validator: (value) => FieldValidator().validateWaist(value!),
                   // onTap: (){
                   //   showAlertDialog(context);
                   // },
@@ -609,13 +715,20 @@ class HipsTextFieldModule extends StatelessWidget {
                 ),
                 TextFormField(
                   controller: screenController.hipsFieldController,
-                  keyboardType: TextInputType.text,
+                  keyboardType: TextInputType.number,
                   cursorColor: Colors.black,
-                  decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(top: 10, left: 10, right: 10),
                     border: InputBorder.none,
+                      suffixIcon: Column(
+                    children: [
+                      SizedBox(height: 12),
+                      Text("cm"),
+                    ],
+                  )
+
                   ),
-                  validator: (value) => FieldValidator().validateMeasurement(value!),
+                  validator: (value) => FieldValidator().validateHips(value!),
                   // onTap: (){
                   //   showAlertDialog(context);
                   // },
@@ -659,13 +772,19 @@ class LeftThighTextFieldModule extends StatelessWidget {
                 ),
                 TextFormField(
                   controller: screenController.leftThighFieldController,
-                  keyboardType: TextInputType.text,
+                  keyboardType: TextInputType.number,
                   cursorColor: Colors.black,
-                  decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(top: 10, left: 10, right: 10),
                     border: InputBorder.none,
+                      suffixIcon: Column(
+                        children: [
+                          SizedBox(height: 12),
+                          Text("cm"),
+                        ],
+                      )
                   ),
-                  validator: (value) => FieldValidator().validateMeasurement(value!),
+                  validator: (value) => FieldValidator().validateLeftThight(value!),
                   // onTap: (){
                   //   showAlertDialog(context);
                   // },
@@ -709,13 +828,19 @@ class RightThighTextFieldModule extends StatelessWidget {
                 ),
                 TextFormField(
                   controller: screenController.rightThighFieldController,
-                  keyboardType: TextInputType.text,
+                  keyboardType: TextInputType.number,
                   cursorColor: Colors.black,
-                  decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(top: 10, left: 10, right: 10),
                     border: InputBorder.none,
+                      suffixIcon: Column(
+                        children: [
+                          SizedBox(height: 12),
+                          Text("cm"),
+                        ],
+                      )
                   ),
-                  validator: (value) => FieldValidator().validateMeasurement(value!),
+                  validator: (value) => FieldValidator().validateRightThight(value!),
                   // onTap: (){
                   //   showAlertDialog(context);
                   // },
@@ -739,7 +864,13 @@ class UpdateButtonModule extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         if(screenController.editProfileFormKey.currentState!.validate()){
-          if(screenController.profile == null){
+          if(screenController.genderValue.isEmpty){
+            Fluttertoast.showToast(msg: "Please Enter Gender");
+          } else{
+            screenController.updateProfileAPI();
+          }
+
+          /*if(screenController.profile == null){
             Fluttertoast.showToast(msg: "please Select Profile");
           } else if(screenController.beforeImageProfile == null){
             Fluttertoast.showToast(msg: "please Select Before Image Profile");
@@ -747,7 +878,7 @@ class UpdateButtonModule extends StatelessWidget {
             Fluttertoast.showToast(msg: "please Select After Image Profile");
           } else{
             screenController.updateProfileAPI();
-          }
+          }*/
         }
         },
       child: Container(

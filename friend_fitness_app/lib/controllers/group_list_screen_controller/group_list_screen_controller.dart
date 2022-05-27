@@ -49,6 +49,9 @@ class GroupListScreenController extends GetxController{
 
         getGameList = getAllGameListModel.list;
         log('getGameList : $getGameList');
+      } else{
+        Fluttertoast.showToast(msg: getAllGameListModel.errorMessage);
+        Fluttertoast.showToast(msg: getAllGameListModel.messege);
       }
 
     } catch(e) {
@@ -86,6 +89,7 @@ class GroupListScreenController extends GetxController{
       if(isSuccessStatusCode.value) {
         Fluttertoast.showToast(msg: memberJoinGameModel.messege);
       }else{
+        Fluttertoast.showToast(msg: memberJoinGameModel.errorMessage);
         Fluttertoast.showToast(msg: memberJoinGameModel.messege);
       }
 

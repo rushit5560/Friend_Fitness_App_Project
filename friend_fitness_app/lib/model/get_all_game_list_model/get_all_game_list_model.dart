@@ -14,18 +14,21 @@ class GetAllGameListModel {
     required this.success,
     required this.messege,
     required this.list,
+    required this.errorMessage
   });
 
   int the0;
   bool success;
   String messege;
   List<ListElement1> list;
+  String errorMessage;
 
   factory GetAllGameListModel.fromJson(Map<String, dynamic> json) => GetAllGameListModel(
     the0: json["0"]?? 0,
     success: json["success"] ?? false,
     messege: json["messege"] ?? "",
     list: List<ListElement1>.from(json["list"].map((x) => ListElement1.fromJson(x)) ?? {}),
+    errorMessage: json["error"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
@@ -33,6 +36,7 @@ class GetAllGameListModel {
     "success": success,
     "messege": messege,
     "list": List<dynamic>.from(list.map((x) => x.toJson())),
+    "error" : errorMessage,
   };
 }
 

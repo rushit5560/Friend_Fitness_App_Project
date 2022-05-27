@@ -99,21 +99,22 @@ class LeaderBoardModule extends StatelessWidget {
           screenController.getAllGameMemberFunction();
         });
       },
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Text(
-            "Group Name (Game)",
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 20,
+      child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              screenController.gameName,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
             ),
-          ),
-          const SizedBox(height: 20),
-          Expanded(
-            child: Container(
+            const SizedBox(height: 20),
+            Container(
               //height: 250,
               decoration: BoxDecoration(
                 color: Colors.white,
@@ -137,10 +138,10 @@ class LeaderBoardModule extends StatelessWidget {
                 },
               ).commonAllSidePadding(padding: 8),
             ),
-          ),
 
-        ],
-      ).commonSymmetricPadding(horizontal: 10),
+          ],
+        ).commonSymmetricPadding(horizontal: 10),
+      ),
     );
   }
 
@@ -155,18 +156,18 @@ class LeaderBoardModule extends StatelessWidget {
           Container(
             height: 50,
             width: 50,
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               shape: BoxShape.circle,
               image: DecorationImage(
-                image: AssetImage(AppImages.personImg),
+                image: NetworkImage("https://squadgame.omdemo.co.in/asset/uploads/" + screenController.getAllGameMembersList[i].userimage),
                 fit: BoxFit.cover,
               ),
             ),
           ),
-          const SizedBox(width: 10),
+          const SizedBox(width: 15),
           Expanded(
             child: Text(
-              screenController.getAllGameMembersList[i].gamename,
+              screenController.getAllGameMembersList[i].username,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 17,

@@ -53,6 +53,7 @@ class CreateGameScreenController extends GetxController{
 
       }else{
         Fluttertoast.showToast(msg: createGameModel.messege);
+        Fluttertoast.showToast(msg: createGameModel.errorMessage);
         log('Fail');
         log('isStatus.value: ${isSuccessStatus.value}');
 

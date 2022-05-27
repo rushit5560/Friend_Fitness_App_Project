@@ -10,54 +10,30 @@ String userSignUpModelToJson(UserSignUpModel data) => json.encode(data.toJson())
 
 class UserSignUpModel {
   UserSignUpModel({
-    required this.the0,
     required this.success,
-    required this.messege,
-    //required this.error,
-    required this.list,
+    required this.data,
+    required this.message,
   });
 
-  int the0;
   bool success;
-  String messege;
- // Error error;
-  List<ListElement> list;
+  List<Datum> data;
+  String message;
 
   factory UserSignUpModel.fromJson(Map<String, dynamic> json) => UserSignUpModel(
-    the0: json["0"] ?? 0,
     success: json["success"] ?? false,
-    messege: json["messege"] ?? "",
-    //error: Error.fromJson(json["error"] ?? {}),
-    list: List<ListElement>.from(json["list"].map((x) => ListElement.fromJson(x)) ?? {}),
+    data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x)) ?? {}),
+    message: json["message"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
-    "0": the0,
     "success": success,
-    "messege": messege,
-    //"error": error.toJson(),
-    "list": List<dynamic>.from(list.map((x) => x.toJson())),
+    "data": List<dynamic>.from(data.map((x) => x.toJson())),
+    "message": message,
   };
 }
 
-/*class Error {
-  Error({
-    required this.email,
-  });
-
-  List<String> email;
-
-  factory Error.fromJson(Map<String, dynamic> json) => Error(
-    email: List<String>.from(json["email"].map((x) => x) ?? {}),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "email": List<dynamic>.from(email.map((x) => x)),
-  };
-}*/
-
-class ListElement {
-  ListElement({
+class Datum {
+  Datum({
     required this.id,
     required this.name,
     required this.email,
@@ -79,6 +55,8 @@ class ListElement {
     required this.rThigh,
     required this.createdAt,
     required this.updatedAt,
+    required this.otp,
+    required this.gameid,
   });
 
   int id;
@@ -102,8 +80,10 @@ class ListElement {
   String rThigh;
   DateTime createdAt;
   DateTime updatedAt;
+  String otp;
+  String gameid;
 
-  factory ListElement.fromJson(Map<String, dynamic> json) => ListElement(
+  factory Datum.fromJson(Map<String, dynamic> json) => Datum(
     id: json["id"] ?? 0,
     name: json["name"] ?? "",
     email: json["email"] ?? "",
@@ -125,6 +105,8 @@ class ListElement {
     rThigh: json["r_thigh"] ?? "",
     createdAt: DateTime.parse(json["created_at"] ?? DateTime.now()),
     updatedAt: DateTime.parse(json["updated_at"] ?? DateTime.now()),
+    otp: json["otp"] ?? "",
+    gameid: json["gameid"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
@@ -149,5 +131,7 @@ class ListElement {
     "r_thigh": rThigh,
     "created_at": createdAt.toIso8601String(),
     "updated_at": updatedAt.toIso8601String(),
+    "otp": otp,
+    "gameid": gameid,
   };
 }

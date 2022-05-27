@@ -30,11 +30,14 @@ class EditProfileScreenController extends GetxController{
 
   File? afterImageProfile;
   String userAfterImageProfile = "";
+
+  RxString genderValue = 'Female'.obs;
   GlobalKey<FormState> profileFormKey = GlobalKey();
   GlobalKey<FormState> editProfileFormKey = GlobalKey();
   ApiHeader apiHeader = ApiHeader();
 
   TextEditingController nameFieldController = TextEditingController();
+  TextEditingController emailFieldController = TextEditingController();
   TextEditingController addressFieldController = TextEditingController();
   TextEditingController genderFieldController = TextEditingController();
   TextEditingController weightFieldController = TextEditingController();
@@ -52,7 +55,7 @@ class EditProfileScreenController extends GetxController{
     // TODO: implement onInit
     super.onInit();
     getProfileAPI();
-    addStarPointAPI();
+
   }
 
   getProfileAPI() async {
@@ -71,8 +74,9 @@ class EditProfileScreenController extends GetxController{
       if(isSuccessStatusCode.value){
         log('Success');
         nameFieldController.text = getUserProfileModel.list.name;
+        emailFieldController.text = getUserProfileModel.list.email;
         addressFieldController.text = getUserProfileModel.list.address;
-        genderFieldController.text = getUserProfileModel.list.gender;
+        //genderValue.value = getUserProfileModel.list.gender;
          weightFieldController.text = getUserProfileModel.list.weight;
          heightFieldController.text =  getUserProfileModel.list.height;
         chestFieldController.text =  getUserProfileModel.list.chest;
@@ -88,11 +92,14 @@ class EditProfileScreenController extends GetxController{
 
       }else{
         log('Fail');
+        Fluttertoast.showToast(msg: getUserProfileModel.messege);
+        Fluttertoast.showToast(msg: getUserProfileModel.errorMessage);
       }
     }catch(e){
       log('Get Profile Error: $e');
     } finally{
-      isLoading(false);
+     // isLoading(false);
+      addStarPointAPI();
     }
   }
 
@@ -126,7 +133,7 @@ class EditProfileScreenController extends GetxController{
         request.fields['id'] = "${UserDetails.userId}";
         request.fields['name'] = nameFieldController.text.trim();
         request.fields['address'] = addressFieldController.text.trim();
-        request.fields['gender'] = genderFieldController.text.trim();
+        request.fields['gender'] = genderValue.value;
         request.fields['height'] = heightFieldController.text.trim();
         request.fields['weight'] = weightFieldController.text.trim();
         request.fields['chest'] = chestFieldController.text.trim();
@@ -174,8 +181,15 @@ class EditProfileScreenController extends GetxController{
 
           if(isSuccessStatusCode.value){
             Fluttertoast.showToast(msg: response1.messege);
-
+            getProfileAPI();
           } else {
+            log('status code false: ${response1.success}');
+            log('response1.errorMessage: ${response1.errorMessage}');
+            //if(response1.errorMessage.contains("Token don't match")){
+              Fluttertoast.showToast(msg: response1.errorMessage);
+            Fluttertoast.showToast(msg: response1.messege);
+           // }
+
             log('False False');
           }
         });
@@ -253,7 +267,14 @@ class EditProfileScreenController extends GetxController{
 
           if(isSuccessStatusCode.value){
             Fluttertoast.showToast(msg: response1.messege);
+            getProfileAPI();
           } else {
+            log('status code false: ${response1.success}');
+            log('response1.errorMessage: ${response1.errorMessage}');
+            //if(response1.errorMessage.contains("Token don't match")){
+              Fluttertoast.showToast(msg: response1.errorMessage);
+            Fluttertoast.showToast(msg: response1.messege);
+            //}
             log('False False');
           }
         });
@@ -262,8 +283,8 @@ class EditProfileScreenController extends GetxController{
     }catch(e){
       log('Error: $e');
     } finally{
-      isLoading(false);
-      //addStarPointAPI();
+      //isLoading(false);
+      addStarPointAPI();
     }
   }
 
@@ -287,9 +308,9 @@ class EditProfileScreenController extends GetxController{
 
       if(isAddStarSuccessStatusCode.value){
         log('Success');
-        Fluttertoast.showToast(msg: addStarPointModel.messege);
+        //Fluttertoast.showToast(msg: addStarPointModel.messege);
       }else{
-        Fluttertoast.showToast(msg: addStarPointModel.messege);
+       // Fluttertoast.showToast(msg: addStarPointModel.messege);
         log('Fail');
       }
     }catch(e){

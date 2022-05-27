@@ -47,7 +47,8 @@ class CustomDrawer extends StatelessWidget {
                 img: AppImages.startGameImg,
                 name: 'Start Game',
                 customDrawerOption: CustomDrawerOption.startGame,
-              ) : Container(),
+              ) :
+              Container(),
 
               UserDetails.roleId == 3 ? const SizedBox(height: 20) : Container(),
 

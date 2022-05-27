@@ -3,7 +3,7 @@ class ApiUrl {
   static const apiMainPath = "https://squadgame.omdemo.co.in/";
 
   /// Login, Signup
-  static const signUpApi = apiMainPath + "api/register";
+  static const signUpApi = apiMainPath + "api/registeruser";
   static const loginApi = apiMainPath + "api/login";
 
   /// profile

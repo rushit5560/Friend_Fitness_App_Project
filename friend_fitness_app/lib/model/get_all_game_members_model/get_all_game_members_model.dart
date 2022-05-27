@@ -13,22 +13,30 @@ class GetAllGameMembersModel {
     required this.success,
     required this.messege,
     required this.list,
+    required this.gamename,
+    required this.errorMessage
   });
 
   bool success;
   String messege;
   List<ListElement> list;
+  String gamename;
+  String errorMessage;
 
   factory GetAllGameMembersModel.fromJson(Map<String, dynamic> json) => GetAllGameMembersModel(
     success: json["success"] ?? false,
     messege: json["messege"] ?? "",
     list: List<ListElement>.from(json["list"].map((x) => ListElement.fromJson(x))),
+    gamename: json["gamename"],
+    errorMessage: json["error"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
     "success": success,
     "messege": messege,
     "list": List<dynamic>.from(list.map((x) => x.toJson())),
+    "gamename": gamename,
+    "error" : errorMessage,
   };
 }
 
@@ -57,6 +65,8 @@ class ListElement {
     required this.categorytype,
     required this.categorypoint,
     required this.categoryimage,
+    required this.username,
+    required this.userimage,
   });
 
   int id;
@@ -82,6 +92,8 @@ class ListElement {
   String categorytype;
   String categorypoint;
   String categoryimage;
+  String username;
+  String userimage;
 
   factory ListElement.fromJson(Map<String, dynamic> json) => ListElement(
     id: json["id"] ?? 0,
@@ -107,6 +119,8 @@ class ListElement {
     categorytype: json["categorytype"] ?? "",
     categorypoint: json["categorypoint"] ?? "",
     categoryimage: json["categoryimage"] ?? "",
+    username: json["username"] ?? "",
+    userimage: json["userimage"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
@@ -133,5 +147,7 @@ class ListElement {
     "categorytype": categorytype,
     "categorypoint": categorypoint,
     "categoryimage": categoryimage,
+    "username": username,
+    "userimage": userimage
   };
 }

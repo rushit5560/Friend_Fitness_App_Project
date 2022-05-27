@@ -62,15 +62,15 @@ class SignUpScreenController extends GetxController {
 
       if(isStatus.value){
         log('Success');
-        Get.snackbar(userSignUpModel.messege, '');
-        Fluttertoast.showToast(msg: userSignUpModel.messege);
+        Get.snackbar(userSignUpModel.message, '');
+        Fluttertoast.showToast(msg: userSignUpModel.message);
         clearSignUpFieldsFunction();
         Get.back();
 
       }else{
         log('Fail');
         log('isStatus.value: ${isStatus.value}');
-        Fluttertoast.showToast(msg: userSignUpModel.messege);
+        Fluttertoast.showToast(msg: userSignUpModel.message);
 
       }
     }catch(e){

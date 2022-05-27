@@ -206,6 +206,8 @@ class TrackScreenController extends GetxController{
         getAllPositiveCategoryList = getAllPositiveCategoryModel.list;
         log('getAllPositiveCategoryList : $getAllPositiveCategoryList');
 
+      }else{
+        Fluttertoast.showToast(msg: getAllPositiveCategoryModel.errorMessage);
       }
 
     } catch(e) {
@@ -236,6 +238,8 @@ class TrackScreenController extends GetxController{
         getAllNegativeCategoryList = getAllNegativeCategoryModel.list;
         log('getAllNegativeCategoryList : $getAllNegativeCategoryList');
 
+      } else{
+        Fluttertoast.showToast(msg: getAllNegativeCategoryModel.errorMessage);
       }
 
     } catch(e) {
@@ -290,6 +294,7 @@ class TrackScreenController extends GetxController{
 
       } else {
         Fluttertoast.showToast(msg: categoryAddPositivePointModel.messege);
+        Fluttertoast.showToast(msg: categoryAddPositivePointModel.errorMessage);
         log("addCategoryPointEntryToFirebaseFunction Else Else");
       }
 
@@ -339,6 +344,7 @@ class TrackScreenController extends GetxController{
 
       } else {
         Fluttertoast.showToast(msg: categoryAddNegativePointModel.messege);
+        Fluttertoast.showToast(msg: categoryAddNegativePointModel.errorMessage);
         log("addNegativeCategoryPointEntryTFunction Else Else");
       }
 
@@ -392,6 +398,7 @@ class TrackScreenController extends GetxController{
 
       } else {
         Fluttertoast.showToast(msg: addWaterIntakePointListModel.messege);
+        Fluttertoast.showToast(msg: addWaterIntakePointListModel.errorMessage);
         log("addWaterIntakeCategoryPointEntryFunction Else Else");
       }
 

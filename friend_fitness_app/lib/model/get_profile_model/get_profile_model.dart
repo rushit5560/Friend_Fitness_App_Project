@@ -14,18 +14,21 @@ class GetUserProfileModel {
     required this.success,
     required this.messege,
     required this.list,
+    required this.errorMessage
   });
 
   int the0;
   bool success;
   String messege;
   ListClass list;
+  String errorMessage;
 
   factory GetUserProfileModel.fromJson(Map<String, dynamic> json) => GetUserProfileModel(
     the0: json["0"] ?? 0,
     success: json["success"] ?? false,
     messege: json["messege"] ?? "",
     list: ListClass.fromJson(json["list"]),
+    errorMessage: json["error"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
@@ -33,6 +36,7 @@ class GetUserProfileModel {
     "success": success,
     "messege": messege,
     "list": list.toJson(),
+    "error" : errorMessage,
   };
 }
 

@@ -24,6 +24,7 @@ class CustomDrawerSingleItemModule extends StatelessWidget {
   SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
   final screenController = Get.find<CustomDrawerController>();
 
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(

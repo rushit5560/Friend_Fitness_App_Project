@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:friend_fitness_app/common/constants/api_url.dart';
 import 'package:friend_fitness_app/common/sharedpreference_data/sharedpreference_data.dart';
 import 'package:friend_fitness_app/common/user_details.dart';
@@ -38,12 +39,12 @@ class SignInScreenController extends GetxController {
       log('Response : ${response.body}');
       UserSignInModel signInModel = UserSignInModel.fromJson(json.decode(response.body));
       // log('signInModel: ${signUpModel.name}');
-      isStatus = response.statusCode.obs;
+      isSuccessStatus = signInModel.success.obs;
       log('isStatus: $isStatus');
 
 
 
-      if(isStatus.value == 200){
+      if(isSuccessStatus.value){
         log('Success');
         // for(int i =0; i < signInModel.list.length; i++){
         //
@@ -65,7 +66,8 @@ class SignInScreenController extends GetxController {
 
       }else{
         log('Fail');
-        Get.snackbar("Wrong Email/Password", '');
+        Fluttertoast.showToast(msg: signInModel.messege);
+        //Get.snackbar("Wrong Email/Password", '');
       }
     }catch(e){
       log('Error: $e');

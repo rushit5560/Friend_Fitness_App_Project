@@ -152,7 +152,7 @@ class ForgotPasswordTextModule extends StatelessWidget {
              Get.to(()=> ForgotPasswordScreen(), transition: Transition.rightToLeft);
           },
           child: const Text(
-            "FORGOT PASSWORD?",
+            "Forgot Password?",
             style: TextStyle(
               fontSize: 13,
             ),
@@ -187,7 +187,7 @@ class LoginButtonModule extends StatelessWidget {
               borderRadius: BorderRadius.circular(20),
             ),
             child: const Text(
-              "LOGIN",
+              "Login",
               style: TextStyle(
                 fontWeight: FontWeight.bold,
                 color: Colors.white,
@@ -289,7 +289,7 @@ class SignUpTextModule extends StatelessWidget {
             Get.off(()=> SignUpScreen(), transition: Transition.zoom);
           },
           child: const Text(
-            "SignUp",
+            "Register",
             style: TextStyle(
               fontSize: 13,
               decoration: TextDecoration.underline,

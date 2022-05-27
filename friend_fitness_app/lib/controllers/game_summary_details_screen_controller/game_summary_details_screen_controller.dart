@@ -53,6 +53,9 @@ class GameSummaryDetailsScreenController extends GetxController{
         totalPositivePoint = getUserWisePointModel.list.positive.total;
         totalNegativePoint = getUserWisePointModel.list.negative.total;
         currentDate = getUserWisePointModel.date;
+      } else{
+        Fluttertoast.showToast(msg: getUserWisePointModel.errorMessage);
+        Fluttertoast.showToast(msg: getUserWisePointModel.messege);
       }
 
     } catch(e) {
@@ -85,6 +88,7 @@ class GameSummaryDetailsScreenController extends GetxController{
         Fluttertoast.showToast(msg: addStarPointModel.messege);
       }else{
         Fluttertoast.showToast(msg: addStarPointModel.messege);
+        Fluttertoast.showToast(msg: addStarPointModel.errorMessage);
         log('Fail');
       }
     }catch(e){

@@ -13,19 +13,22 @@ class GetUserWisePointModel {
     required this.success,
     required this.messege,
     required this.list,
-    required this.date
+    required this.date,
+    required this.errorMessage
   });
 
   bool success;
   String messege;
   GetUserWisePointModelList list;
   String date;
+  String errorMessage;
 
   factory GetUserWisePointModel.fromJson(Map<String, dynamic> json) => GetUserWisePointModel(
     success: json["success"] ?? false,
     messege: json["messege"] ?? "",
     list: GetUserWisePointModelList.fromJson(json["list"] ?? {}),
     date: json["Date"],
+    errorMessage: json["error"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
@@ -33,6 +36,7 @@ class GetUserWisePointModel {
     "messege": messege,
     "list": list.toJson(),
     "Date": date,
+    "error" : errorMessage,
   };
 }
 

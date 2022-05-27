@@ -95,6 +95,7 @@ class GroupChatScreenController extends GetxController {
             //getAllMessageFunction(gameId: gameId, userId: userId);
           } else {
             Fluttertoast.showToast(msg: response1.messege);
+            Fluttertoast.showToast(msg: response1.errorMessage);
             log('False False');
           }
         });
@@ -165,6 +166,7 @@ class GroupChatScreenController extends GetxController {
 
           } else {
             Fluttertoast.showToast(msg: response1.messege);
+            Fluttertoast.showToast(msg: response1.errorMessage);
             log('False False');
           }
         });
@@ -203,6 +205,8 @@ class GroupChatScreenController extends GetxController {
         log('getAllMessageList : $getAllMessageList');
 
       }else{
+        Fluttertoast.showToast(msg: getAllMessageModel.messege!);
+        Fluttertoast.showToast(msg: getAllMessageModel.errorMessage!);
         log('Fail');
       }
     }catch(e){
@@ -210,6 +214,11 @@ class GroupChatScreenController extends GetxController {
     } finally{
       isLoading(false);
     }
+  }
+
+  loadUI() {
+    isLoading(true);
+    isLoading(false);
   }
 
   @override

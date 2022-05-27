@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/common/constants/app_colors.dart';
 import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
+import 'package:friend_fitness_app/common/user_details.dart';
 import 'package:friend_fitness_app/controllers/game_summary_details_screen_controller/game_summary_details_screen_controller.dart';
 import 'package:get/get.dart';
 
@@ -51,8 +52,11 @@ class GameSummaryDetailsModule extends StatelessWidget {
         });
       },
       child: SingleChildScrollView(
-        physics: const BouncingScrollPhysics(),
-        child: Column(
+        physics: const AlwaysScrollableScrollPhysics(),
+        child: (int.parse(UserDetails.gameId) == 0) ?
+        const Text("Please join with any game"):
+
+        Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -66,7 +70,7 @@ class GameSummaryDetailsModule extends StatelessWidget {
             // const SizedBox(height: 10),
             // showStarPointModule(),
 
-            const SizedBox(height: 250),
+            //const SizedBox(height: 250),
 
             // const SizedBox(height: 10),
             // negativePointModule(),

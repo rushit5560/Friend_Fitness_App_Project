@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:friend_fitness_app/common/constants/api_header.dart';
 import 'package:friend_fitness_app/common/constants/api_url.dart';
 import 'package:friend_fitness_app/common/user_details.dart';
@@ -18,6 +19,8 @@ class HomeScreenController extends GetxController {
 
   ApiHeader apiHeader = ApiHeader();
   List<ListElement> getAllGameMembersList = [];
+
+  String gameName = "";
 
   // List<FitnessModel> exerciseList = [];
   // List<FitnessModel> movementList = [];
@@ -243,11 +246,13 @@ class HomeScreenController extends GetxController {
         log('Success');
          getAllGameMembersList = getAllGameMembersModel.list;
          log('getAllGameMembersList : $getAllGameMembersList');
+        gameName = getAllGameMembersModel.gamename;
 
       }else{
         log('Fail');
         log('isStatus.value: ${isSuccessStatusCode.value}');
-
+        Fluttertoast.showToast(msg: getAllGameMembersModel.messege);
+        Fluttertoast.showToast(msg: getAllGameMembersModel.errorMessage);
       }
     }catch(e){
       log('getAllGameMembersList Error: $e');
