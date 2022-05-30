@@ -314,7 +314,17 @@ class SignUpConfirmPasswordTextFieldModule extends StatelessWidget {
             cursorColor: Colors.grey,
             obscureText: screenController.isCPasswordShow.value,
             decoration: signUpInputDecoration(hintText: "Confirm Password", controller: screenController, index: 2),
-            validator: (value) => fieldValidator.validateConfirmPassword(value!, screenController.cPasswordFieldController.text.trim()),
+            validator: (value) {
+              if (value!.isEmpty) {
+                return "Please enter password";
+              } else if(value.length < 8){
+                return "Password length should be minimum 8 character";
+              } else if(screenController.passwordFieldController.text != screenController.cPasswordFieldController.text){
+                return "Password and confirm password should be same";
+              } else {
+                return null;
+              }
+            },
           ),
         ),
 

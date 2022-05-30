@@ -31,8 +31,13 @@ class GroupListScreenController extends GetxController{
     String url = ApiUrl.getAllGameApi;
     log("Get All Game API URL : $url");
 
+    Map<String, dynamic> data = {
+      "userid" : "${UserDetails.userId}",
+      "roleid" : "${UserDetails.roleId}"
+    };
+
     try {
-      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      http.Response response = await http.post(Uri.parse(url), body: data, headers: apiHeader.headers);
       log('Response:  ${response.body}');
 
      GetAllGameListModel getAllGameListModel = GetAllGameListModel.fromJson(json.decode(response.body));

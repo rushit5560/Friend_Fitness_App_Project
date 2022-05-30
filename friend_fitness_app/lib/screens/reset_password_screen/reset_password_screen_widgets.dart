@@ -56,55 +56,40 @@ class NewPasswordTextFieldModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          height: 50,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 6,
-                blurStyle: BlurStyle.outer,
-                color: AppColors.colorLightGrey,
-              ),
-            ],
+    return Obx(()=>
+       Stack(
+        children: [
+          Container(
+            height: 50,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 6,
+                  blurStyle: BlurStyle.outer,
+                  color: AppColors.colorLightGrey,
+                ),
+              ],
+            ),
           ),
-        ),
-        TextFormField(
-          controller: screenController.newPasswordFieldController,
-          keyboardType: TextInputType.visiblePassword,
-          cursorColor: Colors.grey,
-          decoration: emailInputDecoration(hintText: "New Password"),
-          //validator: (value) => fieldValidator.validateEmail(value!),
-        ),
-      ],
+          TextFormField(
+            controller: screenController.newPasswordFieldController,
+            keyboardType: TextInputType.visiblePassword,
+            cursorColor: Colors.grey,
+            obscureText: screenController.isNewPass.value,
+            decoration: passwordInputDecoration(
+                hintText: "New Password", index: 0, controller: screenController),
+            validator: (value) => fieldValidator.validatePassword(value!),
+          ),
+        ],
+      ),
     );
   }
 
-  InputDecoration emailInputDecoration({required String hintText}) {
-    return InputDecoration(
-      hintText: hintText,
-      hintStyle: const TextStyle(color: Colors.grey),
-      isDense: true,
-      contentPadding: const EdgeInsets.symmetric(horizontal: 15, vertical: 17),
-      filled: true,
-      fillColor: Colors.white,
-      enabledBorder: OutlineInputBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
-          borderSide: BorderSide(color: Colors.grey.shade200)),
-      focusedBorder: OutlineInputBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
-          borderSide: BorderSide(color: Colors.grey.shade200)),
-      errorBorder: OutlineInputBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
-          borderSide: BorderSide(color: Colors.grey.shade200)),
-      focusedErrorBorder: OutlineInputBorder(
-          borderRadius: const BorderRadius.all(Radius.circular(10)),
-          borderSide: BorderSide(color: Colors.grey.shade200)),
-    );
-  }
+
 }
+
+
 
 class ConfirmPasswordTextFieldModule extends StatelessWidget {
   ConfirmPasswordTextFieldModule({Key? key}) : super(key: key);
@@ -114,34 +99,49 @@ class ConfirmPasswordTextFieldModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          height: 50,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 6,
-                blurStyle: BlurStyle.outer,
-                color: AppColors.colorLightGrey,
-              ),
-            ],
+    return Obx(()=>
+       Stack(
+        children: [
+          Container(
+            height: 50,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(15),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 6,
+                  blurStyle: BlurStyle.outer,
+                  color: AppColors.colorLightGrey,
+                ),
+              ],
+            ),
           ),
-        ),
-        TextFormField(
-          controller: screenController.confirmPasswordFieldController,
-          keyboardType: TextInputType.visiblePassword,
-          cursorColor: Colors.grey,
-          decoration: emailInputDecoration(hintText: "Confirm Password"),
-          //validator: (value) => fieldValidator.validateEmail(value!),
-        ),
-      ],
+          TextFormField(
+            controller: screenController.confirmPasswordFieldController,
+            keyboardType: TextInputType.visiblePassword,
+            cursorColor: Colors.grey,
+            obscureText: screenController.isCPassShow.value,
+            decoration: passwordInputDecoration(hintText: "Confirm Password", index: 1, controller: screenController),
+            validator: (value) {
+              if (value!.isEmpty) {
+                return "Please enter password";
+              } else if(value.length < 8){
+                return "Password length should be minimum 8 character";
+              } else if(screenController.newPasswordFieldController.text != screenController.confirmPasswordFieldController.text){
+                return "Password and confirm password should be same";
+              } else {
+                return null;
+              }
+            },
+          ),
+        ],
+      ),
     );
   }
 
-  InputDecoration emailInputDecoration({required String hintText}) {
-    return InputDecoration(
+}
+
+InputDecoration passwordInputDecoration({required String hintText, required int index, required ResetPasswordScreenController controller}) {
+  return InputDecoration(
       hintText: hintText,
       hintStyle: const TextStyle(color: Colors.grey),
       isDense: true,
@@ -160,8 +160,40 @@ class ConfirmPasswordTextFieldModule extends StatelessWidget {
       focusedErrorBorder: OutlineInputBorder(
           borderRadius: const BorderRadius.all(Radius.circular(10)),
           borderSide: BorderSide(color: Colors.grey.shade200)),
-    );
-  }
+      suffixIcon: index == 0
+          ? GestureDetector(
+        onTap: () {
+          controller.isNewPass.value = !controller.isNewPass.value;
+        },
+        child: Obx(
+              () =>
+              Icon(
+                controller.isNewPass.value
+                    ? Icons.visibility_off_rounded
+                    : Icons.visibility_rounded,
+                color: Colors.grey,
+                size: 22,
+              ),
+        ),
+      )
+          : index == 1
+          ? GestureDetector(
+        onTap: () {
+          controller.isCPassShow.value =
+          !controller.isCPassShow.value;
+        },
+        child: Obx(
+              () =>
+              Icon(
+                controller.isCPassShow.value
+                    ? Icons.visibility_off_rounded
+                    : Icons.visibility_rounded,
+                color: Colors.grey,
+                size: 22,
+              ),
+        ),
+      ) : Container()
+  );
 }
 
 /// Reset Password Button
@@ -190,7 +222,7 @@ class ResetPasswordButtonModule extends StatelessWidget {
           ],
         ),
         child: const Text(
-          "RESET PASSWORD",
+          "Reset Password",
           style: TextStyle(color: Colors.white, fontSize: 18),
         ).commonSymmetricPadding(horizontal: 28, vertical: 14),
       ),

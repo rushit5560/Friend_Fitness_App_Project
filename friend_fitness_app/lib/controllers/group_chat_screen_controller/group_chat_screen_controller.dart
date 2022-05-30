@@ -176,11 +176,11 @@ class GroupChatScreenController extends GetxController {
       log('Error: $e');
     } finally{
       //isLoading(false);
-      getAllMessageFunction(userId: userId, gameId: gameId);
+      getAllMessageFunction(gameId: gameId);
     }
   }
 
-  getAllMessageFunction({required String gameId, required String userId}) async {
+  getAllMessageFunction({required String gameId}) async {
     isLoading(true);
     String url = ApiUrl.getAllMessageApi;
     log('url: $url');
@@ -225,7 +225,7 @@ class GroupChatScreenController extends GetxController {
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    getAllMessageFunction(userId: userId, gameId: gameId);
+    getAllMessageFunction(gameId: gameId);
   }
 
 }

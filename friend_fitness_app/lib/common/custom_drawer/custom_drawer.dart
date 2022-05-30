@@ -36,7 +36,7 @@ class CustomDrawer extends StatelessWidget {
 
               UserDetails.roleId == 3 ?
               CustomDrawerSingleItemModule(
-                img: AppImages.createGameImg,
+                img: AppImages.gameLogoImg,
                 name: 'Create Game',
                 customDrawerOption: CustomDrawerOption.createGame,
               ) : Container(),
@@ -44,7 +44,7 @@ class CustomDrawer extends StatelessWidget {
 
               UserDetails.roleId == 3 ?
               CustomDrawerSingleItemModule(
-                img: AppImages.startGameImg,
+                img: AppImages.gameLogoImg,
                 name: 'Start Game',
                 customDrawerOption: CustomDrawerOption.startGame,
               ) :
@@ -54,7 +54,7 @@ class CustomDrawer extends StatelessWidget {
 
               UserDetails.roleId == 3 ?
               CustomDrawerSingleItemModule(
-                img: AppImages.startGameImg,
+                img: AppImages.gameLogoImg,
                 name: 'End Game',
                 customDrawerOption: CustomDrawerOption.endGame,
               ) : Container(),

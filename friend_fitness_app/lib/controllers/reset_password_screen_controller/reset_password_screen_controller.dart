@@ -7,6 +7,7 @@ import 'package:friend_fitness_app/common/constants/api_header.dart';
 import 'package:friend_fitness_app/common/constants/api_url.dart';
 import 'package:friend_fitness_app/common/user_details.dart';
 import 'package:friend_fitness_app/model/reset_password_model/reset_password_model.dart';
+import 'package:friend_fitness_app/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -16,6 +17,9 @@ class ResetPasswordScreenController extends GetxController{
   TextEditingController confirmPasswordFieldController = TextEditingController();
 
   int userId = Get.arguments;
+
+  RxBool isNewPass = true.obs;
+  RxBool isCPassShow = true.obs;
 
   RxBool isLoading = false.obs;
   ApiHeader apiHeader = ApiHeader();
@@ -46,6 +50,7 @@ class ResetPasswordScreenController extends GetxController{
         log('Success');
         Fluttertoast.showToast(msg: resetPasswordModel.message);
         clearResetPasswordFieldsFunction();
+        Get.off(()=> SignInScreen());
 
       }else{
         log('Fail');

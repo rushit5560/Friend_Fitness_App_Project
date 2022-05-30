@@ -132,7 +132,7 @@ class VerifyOtpButtonModule extends StatelessWidget {
           ],
         ),
         child: const Text(
-          "VERIFY OTP",
+          "Verify OTP",
           style: TextStyle(color: Colors.white, fontSize: 18),
         ).commonSymmetricPadding(horizontal: 28, vertical: 14),
       ),

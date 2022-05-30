@@ -110,7 +110,7 @@ class SendOtpButtonModule extends StatelessWidget {
           ],
         ),
         child: const Text(
-          "SEND OTP",
+          "Send OTP",
           style: TextStyle(color: Colors.white, fontSize: 18),
         ).commonSymmetricPadding(horizontal: 28, vertical: 14),
       ),

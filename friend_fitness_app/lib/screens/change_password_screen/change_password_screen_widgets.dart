@@ -159,10 +159,20 @@ class ConfirmNewPasswordTextFieldModule extends StatelessWidget {
             cursorColor: Colors.grey,
             obscureText: screenController.isCNewPassShow.value,
             decoration: passwordInputDecoration(
-                hintText: "Confirm New Password",
+                hintText: "Confirm Password",
                 index: 2,
                 controller: screenController),
-            validator: (value) => fieldValidator.validateConfirmPassword(value!, screenController.newPasswordFieldController.text.trim()),
+            validator: (value) {
+              if (value!.isEmpty) {
+                return "Please enter password";
+              } else if(value.length < 8){
+                return "Password length should be minimum 8 character";
+              } else if(screenController.newPasswordFieldController.text != screenController.cNewPasswordFieldController.text){
+                return "Password and confirm password should be same";
+              } else {
+                return null;
+              }
+            },
           ),
         ),
       ],

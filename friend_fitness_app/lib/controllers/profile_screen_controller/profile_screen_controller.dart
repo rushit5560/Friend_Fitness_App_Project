@@ -76,7 +76,7 @@ class EditProfileScreenController extends GetxController{
         nameFieldController.text = getUserProfileModel.list.name;
         emailFieldController.text = getUserProfileModel.list.email;
         addressFieldController.text = getUserProfileModel.list.address;
-        //genderValue.value = getUserProfileModel.list.gender;
+        genderValue.value = getUserProfileModel.list.gender;
          weightFieldController.text = getUserProfileModel.list.weight;
          heightFieldController.text =  getUserProfileModel.list.height;
         chestFieldController.text =  getUserProfileModel.list.chest;
@@ -218,7 +218,7 @@ class EditProfileScreenController extends GetxController{
         request.fields['id'] = "${UserDetails.userId}";
         request.fields['name'] = nameFieldController.text.trim();
         request.fields['address'] = addressFieldController.text.trim();
-        request.fields['gender'] = genderFieldController.text.trim();
+        request.fields['gender'] = genderValue.value;
         request.fields['height'] = heightFieldController.text.trim();
         request.fields['weight'] = weightFieldController.text.trim();
         request.fields['chest'] = chestFieldController.text.trim();
@@ -297,7 +297,7 @@ class EditProfileScreenController extends GetxController{
 
     Map<String, dynamic> data= {
       "userid" : "${UserDetails.userId}",
-      "gameid" : "${UserDetails.gameId}"
+      //"gameid" : "${UserDetails.gameId}"
     };
     try{
       http.Response response = await http.post(Uri.parse(url), body: data, headers: apiHeader.headers);

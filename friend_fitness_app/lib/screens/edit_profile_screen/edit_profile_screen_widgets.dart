@@ -305,71 +305,36 @@ class GenderTextFieldModule extends StatelessWidget {
         ),
         Expanded(
             flex: 4,
-            child: Stack(
-        children: [
-        Container(
-        height: 50,
-          decoration: BoxDecoration(
-            //color: Colors.white,
-            borderRadius: BorderRadius.circular(15),
-            //border: Border.all(color: AppColors.colorLightGrey),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.colorLightGrey,
-                blurRadius: 5,
-                //spreadRadius: 5,
-                blurStyle: BlurStyle.outer,
-              ),
-            ],
-          ),
-        ),
-
-        Obx(() =>
-            Container(
-              padding: const EdgeInsets.only(left: 10),
-              width: Get.width, //gives the width of the dropdown button
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                //color: Colors.grey.shade200,
-              ),
-              child: Theme(
-                data: Theme.of(context).copyWith(
-                  canvasColor: Colors.grey.shade100,
-                  buttonTheme: ButtonTheme.of(context).copyWith(
-                    alignedDropdown: true,
-                  ),
+            child: Obx(()=>
+                Column(
+                  children: [
+                    ListTile(
+                      leading: Radio<String>(
+                        value: 'Male',
+                        activeColor: Colors.black,
+                        groupValue: screenController.genderValue.value,
+                        onChanged: (value) {
+                          screenController.genderValue.value = value!;
+                          log(value);
+                        },
+                      ),
+                      title: const Text('Male', style: TextStyle(color: Colors.black, fontSize: 15),),
+                    ),
+                    ListTile(
+                      leading: Radio<String>(
+                        value: 'Female',
+                        activeColor: Colors.black,
+                        groupValue: screenController.genderValue.value,
+                        onChanged: (value) {
+                          screenController.genderValue.value = value!;
+                          log(value);
+                        },
+                      ),
+                      title: const Text('Female', style: TextStyle(color: Colors.black, fontSize: 15),),
+                    ),
+                  ],
                 ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-
-                    value: screenController.genderValue.value,
-
-                    items: <String>[
-                      'Female',
-                      'Male'
-                    ].map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: const TextStyle(color: Colors.grey),
-                        ),
-                      );
-                    }).toList(),
-
-                    onChanged: (value){
-                      screenController.isLoading(true);
-                      //screenController.roleValue.value = int.parse(value!);
-                      screenController.genderValue.value = value!;
-                      screenController.isLoading(false);
-                    },
-                  ),
-                ),
-              ),
-            ),
-        ),
-      ],
-    )
+            )
         )
       ],
     );

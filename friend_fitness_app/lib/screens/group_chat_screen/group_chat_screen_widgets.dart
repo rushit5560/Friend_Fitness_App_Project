@@ -62,103 +62,125 @@ class GroupChatListModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return screenController.getAllMessageList.isEmpty ?
-        const Center(child: Text("No message")):
-      ListView.builder(
-      itemCount: screenController.getAllMessageList.length,
-      shrinkWrap: true,
-      physics: const AlwaysScrollableScrollPhysics(),
-      itemBuilder: (context, i) {
-        log('screenController.getAllMessageList[i].userid: ${screenController.getAllMessageList[i].userid}');
-        log('UserDetails.userId: ${UserDetails.userId}');
-        /*return SingleMessageBubble(
-          isSendByMe: screenController.userChatList[i].isSendByMe,
-          message: screenController.userChatList[i].message,
-        );*/
-        return messageList(i);
+    return RefreshIndicator(
+      onRefresh: (){
+        return Future.delayed(
+            const Duration(seconds: 1),(){
+          screenController.getAllMessageFunction(gameId: screenController.gameId);
+        });
       },
-    ).commonSymmetricPadding(horizontal: 15);
+      child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            children: [
+              SizedBox(height: 30),
+              screenController.getAllMessageList.isEmpty ?
+              const Center(child: Text("No message")):
+              ListView.builder(
+              itemCount: screenController.getAllMessageList.length,
+              shrinkWrap: true,
+              physics: const AlwaysScrollableScrollPhysics(),
+              itemBuilder: (context, i) {
+                log('screenController.getAllMessageList[i].userid: ${screenController.getAllMessageList[i].userid}');
+                log('UserDetails.userId: ${UserDetails.userId}');
+                /*return SingleMessageBubble(
+                  isSendByMe: screenController.userChatList[i].isSendByMe,
+                  message: screenController.userChatList[i].message,
+                );*/
+                return messageList(i);
+              },
+      ).commonSymmetricPadding(horizontal: 15),
+            ],
+          ),
+        ),
+    );
   }
 
   Widget messageList(i){
     return screenController.getAllMessageList[i].userid == UserDetails.userId ?
-      Container(
-      padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        // color: AppColors.colorLightGrey,
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 3,
-            blurStyle: BlurStyle.outer,
-            color: AppColors.colorLightGrey,
+      Padding(
+        padding: const EdgeInsets.symmetric(vertical: 5),
+        child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          // color: AppColors.colorLightGrey,
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 3,
+              blurStyle: BlurStyle.outer,
+              color: AppColors.colorLightGrey,
+            ),
+          ],
+          borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(15),
+            topLeft: Radius.circular(15),
+            bottomRight: Radius.circular(15),
+            bottomLeft: Radius.circular(15),
           ),
-        ],
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(15),
-          topLeft: Radius.circular(15),
-          bottomRight: Radius.circular(15),
-          bottomLeft: Radius.circular(15),
         ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.end,
-        crossAxisAlignment: CrossAxisAlignment.end,
-        children: [
-          Text(
-            screenController.getAllMessageList[i].message!,
-            style: const TextStyle(fontSize: 12),
-          ),
-          screenController.profile != null ?
-          Container(
-            height: 150, width: 150,
-            decoration: BoxDecoration(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            Text(
+              screenController.getAllMessageList[i].message!,
+              style: const TextStyle(fontSize: 12),
+            ),
+            screenController.profile != null ?
+            Container(
+              height: 150, width: 150,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10.0),
+                  //border: Border.all(color: AppColors.colorLightGrey),
+                  boxShadow: [
+                    BoxShadow(
+                        blurRadius: 1,
+                        blurStyle: BlurStyle.outer,
+                        color: Colors.grey.shade500
+                    )
+                  ]
+              ),
+              child: ClipRRect(
                 borderRadius: BorderRadius.circular(10.0),
-                //border: Border.all(color: AppColors.colorLightGrey),
-                boxShadow: [
-                  BoxShadow(
-                      blurRadius: 1,
-                      blurStyle: BlurStyle.outer,
-                      color: Colors.grey.shade500
-                  )
-                ]
-            ),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(10.0),
-              child: Image.file(screenController.profile!,
-                  height: 150, width: 150, fit: BoxFit.cover),
-            ),
-          ):
-          Container()
-        ],
-      ),
-    ) :
-    Container(
-      padding: const EdgeInsets.all(15),
-      decoration: BoxDecoration(
-        // color: AppColors.colorLightGrey,
-        boxShadow: [
-          BoxShadow(
-            blurRadius: 3,
-            blurStyle: BlurStyle.outer,
-            color: AppColors.colorLightGrey,
-          ),
-        ],
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(15),
-          topLeft: Radius.circular(15),
-          bottomRight: Radius.circular(15),
-          bottomLeft: Radius.circular(15),
+                child: Image.file(screenController.profile!,
+                    height: 150, width: 150, fit: BoxFit.cover),
+              ),
+            ):
+            Container()
+          ],
         ),
-      ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            screenController.getAllMessageList[i].message!,
-            style: const TextStyle(fontSize: 12),
+    ),
+      ) :
+    Padding(
+      padding: const EdgeInsets.symmetric(vertical: 5),
+      child: Container(
+        padding: const EdgeInsets.all(12),
+        decoration: BoxDecoration(
+          // color: AppColors.colorLightGrey,
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 3,
+              blurStyle: BlurStyle.outer,
+              color: AppColors.colorLightGrey,
+            ),
+          ],
+          borderRadius: const BorderRadius.only(
+            topRight: Radius.circular(15),
+            topLeft: Radius.circular(15),
+            bottomRight: Radius.circular(15),
+            bottomLeft: Radius.circular(15),
           ),
-        ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              screenController.getAllMessageList[i].message!,
+              style: const TextStyle(fontSize: 12),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -282,7 +304,7 @@ class SendMessageModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        GestureDetector(
+        /*GestureDetector(
           onTap: (){
             gallery();
           },
@@ -299,9 +321,9 @@ class SendMessageModule extends StatelessWidget {
                 ],
               ),
               child: Icon(Icons.image)),
-        ),
+        ),*/
 
-        const SizedBox(width: 10),
+        //const SizedBox(width: 10),
 
         Expanded(
           child: Stack(

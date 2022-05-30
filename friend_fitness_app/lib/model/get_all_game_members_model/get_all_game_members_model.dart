@@ -26,8 +26,8 @@ class GetAllGameMembersModel {
   factory GetAllGameMembersModel.fromJson(Map<String, dynamic> json) => GetAllGameMembersModel(
     success: json["success"] ?? false,
     messege: json["messege"] ?? "",
-    list: List<ListElement>.from(json["list"].map((x) => ListElement.fromJson(x))),
-    gamename: json["gamename"],
+    list: List<ListElement>.from(json["list"].map((x) => ListElement.fromJson(x)) ?? {}),
+    gamename: json["gamename"] ?? "",
     errorMessage: json["error"] ?? "",
   );
 
