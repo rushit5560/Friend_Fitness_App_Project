@@ -7,6 +7,7 @@ import 'package:friend_fitness_app/common/constants/api_url.dart';
 import 'package:friend_fitness_app/common/sharedpreference_data/sharedpreference_data.dart';
 import 'package:friend_fitness_app/common/user_details.dart';
 import 'package:friend_fitness_app/model/get_all_game_list_model/get_all_game_list_model.dart';
+import 'package:friend_fitness_app/model/get_all_game_members_model/get_all_game_members_model.dart';
 import 'package:friend_fitness_app/model/member_join_game_model/member_join_game_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -18,6 +19,8 @@ class GroupListScreenController extends GetxController{
 
   ApiHeader apiHeader= ApiHeader();
   SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
+  List<ListElement> getAllGameMembersList = [];
+  String gameName = "";
 
   @override
   void onInit() {
@@ -35,10 +38,11 @@ class GroupListScreenController extends GetxController{
       "userid" : "${UserDetails.userId}",
       "roleid" : "${UserDetails.roleId}"
     };
+    log('getAllGameList data: $data');
 
     try {
       http.Response response = await http.post(Uri.parse(url), body: data, headers: apiHeader.headers);
-      log('Response:  ${response.body}');
+      log('getAllGameList Response:  ${response.body}');
 
      GetAllGameListModel getAllGameListModel = GetAllGameListModel.fromJson(json.decode(response.body));
       isSuccessStatusCode = getAllGameListModel.success.obs;
@@ -55,7 +59,7 @@ class GroupListScreenController extends GetxController{
         getGameList = getAllGameListModel.list;
         log('getGameList : $getGameList');
       } else{
-        Fluttertoast.showToast(msg: getAllGameListModel.errorMessage);
+        //Fluttertoast.showToast(msg: getAllGameListModel.errorMessage);
         Fluttertoast.showToast(msg: getAllGameListModel.messege);
       }
 
@@ -94,14 +98,49 @@ class GroupListScreenController extends GetxController{
       if(isSuccessStatusCode.value) {
         Fluttertoast.showToast(msg: memberJoinGameModel.messege);
       }else{
-        Fluttertoast.showToast(msg: memberJoinGameModel.errorMessage);
         Fluttertoast.showToast(msg: memberJoinGameModel.messege);
       }
 
     } catch(e) {
       log("memberJoinGame Error ::: $e");
     } finally {
+      //isLoading(false);
+      getAllGameMemberFunction();
+    }
+  }
+
+  /// Get All Members Point wise
+  getAllGameMemberFunction()async{
+    isLoading(true);
+    String url = ApiUrl.gameMemberApi+ "${UserDetails.gameId}";
+    log('Game Member url: $url');
+
+    try{
+      http.Response response = await http.get(Uri.parse(url), headers: apiHeader.headers);
+      log('getAllGameMembersList Response : ${response.body}');
+      GetAllGameMembersModel getAllGameMembersModel = GetAllGameMembersModel.fromJson(json.decode(response.body));
+      //log('signInModel: ${signUpModel.name}');
+      isSuccessStatusCode = getAllGameMembersModel.success.obs;
+      log('isSuccessStatusCode: $isSuccessStatusCode');
+      //isStatus = signInModel.statusCode.obs;
+
+      if(isSuccessStatusCode.value){
+        log('Success');
+        getAllGameMembersList = getAllGameMembersModel.list;
+        log('getAllGameMembersList : $getAllGameMembersList');
+        gameName = getAllGameMembersModel.gamename;
+
+      }else{
+        log('Fail');
+        log('isStatus.value: ${isSuccessStatusCode.value}');
+        Fluttertoast.showToast(msg: getAllGameMembersModel.messege);
+        //Fluttertoast.showToast(msg: getAllGameMembersModel.errorMessage);
+      }
+    }catch(e){
+      log('getAllGameMembersList Error: $e');
+    } finally{
       isLoading(false);
+      //addStarPointAPI();
     }
   }
 }

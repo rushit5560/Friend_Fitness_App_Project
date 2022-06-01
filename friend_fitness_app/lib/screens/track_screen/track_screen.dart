@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/common/common_widgets.dart';
 import 'package:friend_fitness_app/common/custom_drawer/custom_drawer.dart';
@@ -7,12 +9,26 @@ import 'package:friend_fitness_app/controllers/track_screen_controller/track_scr
 import 'package:friend_fitness_app/screens/track_screen/track_screen_widgets.dart';
 import 'package:get/get.dart';
 
-class TrackScreen extends StatelessWidget {
+class TrackScreen extends StatefulWidget {
   TrackScreen({Key? key}) : super(key: key);
+
+  @override
+  State<TrackScreen> createState() => _TrackScreenState();
+}
+
+class _TrackScreenState extends State<TrackScreen> {
   final trackScreenController = Get.put(TrackScreenController());
 
   @override
+  void initState() {
+    trackScreenController.getAllPositiveCategoryFromFirebaseFunction();
+    trackScreenController.getAllNegativeCategoryFromFirebaseFunction();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    log('track UserDetails.gameId: ${UserDetails.gameId}');
     return Scaffold(
       drawer: CustomDrawer(),
       body: Obx(

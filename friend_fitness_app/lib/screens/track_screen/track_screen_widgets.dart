@@ -17,6 +17,8 @@ import 'package:friend_fitness_app/screens/time_spend_mindfulness_details_screen
 import 'package:friend_fitness_app/screens/water_intake_details_screen/water_intake_details_screen.dart';
 import 'package:get/get.dart';
 
+import '../../controllers/home_screen_controller/home_screen_controller.dart';
+
 /// AppBar
 class TrackScreenAppBarModule extends StatelessWidget {
   const TrackScreenAppBarModule({Key? key}) : super(key: key);
@@ -561,7 +563,7 @@ class TrackExerciseModule extends StatelessWidget {
                        screenController.getAllPositiveCategoryList[i].point.toString(),
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
+                      style: const TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
                       ),
@@ -569,7 +571,7 @@ class TrackExerciseModule extends StatelessWidget {
                  // ),
                   const SizedBox(height: 5,),
                   GestureDetector(
-                    onTap: (){
+                    onTap: () async {
                       // if (screenController.positiveCategoryValue.value <= 0) {
                       // screenController.positiveCategoryValue++;
                       // log("${screenController.positiveCategoryValue}");
@@ -589,13 +591,13 @@ class TrackExerciseModule extends StatelessWidget {
 
                       if(screenController.getAllPositiveCategoryList[i].id == 20){
                         log("water intake Point Add API");
-                        screenController.addWaterIntakeCategoryPointEntry(
+                        await screenController.addWaterIntakeCategoryPointEntry(
                           catId: screenController.getAllPositiveCategoryList[i].id,
                           point: screenController.getAllPositiveCategoryList[i].point,
                         );
                       } else{
                         log("Positive Point Add API");
-                        screenController.addPositiveCategoryPointEntry(
+                        await screenController.addPositiveCategoryPointEntry(
                           catId: screenController.getAllPositiveCategoryList[i].id,
                           point: screenController.getAllPositiveCategoryList[i].point,
                         );

@@ -14,24 +14,27 @@ class UserSignInModel {
     required this.success,
     required this.messege,
     required this.list,
+    //required this.message,
   });
 
   int the0;
   bool success;
   String messege;
+  //String message;
   List<ListElement> list;
 
   factory UserSignInModel.fromJson(Map<String, dynamic> json) => UserSignInModel(
     the0: json["0"] ?? 0,
     success: json["success"] ?? false,
     messege: json["messege"] ?? "",
+   // message: json["message"] ?? "",
     list: List<ListElement>.from(json["list"].map((x) => ListElement.fromJson(x)) ?? {}),
   );
 
   Map<String, dynamic> toJson() => {
     "0": the0,
     "success": success,
-    "messege": messege,
+    //"messege": messege,
     "list": List<dynamic>.from(list.map((x) => x.toJson())),
   };
 }

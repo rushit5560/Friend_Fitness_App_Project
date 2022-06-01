@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
+import 'package:friend_fitness_app/common/user_details.dart';
 import 'package:friend_fitness_app/model/home_screen_models/fitness_model.dart';
 import 'package:friend_fitness_app/screens/exercise_details_screen/exercise_details_screen.dart';
 import 'package:friend_fitness_app/screens/profile_screen/profile_screen.dart';
@@ -166,12 +167,21 @@ class LeaderBoardModule extends StatelessWidget {
           ),
           const SizedBox(width: 15),
           Expanded(
-            child: Text(
-              screenController.getAllGameMembersList[i].username,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 17,
-              ),
+            child: Row(
+              children: [
+                Text(
+                  screenController.getAllGameMembersList[i].username,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 17,
+                  ),
+                ),
+                SizedBox(width: 5),
+                screenController.isAddStarSuccessStatusCode.value ?
+                    UserDetails.userId == screenController.getAllGameMembersList[i].userid ?
+                const Icon(Icons.star, color: Colors.yellow, size: 30,) : Container() : Container()
+
+              ],
             ),
           ),
           const SizedBox(width: 10),

@@ -6,10 +6,23 @@ import 'group_chat_screen_widgets.dart';
 
 
 
-class GroupChatScreen extends StatelessWidget {
+class GroupChatScreen extends StatefulWidget {
   //GroupChatScreen({Key? key}) : super(key: key);
   GroupChatScreen({Key? key}) : super(key: key);
+
+  @override
+  State<GroupChatScreen> createState() => _GroupChatScreenState();
+}
+
+class _GroupChatScreenState extends State<GroupChatScreen> {
   final groupChatScreenController = Get.put(GroupChatScreenController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    groupChatScreenController.getAllMessageFunction(gameId: groupChatScreenController.gameId);
+  }
 
   @override
   Widget build(BuildContext context) {

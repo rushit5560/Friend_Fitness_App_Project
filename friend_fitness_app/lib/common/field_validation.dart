@@ -11,9 +11,17 @@ class FieldValidator {
       return null;
     }
   }
+
+  String? validateOtp(String value) {
+    if (value.isEmpty) {
+      return "Please enter otp";
+    }  else {
+      return null;
+    }
+  }
   String? validateWeight(String value) {
     if (value.isEmpty) {
-      return 'Please Enter Weight';
+      return 'Please enter weight';
     }
     return null;
   }
@@ -69,7 +77,7 @@ class FieldValidator {
 
   String? validateHeight(String value) {
     if (value.isEmpty) {
-      return 'Please Enter Height';
+      return 'Please enter height';
     }
     return null;
   }
@@ -106,7 +114,7 @@ class FieldValidator {
 
   String? validateAddress(String value) {
     if (value.isEmpty) {
-      return 'Please Enter Address';
+      return 'Please enter address';
     }
     return null;
   }

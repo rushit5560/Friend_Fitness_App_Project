@@ -127,9 +127,10 @@ class ProfileImage extends StatelessWidget {
                 )
               ],
         ),
+        const SizedBox(width: 10),
 
-        screenController.isAddStarSuccessStatusCode.value == "true" ?
-        Icon(Icons.star) : Container()
+        screenController.isAddStarSuccessStatusCode.value ?
+        Icon(Icons.star, color: Colors.yellow, size: 30,) : Container()
 
       ],
     );
@@ -310,7 +311,7 @@ class GenderTextFieldModule extends StatelessWidget {
                   children: [
                     ListTile(
                       leading: Radio<String>(
-                        value: 'Male',
+                        value: 'male',
                         activeColor: Colors.black,
                         groupValue: screenController.genderValue.value,
                         onChanged: (value) {
@@ -322,7 +323,7 @@ class GenderTextFieldModule extends StatelessWidget {
                     ),
                     ListTile(
                       leading: Radio<String>(
-                        value: 'Female',
+                        value: 'female',
                         activeColor: Colors.black,
                         groupValue: screenController.genderValue.value,
                         onChanged: (value) {
@@ -379,7 +380,7 @@ class WeightTextFieldModule extends StatelessWidget {
                     contentPadding: EdgeInsets.only(top: 10, left: 10, right: 10),
                     border: InputBorder.none,
                     suffixIcon: Column(
-                      children: [
+                      children: const [
                         SizedBox(height: 12),
                         Text("kg"),
                       ],
@@ -434,7 +435,7 @@ class HeightTextFieldModule extends StatelessWidget {
                       suffixIcon: Column(
                         children: [
                           SizedBox(height: 12),
-                          Text("inch"),
+                          Text("cm"),
                         ],
                       )
                   ),
@@ -481,11 +482,17 @@ class ChestTextFieldModule extends StatelessWidget {
                   controller: screenController.chestFieldController,
                   keyboardType: TextInputType.number,
                   cursorColor: Colors.black,
-                  decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.only(top: 10, left: 10, right: 10),
                     border: InputBorder.none,
+                      suffixIcon: Column(
+                        children: [
+                          SizedBox(height: 12),
+                          Text("cm"),
+                        ],
+                      )
                   ),
-                  validator: (value) => FieldValidator().validateChest(value!),
+                  //validator: (value) => FieldValidator().validateChest(value!),
                 ),
               ],
             )
@@ -505,7 +512,7 @@ class LeftArmTextFieldModule extends StatelessWidget {
       children: [
         const Expanded(
             flex: 2,
-            child: Text("Left arm:", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),)
+            child: Text("Left Arm:", style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17),)
         ),
         Expanded(
             flex: 4,
@@ -528,11 +535,17 @@ class LeftArmTextFieldModule extends StatelessWidget {
                   controller: screenController.leftArmFieldController,
                   keyboardType: TextInputType.number,
                   cursorColor: Colors.black,
-                  decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(top: 10, left: 10, right: 10),
                     border: InputBorder.none,
+                      suffixIcon: Column(
+                        children: [
+                          SizedBox(height: 12),
+                          Text("cm"),
+                        ],
+                      )
                   ),
-                  validator: (value) => FieldValidator().validateLeftArm(value!),
+                  //validator: (value) => FieldValidator().validateLeftArm(value!),
                 ),
               ],
             )
@@ -576,11 +589,17 @@ class RightArmTextFieldModule extends StatelessWidget {
                   controller: screenController.rightArmFieldController,
                   keyboardType: TextInputType.number,
                   cursorColor: Colors.black,
-                  decoration: const InputDecoration(
-                    contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                  decoration: InputDecoration(
+                    contentPadding: EdgeInsets.only(top: 10, left: 10, right: 10),
                     border: InputBorder.none,
+                      suffixIcon: Column(
+                        children: [
+                          SizedBox(height: 12),
+                          Text("cm"),
+                        ],
+                      )
                   ),
-                  validator: (value) => FieldValidator().validateRightArm(value!),
+                  //validator: (value) => FieldValidator().validateRightArm(value!),
                   // onTap: (){
                   //   showAlertDialog(context);
                   // },
@@ -636,7 +655,7 @@ class WaistTextFieldModule extends StatelessWidget {
                         ],
                       )
                   ),
-                  validator: (value) => FieldValidator().validateWaist(value!),
+                  //validator: (value) => FieldValidator().validateWaist(value!),
                   // onTap: (){
                   //   showAlertDialog(context);
                   // },
@@ -693,7 +712,7 @@ class HipsTextFieldModule extends StatelessWidget {
                   )
 
                   ),
-                  validator: (value) => FieldValidator().validateHips(value!),
+                 // validator: (value) => FieldValidator().validateHips(value!),
                   // onTap: (){
                   //   showAlertDialog(context);
                   // },
@@ -749,7 +768,7 @@ class LeftThighTextFieldModule extends StatelessWidget {
                         ],
                       )
                   ),
-                  validator: (value) => FieldValidator().validateLeftThight(value!),
+                  //validator: (value) => FieldValidator().validateLeftThight(value!),
                   // onTap: (){
                   //   showAlertDialog(context);
                   // },
@@ -805,7 +824,7 @@ class RightThighTextFieldModule extends StatelessWidget {
                         ],
                       )
                   ),
-                  validator: (value) => FieldValidator().validateRightThight(value!),
+                  //validator: (value) => FieldValidator().validateRightThight(value!),
                   // onTap: (){
                   //   showAlertDialog(context);
                   // },
@@ -934,7 +953,7 @@ class BeforeAfterImageModule extends StatelessWidget {
                         ),
                         child: Container(
                             padding: const EdgeInsets.all(5.0),
-                            child: const Icon(Icons.camera_alt, color: Colors.white, size: 15)),
+                            child: const Icon(Icons.camera_alt, color: Colors.white, size: 20)),
                       ),
                     ),
                   )
@@ -1006,7 +1025,7 @@ class BeforeAfterImageModule extends StatelessWidget {
                         ),
                         child: Container(
                             padding: const EdgeInsets.all(5.0),
-                            child: const Icon(Icons.camera_alt, color: Colors.white, size: 15)),
+                            child: const Icon(Icons.camera_alt, color: Colors.white, size: 20)),
                       ),
                     ),
                   )

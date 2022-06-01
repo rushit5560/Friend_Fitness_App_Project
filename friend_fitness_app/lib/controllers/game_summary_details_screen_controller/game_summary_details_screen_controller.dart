@@ -54,7 +54,7 @@ class GameSummaryDetailsScreenController extends GetxController{
         totalNegativePoint = getUserWisePointModel.list.negative.total;
         currentDate = getUserWisePointModel.date;
       } else{
-        Fluttertoast.showToast(msg: getUserWisePointModel.errorMessage);
+        //Fluttertoast.showToast(msg: getUserWisePointModel.errorMessage);
         Fluttertoast.showToast(msg: getUserWisePointModel.messege);
       }
 

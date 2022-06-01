@@ -37,6 +37,7 @@ class List1 {
   String? message;
   String? createdAt;
   String? file;
+  String? profile;
 
   List1(
       {this.id,
@@ -44,7 +45,8 @@ class List1 {
         this.gameid,
         this.message,
         this.createdAt,
-        this.file});
+        this.file,
+        this.profile});
 
   List1.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -53,6 +55,7 @@ class List1 {
     message = json['message'];
     createdAt = json['created_at'];
     file = json['file'];
+    profile = json['profile'];
   }
 
   Map<String, dynamic> toJson() {
@@ -63,6 +66,7 @@ class List1 {
     data['message'] = this.message;
     data['created_at'] = this.createdAt;
     data['file'] = this.file;
+    data['profile'] = this.profile;
     return data;
   }
 }

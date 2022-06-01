@@ -69,30 +69,29 @@ class GroupChatListModule extends StatelessWidget {
           screenController.getAllMessageFunction(gameId: screenController.gameId);
         });
       },
-      child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          child: Column(
-            children: [
-              SizedBox(height: 30),
-              screenController.getAllMessageList.isEmpty ?
-              const Center(child: Text("No message")):
-              ListView.builder(
-              itemCount: screenController.getAllMessageList.length,
-              shrinkWrap: true,
-              physics: const AlwaysScrollableScrollPhysics(),
-              itemBuilder: (context, i) {
-                log('screenController.getAllMessageList[i].userid: ${screenController.getAllMessageList[i].userid}');
-                log('UserDetails.userId: ${UserDetails.userId}');
-                /*return SingleMessageBubble(
-                  isSendByMe: screenController.userChatList[i].isSendByMe,
-                  message: screenController.userChatList[i].message,
-                );*/
-                return messageList(i);
-              },
+      child: Column(
+        children: [
+          SizedBox(height: 30),
+          screenController.getAllMessageList.isEmpty ?
+          const Center(child: Text("No message")):
+          Expanded(
+            child: ListView.builder(
+            itemCount: screenController.getAllMessageList.length,
+            shrinkWrap: true,
+            physics: const AlwaysScrollableScrollPhysics(),
+            itemBuilder: (context, i) {
+              log('screenController.getAllMessageList[i].userid: ${screenController.getAllMessageList[i].userid}');
+              log('UserDetails.userId: ${UserDetails.userId}');
+              /*return SingleMessageBubble(
+                isSendByMe: screenController.userChatList[i].isSendByMe,
+                message: screenController.userChatList[i].message,
+              );*/
+              return messageList(i);
+            },
       ).commonSymmetricPadding(horizontal: 15),
-            ],
           ),
-        ),
+        ],
+      ),
     );
   }
 
@@ -102,82 +101,225 @@ class GroupChatListModule extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 5),
         child: Container(
         padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          // color: AppColors.colorLightGrey,
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 3,
-              blurStyle: BlurStyle.outer,
-              color: AppColors.colorLightGrey,
-            ),
-          ],
-          borderRadius: const BorderRadius.only(
-            topRight: Radius.circular(15),
-            topLeft: Radius.circular(15),
-            bottomRight: Radius.circular(15),
-            bottomLeft: Radius.circular(15),
-          ),
-        ),
-        child: Column(
+        // decoration: BoxDecoration(
+        //   // color: AppColors.colorLightGrey,
+        //   boxShadow: [
+        //     BoxShadow(
+        //       blurRadius: 3,
+        //       blurStyle: BlurStyle.outer,
+        //       color: AppColors.colorLightGrey,
+        //     ),
+        //   ],
+        //   borderRadius: const BorderRadius.only(
+        //     topRight: Radius.circular(15),
+        //     topLeft: Radius.circular(15),
+        //     bottomRight: Radius.circular(15),
+        //     bottomLeft: Radius.circular(15),
+        //   ),
+        // ),
+        child: Row(
           mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Text(
-              screenController.getAllMessageList[i].message!,
-              style: const TextStyle(fontSize: 12),
-            ),
-            screenController.profile != null ?
-            Container(
-              height: 150, width: 150,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10.0),
-                  //border: Border.all(color: AppColors.colorLightGrey),
-                  boxShadow: [
-                    BoxShadow(
-                        blurRadius: 1,
-                        blurStyle: BlurStyle.outer,
-                        color: Colors.grey.shade500
+            Column(
+              children: [
+
+                Text(
+                  screenController.getAllMessageList[i].message!,
+                  style: const TextStyle(fontSize: 12),
+                ),
+
+               /* screenController.addPhoto != null ?
+                Container(
+                    height: 50, width: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        //border: Border.all(color: AppColors.colorLightGrey),
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 1,
+                              blurStyle: BlurStyle.outer,
+                              color: Colors.grey.shade500
+                          )
+                        ]
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: Image.file(screenController.addPhoto!,
+                        //     height: 150, width: 150, fit: BoxFit.cover),
+                      ),
                     )
-                  ]
-              ),
+                ) : Container(
+                    height: 50, width: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        //border: Border.all(color: AppColors.colorLightGrey),
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 1,
+                              blurStyle: BlurStyle.outer,
+                              color: Colors.grey.shade500
+                          )
+                        ]
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: Image.network(screenController.attachImage!,
+                        //     height: 150, width: 150, fit: BoxFit.cover),
+                      ),
+                    )
+                )*/
+
+
+                /*Container(
+                    height: 50, width: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        //border: Border.all(color: AppColors.colorLightGrey),
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 1,
+                              blurStyle: BlurStyle.outer,
+                              color: Colors.grey.shade500
+                          )
+                        ]
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: Image.network("https://squadgame.omdemo.co.in/asset/uploads/chat/" + screenController.getAllMessageList[i].file!,
+                        //     height: 150, width: 150, fit: BoxFit.cover),
+                      ),
+                    )
+                )*/
+               /* screenController.addPhoto != null ?
+                //screenController.getAllMessageList[i].file != null ?
+                Container(
+                  height: 50, width: 50,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      //border: Border.all(color: AppColors.colorLightGrey),
+                      boxShadow: [
+                        BoxShadow(
+                            blurRadius: 1,
+                            blurStyle: BlurStyle.outer,
+                            color: Colors.grey.shade500
+                        )
+                      ]
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: Image.file(screenController.addPhoto!,
+                      //     height: 150, width: 150, fit: BoxFit.cover),
+                    // child: Image.network("https://squadgame.omdemo.co.in/asset/uploads/chat/" + screenController.getAllMessageList[i].file!,
+                    //     height: 150, width: 150, fit: BoxFit.cover),
+                  ),
+                )
+            )
+                    : *//*Container(
+                    height: 50, width: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10.0),
+                        //border: Border.all(color: AppColors.colorLightGrey),
+                        boxShadow: [
+                          BoxShadow(
+                              blurRadius: 1,
+                              blurStyle: BlurStyle.outer,
+                              color: Colors.grey.shade500
+                          )
+                        ]
+                    ),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(10.0),
+                      child: Image.network("https://squadgame.omdemo.co.in/asset/uploads/chat/" + screenController.getAllMessageList[i].file!,
+                        //     height: 150, width: 150, fit: BoxFit.cover),
+                      ),
+                    )
+                ),*//*Container()*/
+
+
+          ],
+        ),
+            SizedBox(width: 10),
+            Container(
+              // height: 150, width: 150,
+              // decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(10.0),
+              //     //border: Border.all(color: AppColors.colorLightGrey),
+              //     boxShadow: [
+              //       BoxShadow(
+              //           blurRadius: 1,
+              //           blurStyle: BlurStyle.outer,
+              //           color: Colors.grey.shade500
+              //       )
+              //     ]
+              // ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10.0),
-                child: Image.file(screenController.profile!,
-                    height: 150, width: 150, fit: BoxFit.cover),
+                child: screenController.getAllMessageList[i].profile != null ?
+                  Image.network("https://squadgame.omdemo.co.in/asset/uploads/" + screenController.getAllMessageList[i].profile!,
+                    height: 30, width: 30) :
+                 Container(),
               ),
-            ):
-            Container()
-          ],
-        ),
-    ),
-      ) :
+            )
+        ]
+        )
+      ) ,
+      ):
     Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: Container(
         padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          // color: AppColors.colorLightGrey,
-          boxShadow: [
-            BoxShadow(
-              blurRadius: 3,
-              blurStyle: BlurStyle.outer,
-              color: AppColors.colorLightGrey,
-            ),
-          ],
-          borderRadius: const BorderRadius.only(
-            topRight: Radius.circular(15),
-            topLeft: Radius.circular(15),
-            bottomRight: Radius.circular(15),
-            bottomLeft: Radius.circular(15),
-          ),
-        ),
+        // decoration: BoxDecoration(
+        //   // color: AppColors.colorLightGrey,
+        //   boxShadow: [
+        //     BoxShadow(
+        //       blurRadius: 3,
+        //       blurStyle: BlurStyle.outer,
+        //       color: AppColors.colorLightGrey,
+        //     ),
+        //   ],
+        //   borderRadius: const BorderRadius.only(
+        //     topRight: Radius.circular(15),
+        //     topLeft: Radius.circular(15),
+        //     bottomRight: Radius.circular(15),
+        //     bottomLeft: Radius.circular(15),
+        //   ),
+        // ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              screenController.getAllMessageList[i].message!,
-              style: const TextStyle(fontSize: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  // height: 150, width: 150,
+                  // decoration: BoxDecoration(
+                  //     borderRadius: BorderRadius.circular(10.0),
+                  //     //border: Border.all(color: AppColors.colorLightGrey),
+                  //     boxShadow: [
+                  //       BoxShadow(
+                  //           blurRadius: 1,
+                  //           blurStyle: BlurStyle.outer,
+                  //           color: Colors.grey.shade500
+                  //       )
+                  //     ]
+                  // ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(10.0),
+                    child: screenController.getAllMessageList[i].profile != null ?
+                    Image.network("https://squadgame.omdemo.co.in/asset/uploads/" + screenController.getAllMessageList[i].profile!,
+                        height: 30, width: 30) :
+                    Container(),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Text(
+                  screenController.getAllMessageList[i].message!,
+                  style: const TextStyle(fontSize: 12),
+                ),
+              ],
             ),
           ],
         ),
@@ -304,26 +446,26 @@ class SendMessageModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        /*GestureDetector(
-          onTap: (){
-            gallery();
-          },
-          child: Container(
-            height: 52, width: 50,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(15),
-                boxShadow: [
-                  BoxShadow(
-                    blurRadius: 6,
-                    blurStyle: BlurStyle.outer,
-                    color: AppColors.colorLightGrey,
-                  ),
-                ],
-              ),
-              child: Icon(Icons.image)),
-        ),*/
-
-        //const SizedBox(width: 10),
+        // GestureDetector(
+        //   onTap: (){
+        //     gallery();
+        //   },
+        //   child: Container(
+        //     height: 52, width: 50,
+        //       decoration: BoxDecoration(
+        //         borderRadius: BorderRadius.circular(15),
+        //         boxShadow: [
+        //           BoxShadow(
+        //             blurRadius: 6,
+        //             blurStyle: BlurStyle.outer,
+        //             color: AppColors.colorLightGrey,
+        //           ),
+        //         ],
+        //       ),
+        //       child: Icon(Icons.image)),
+        // ),
+        //
+        // const SizedBox(width: 10),
 
         Expanded(
           child: Stack(
@@ -389,7 +531,7 @@ class SendMessageModule extends StatelessWidget {
   void gallery() async {
     final image = await imagePicker.pickImage(source: ImageSource.gallery);
     if(image != null){
-      screenController.profile = File(image.path);
+      screenController.addPhoto = File(image.path);
       screenController.loadUI();
     } else{
     }

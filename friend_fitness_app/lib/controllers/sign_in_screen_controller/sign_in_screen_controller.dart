@@ -40,19 +40,19 @@ class SignInScreenController extends GetxController {
       UserSignInModel signInModel = UserSignInModel.fromJson(json.decode(response.body));
       // log('signInModel: ${signUpModel.name}');
       isSuccessStatus = signInModel.success.obs;
-      log('isStatus: $isStatus');
+      log('isStatus: $isSuccessStatus');
 
 
 
       if(isSuccessStatus.value){
         log('Success');
-        // for(int i =0; i < signInModel.list.length; i++){
-        //
-        // }
-        UserDetails.userId = signInModel.list[0].id;
-        UserDetails.userIdToken = signInModel.list[0].rememberToken;
-        UserDetails.roleId = signInModel.list[0].roleid;
-        UserDetails.gameId = signInModel.list[0].joingameid.toString();
+        for(int i =0; i < signInModel.list.length; i++){
+          UserDetails.userId = signInModel.list[i].id;
+          UserDetails.userIdToken = signInModel.list[i].rememberToken;
+          UserDetails.roleId = signInModel.list[i].roleid;
+          UserDetails.gameId = signInModel.list[i].joingameid.toString();
+        }
+
         //UserDetails.gameId = "8";
         //UserDetails.gameId = "${DateTime.now().day}${DateTime.now().month}${DateTime.now().year}";
         log('UserDetails.userId: ${UserDetails.userId}');
@@ -60,12 +60,15 @@ class SignInScreenController extends GetxController {
        // log('UserDetails.roleId: ${UserDetails.roleId}');
         log('UserDetails.gameId: ${UserDetails.gameId}');
         await sharedPreferenceData.setUserLoginDetailsInPrefs(userId: UserDetails.userId, userIdToken: UserDetails.userIdToken, gameId: UserDetails.gameId, roleId: UserDetails.roleId);
-        Get.offAll(()=> IndexScreen(), transition: Transition.zoom);
         Get.snackbar(signInModel.messege, '');
+        Get.offAll(()=> IndexScreen(), transition: Transition.zoom);
+
         clearSignInFieldsFunction();
 
       }else{
         log('Fail');
+        //log(signInModel.message);
+        //Get.snackbar(signInModel.messege, '');
         Fluttertoast.showToast(msg: signInModel.messege);
         //Get.snackbar("Wrong Email/Password", '');
       }

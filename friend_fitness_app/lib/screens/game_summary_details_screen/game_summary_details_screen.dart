@@ -4,10 +4,22 @@ import 'package:friend_fitness_app/controllers/game_summary_details_screen_contr
 import 'package:friend_fitness_app/screens/game_summary_details_screen/game_summary_details_screen_widgets.dart';
 import 'package:get/get.dart';
 
-class GameSummaryDetailsScreen extends StatelessWidget {
+class GameSummaryDetailsScreen extends StatefulWidget {
   GameSummaryDetailsScreen({Key? key}) : super(key: key);
 
+  @override
+  State<GameSummaryDetailsScreen> createState() => _GameSummaryDetailsScreenState();
+}
+
+class _GameSummaryDetailsScreenState extends State<GameSummaryDetailsScreen> {
   final gameSummaryDetailsScreenController = Get.put(GameSummaryDetailsScreenController());
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    gameSummaryDetailsScreenController.getAllUserWisePointApi();
+  }
 
   @override
   Widget build(BuildContext context) {

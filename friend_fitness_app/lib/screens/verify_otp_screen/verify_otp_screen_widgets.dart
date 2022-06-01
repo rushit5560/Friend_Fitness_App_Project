@@ -73,10 +73,10 @@ class OtpTextFieldModule extends StatelessWidget {
         ),
         TextFormField(
           controller: screenController.otpFieldController,
-          keyboardType: TextInputType.emailAddress,
+          keyboardType: TextInputType.text,
           cursorColor: Colors.grey,
           decoration: emailInputDecoration(hintText: "Otp"),
-          //validator: (value) => fieldValidator.validateEmail(value!),
+          validator: (value) => fieldValidator.validateOtp(value!),
         ),
       ],
     );

@@ -1,4 +1,7 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:friend_fitness_app/common/common_widgets.dart';
 import 'package:friend_fitness_app/common/constants/app_images.dart';
 import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
@@ -55,23 +58,22 @@ class GroupListModule extends StatelessWidget {
           screenController.getAllGameList();
         });
       },
-      child: SingleChildScrollView(
-        physics: const AlwaysScrollableScrollPhysics(),
-        child: Column(
-          children: [
-            const SizedBox(height: 30),
-            screenController.getGameList.isEmpty ?
-                const Center(child: Text("No Game")):
-              ListView.builder(
+      child: Column(
+        children: [
+          const SizedBox(height: 30),
+          screenController.getGameList.isEmpty ?
+              const Center(child: Text("No Game")):
+            Expanded(
+              child: ListView.builder(
               itemCount: screenController.getGameList.length,
               shrinkWrap: true,
               physics: const AlwaysScrollableScrollPhysics(),
               itemBuilder: (context, i) {
                 return _groupListTile(i).commonSymmetricPadding(vertical: 6, horizontal: 14);
               },
+          ),
             ),
-          ],
-        ),
+        ],
       ),
 
     );
@@ -80,12 +82,22 @@ class GroupListModule extends StatelessWidget {
   Widget _groupListTile(i) {
     return GestureDetector(
       onTap: () {
-        Get.to(()=> GroupChatScreen(),
-            arguments: [
-              screenController.getGameList[i].id.toString(),
-              screenController.getGameList[i].userid.toString(),
-              screenController.getGameList[i].name,
-            ]);
+
+        if(UserDetails.gameId == screenController.getGameList[i].id.toString()){
+
+          Get.to(()=> GroupChatScreen(),
+              arguments: [
+                screenController.getGameList[i].id.toString(),
+                screenController.getGameList[i].userid.toString(),
+                screenController.getGameList[i].name,
+              ]);
+          log('1');
+        } else{
+          log('UserDetails.gameId: ${UserDetails.gameId}');
+          Fluttertoast.showToast(msg: 'You are in not this game');
+          log('0');
+        }
+
       },
       child: Container(
         decoration: BoxDecoration(
@@ -192,6 +204,27 @@ class GroupListModule extends StatelessWidget {
                 Row(
                   children: [
                     const Text(
+                      "days: ",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                          fontSize: 15,fontWeight: FontWeight.bold
+                      ),
+                    ),
+                    Text(
+                      screenController.getGameList[i].days.toString(),
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 15,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(height: 5),
+                Row(
+                  children: [
+                    const Text(
                       "Cheat day: ",
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
@@ -209,6 +242,7 @@ class GroupListModule extends StatelessWidget {
                     ),
                   ],
                 ),
+
               ],
             ),
 

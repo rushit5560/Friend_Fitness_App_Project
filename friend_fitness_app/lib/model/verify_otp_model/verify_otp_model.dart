@@ -81,8 +81,8 @@ class ListClass {
   String lThigh;
   String rThigh;
   String rememberToken;
-  DateTime createdAt;
-  DateTime updatedAt;
+  String createdAt;
+  String updatedAt;
   String otp;
 
   factory ListClass.fromJson(Map<String, dynamic> json) => ListClass(
@@ -107,8 +107,8 @@ class ListClass {
     lThigh: json["l_thigh"] ?? "",
     rThigh: json["r_thigh"] ?? "",
     rememberToken: json["remember_token"] ?? "",
-    createdAt: DateTime.parse(json["created_at"] ?? DateTime.now()),
-    updatedAt: DateTime.parse(json["updated_at"] ?? DateTime.now()),
+    createdAt: json["created_at"] ?? "",
+    updatedAt: json["updated_at"] ?? "",
     otp: json["otp"] ?? "",
   );
 
@@ -134,8 +134,8 @@ class ListClass {
     "l_thigh": lThigh,
     "r_thigh": rThigh,
     "remember_token": rememberToken,
-    "created_at": createdAt.toIso8601String(),
-    "updated_at": updatedAt.toIso8601String(),
+    "created_at": createdAt,
+    "updated_at": updatedAt,
     "otp": otp,
   };
 }

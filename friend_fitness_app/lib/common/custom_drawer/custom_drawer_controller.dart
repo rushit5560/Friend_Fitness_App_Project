@@ -44,7 +44,7 @@ class CustomDrawerController extends GetxController{
 
       }else{
         Fluttertoast.showToast(msg: createGameModel.messege);
-        Fluttertoast.showToast(msg: createGameModel.errorMessage);
+        //Fluttertoast.showToast(msg: createGameModel.errorMessage);
         log('Fail');
         log('isStatus.value: ${isSuccessStatusCode.value}');
         //Get.snackbar("User Already Register", '');
@@ -87,7 +87,7 @@ class CustomDrawerController extends GetxController{
 
       } else {
         Fluttertoast.showToast(msg: endGameModel.messege);
-        Fluttertoast.showToast(msg: endGameModel.errorMessage);
+        //Fluttertoast.showToast(msg: endGameModel.errorMessage);
         log('Fail');
         log('isStatus.value: ${isSuccessStatusCode.value}');
         //Get.snackbar("User Already Register", '');

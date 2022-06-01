@@ -70,7 +70,7 @@ class SignUpScreenController extends GetxController {
       }else{
         log('Fail');
         log('isStatus.value: ${isStatus.value}');
-        Fluttertoast.showToast(msg: userSignUpModel.message);
+        Fluttertoast.showToast(msg: userSignUpModel.messege);
 
       }
     }catch(e){

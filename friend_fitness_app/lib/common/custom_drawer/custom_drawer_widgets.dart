@@ -1,7 +1,11 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:friend_fitness_app/common/constants/enums.dart';
 import 'package:friend_fitness_app/common/custom_drawer/custom_drawer_controller.dart';
 import 'package:friend_fitness_app/common/sharedpreference_data/sharedpreference_data.dart';
+import 'package:friend_fitness_app/common/user_details.dart';
 import 'package:friend_fitness_app/screens/change_password_screen/change_password_screen.dart';
 import 'package:friend_fitness_app/screens/create_game_screen/create_game_screen.dart';
 import 'package:friend_fitness_app/screens/edit_profile_screen/edit_profile_screen.dart';
@@ -86,7 +90,13 @@ class CustomDrawerSingleItemModule extends StatelessWidget {
       screenController.startGameFunction();
       //Get.to(() => CreateGameScreen(), transition: Transition.rightToLeft);
     } else if (customDrawerScreenOption == CustomDrawerOption.endGame) {
-      screenController.endGameFunction();
+      log("end game id: ${UserDetails.gameId}");
+      if(UserDetails.gameId == 0){
+        Fluttertoast.showToast(msg: 'Please join the game');
+      } else{
+        screenController.endGameFunction();
+      }
+
       //Get.to(() => CreateGameScreen(), transition: Transition.rightToLeft);
     } else if (customDrawerScreenOption == CustomDrawerOption.logout) {
       sharedPreferenceData.clearUserLoginDetailsFromPrefs();

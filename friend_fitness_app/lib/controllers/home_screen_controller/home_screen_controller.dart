@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:friend_fitness_app/common/constants/api_header.dart';
 import 'package:friend_fitness_app/common/constants/api_url.dart';
 import 'package:friend_fitness_app/common/user_details.dart';
+import 'package:friend_fitness_app/model/add_star_point_model/add_star_point_model.dart';
 import 'package:friend_fitness_app/model/get_all_game_members_model/get_all_game_members_model.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -15,6 +16,7 @@ import '../../model/home_screen_models/water_intake_model.dart';
 class HomeScreenController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isSuccessStatusCode = false.obs;
+  RxBool isAddStarSuccessStatusCode = false.obs;
   RxInt waterIntakeValue = 0.obs;
 
   ApiHeader apiHeader = ApiHeader();
@@ -252,10 +254,43 @@ class HomeScreenController extends GetxController {
         log('Fail');
         log('isStatus.value: ${isSuccessStatusCode.value}');
         Fluttertoast.showToast(msg: getAllGameMembersModel.messege);
-        Fluttertoast.showToast(msg: getAllGameMembersModel.errorMessage);
+        //Fluttertoast.showToast(msg: getAllGameMembersModel.errorMessage);
       }
     }catch(e){
       log('getAllGameMembersList Error: $e');
+    } finally{
+      //isLoading(false);
+      addStarPointAPI();
+    }
+  }
+
+  addStarPointAPI() async {
+    isLoading(true);
+    String url = ApiUrl.addStarPointApi;
+    log('url: $url');
+    log('UserDetails.userId: ${UserDetails.userId}');
+    log('UserDetails.userIdToken: ${UserDetails.userIdToken}');
+
+    Map<String, dynamic> data= {
+      "userid" : "${UserDetails.userId}",
+      "gameid" : "${UserDetails.gameId}"
+    };
+    try{
+      http.Response response = await http.post(Uri.parse(url), body: data, headers: apiHeader.headers);
+      log('Star point add Response : ${response.body}');
+      AddStarPointModel addStarPointModel = AddStarPointModel.fromJson(json.decode(response.body));
+      isAddStarSuccessStatusCode = addStarPointModel.success.obs;
+      log('isStatus: $isAddStarSuccessStatusCode');
+
+      if(isAddStarSuccessStatusCode.value){
+        log('Success');
+        //Fluttertoast.showToast(msg: addStarPointModel.messege);
+      }else{
+        // Fluttertoast.showToast(msg: addStarPointModel.messege);
+        log('Fail');
+      }
+    }catch(e){
+      log('Get Profile Error: $e');
     } finally{
       isLoading(false);
     }
@@ -266,6 +301,12 @@ class HomeScreenController extends GetxController {
     getAllGameMemberFunction();
     super.onInit();
   }
+
+  loadUI() {
+    isLoading(true);
+    isLoading(false);
+  }
+
 
 
 }

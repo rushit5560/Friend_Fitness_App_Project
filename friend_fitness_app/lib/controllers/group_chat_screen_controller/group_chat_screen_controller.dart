@@ -21,10 +21,10 @@ class GroupChatScreenController extends GetxController {
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
 
+  String attachImage = "";
 
 
-
-  File ? profile;
+  File ? addPhoto;
 
   RxBool isSuccessStatusCode = false.obs;
   List<List1> getAllMessageList = [];
@@ -50,16 +50,16 @@ class GroupChatScreenController extends GetxController {
     log('userId: $userId');
     log('gameId: $gameId');
     try{
-      if(profile != null){
+      if(addPhoto != null){
         var request = http.MultipartRequest('POST', Uri.parse(url));
 
-        var stream = http.ByteStream(profile!.openRead());
+        var stream = http.ByteStream(addPhoto!.openRead());
 
         stream.cast();
 
-        var length = await profile!.length();
+        var length = await addPhoto!.length();
 
-        request.files.add(await http.MultipartFile.fromPath("file", profile!.path));
+        request.files.add(await http.MultipartFile.fromPath("file", addPhoto!.path));
 
         request.headers.addAll(apiHeader.headers);
 
@@ -92,15 +92,14 @@ class GroupChatScreenController extends GetxController {
 
           if(isSuccessStatusCode.value){
             Fluttertoast.showToast(msg: response1.messege);
-            //getAllMessageFunction(gameId: gameId, userId: userId);
+            getAllMessageFunction(gameId: gameId);
           } else {
             Fluttertoast.showToast(msg: response1.messege);
-            Fluttertoast.showToast(msg: response1.errorMessage);
             log('False False');
           }
         });
       }
-      else if(profile == null){
+      else if(addPhoto == null){
         var request = http.MultipartRequest('POST', Uri.parse(url));
 
         // var stream = http.ByteStream(profile!.openRead());
@@ -162,11 +161,11 @@ class GroupChatScreenController extends GetxController {
 
           if(isSuccessStatusCode.value){
             Fluttertoast.showToast(msg: response1.messege);
-            //getAllMessageFunction(gameId: gameId, userId: userId);
+            getAllMessageFunction(gameId: gameId);
 
           } else {
             Fluttertoast.showToast(msg: response1.messege);
-            Fluttertoast.showToast(msg: response1.errorMessage);
+            //Fluttertoast.showToast(msg: response1.errorMessage);
             log('False False');
           }
         });
@@ -203,10 +202,13 @@ class GroupChatScreenController extends GetxController {
         log('Success');
         getAllMessageList = getAllMessageModel.list!;
         log('getAllMessageList : $getAllMessageList');
+        for(int i =0; i < getAllMessageList.length ; i++){
+          attachImage = "https://squadgame.omdemo.co.in/asset/uploads/chat/" +getAllMessageList[i].file!;
+        }
 
       }else{
         Fluttertoast.showToast(msg: getAllMessageModel.messege!);
-        Fluttertoast.showToast(msg: getAllMessageModel.errorMessage!);
+        //Fluttertoast.showToast(msg: getAllMessageModel.errorMessage!);
         log('Fail');
       }
     }catch(e){

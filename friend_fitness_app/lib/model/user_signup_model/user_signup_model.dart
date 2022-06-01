@@ -13,22 +13,26 @@ class UserSignUpModel {
     required this.success,
     required this.data,
     required this.message,
+    required this.messege
   });
 
   bool success;
   List<Datum> data;
   String message;
+  String messege;
 
   factory UserSignUpModel.fromJson(Map<String, dynamic> json) => UserSignUpModel(
     success: json["success"] ?? false,
     data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x)) ?? {}),
     message: json["message"] ?? "",
+    messege: json["messege"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
     "success": success,
     "data": List<dynamic>.from(data.map((x) => x.toJson())),
     "message": message,
+    "messege": messege,
   };
 }
 

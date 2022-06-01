@@ -31,7 +31,7 @@ class EditProfileScreenController extends GetxController{
   File? afterImageProfile;
   String userAfterImageProfile = "";
 
-  RxString genderValue = 'Female'.obs;
+  RxString genderValue = 'female'.obs;
   GlobalKey<FormState> profileFormKey = GlobalKey();
   GlobalKey<FormState> editProfileFormKey = GlobalKey();
   ApiHeader apiHeader = ApiHeader();
@@ -55,7 +55,7 @@ class EditProfileScreenController extends GetxController{
     // TODO: implement onInit
     super.onInit();
     getProfileAPI();
-
+    addStarPointAPI();
   }
 
   getProfileAPI() async {
@@ -89,11 +89,11 @@ class EditProfileScreenController extends GetxController{
         userProfile =  "https://squadgame.omdemo.co.in/asset/uploads/" + getUserProfileModel.list.image;
         userBeforeImageProfile = "https://squadgame.omdemo.co.in/asset/uploads/" + getUserProfileModel.list.beforeimage;
         userAfterImageProfile = "https://squadgame.omdemo.co.in/asset/uploads/" + getUserProfileModel.list.afterimage;
-
+        log('userBeforeImageProfile: $userBeforeImageProfile');
+        log('userAfterImageProfile: $userAfterImageProfile');
       }else{
         log('Fail');
         Fluttertoast.showToast(msg: getUserProfileModel.messege);
-        Fluttertoast.showToast(msg: getUserProfileModel.errorMessage);
       }
     }catch(e){
       log('Get Profile Error: $e');
@@ -109,24 +109,24 @@ class EditProfileScreenController extends GetxController{
     log('url: $url');
     log('UserDetails.userId: ${UserDetails.userId}');
     try{
-      if(profile != null){
+      if(profile != null && beforeImageProfile != null && afterImageProfile != null){
         var request = http.MultipartRequest('POST', Uri.parse(url));
 
         var stream = http.ByteStream(profile!.openRead());
-        var beforeStream = http.ByteStream(beforeImageProfile!.openRead());
-        var afterStream = http.ByteStream(afterImageProfile!.openRead());
+         var beforeStream = http.ByteStream(beforeImageProfile!.openRead());
+         var afterStream = http.ByteStream(afterImageProfile!.openRead());
 
         stream.cast();
-        beforeStream.cast();
-        afterStream.cast();
+         beforeStream.cast();
+         afterStream.cast();
 
         var length = await profile!.length();
         var beforeLength = await beforeImageProfile!.length();
         var afterLength = await afterImageProfile!.length();
 
         request.files.add(await http.MultipartFile.fromPath("image", profile!.path));
-        request.files.add(await http.MultipartFile.fromPath("beforeimage", profile!.path));
-        request.files.add(await http.MultipartFile.fromPath("afterimage", profile!.path));
+         request.files.add(await http.MultipartFile.fromPath("beforeimage", beforeImageProfile!.path));
+         request.files.add(await http.MultipartFile.fromPath("afterimage", afterImageProfile!.path));
 
         request.headers.addAll(apiHeader.headers);
 
@@ -175,7 +175,7 @@ class EditProfileScreenController extends GetxController{
 
         response.stream.transform(utf8.decoder).listen((value) {
           GetUserUpdateProfileModel response1 = GetUserUpdateProfileModel.fromJson(json.decode(value));
-          log('response1 ::::::$response1');
+          log('response1 ::::::${response1.messege}');
           isSuccessStatusCode = response1.success.obs;
           log('status : $isSuccessStatusCode');
 
@@ -186,7 +186,7 @@ class EditProfileScreenController extends GetxController{
             log('status code false: ${response1.success}');
             log('response1.errorMessage: ${response1.errorMessage}');
             //if(response1.errorMessage.contains("Token don't match")){
-              Fluttertoast.showToast(msg: response1.errorMessage);
+              //Fluttertoast.showToast(msg: response1.errorMessage);
             Fluttertoast.showToast(msg: response1.messege);
            // }
 
@@ -194,24 +194,24 @@ class EditProfileScreenController extends GetxController{
           }
         });
       }
-      else if(profile == null){
+      else if(profile == null && beforeImageProfile == null && afterImageProfile == null){
         var request = http.MultipartRequest('POST', Uri.parse(url));
 
-        // var stream = http.ByteStream(profile!.openRead());
+        //var stream = http.ByteStream(profile!.openRead());
         // var beforeStream = http.ByteStream(beforeImageProfile!.openRead());
         // var afterStream = http.ByteStream(afterImageProfile!.openRead());
-        //
-        // stream.cast();
+
+        //stream.cast();
         // beforeStream.cast();
         // afterStream.cast();
-        //
-        // var length = await profile!.length();
+
+        //var length = await profile!.length();
         // var beforeLength = await beforeImageProfile!.length();
         // var afterLength = await afterImageProfile!.length();
 
-        // request.files.add(await http.MultipartFile.fromPath("image", profile!.path));
-        // request.files.add(await http.MultipartFile.fromPath("beforeimage", profile!.path));
-        // request.files.add(await http.MultipartFile.fromPath("afterimage", profile!.path));
+        //request.files.add(await http.MultipartFile.fromPath("image", profile!.path));
+        // request.files.add(await http.MultipartFile.fromPath("beforeimage", beforeImageProfile!.path));
+        // request.files.add(await http.MultipartFile.fromPath("afterimage", afterImageProfile!.path));
 
         request.headers.addAll(apiHeader.headers);
 
@@ -248,10 +248,95 @@ class EditProfileScreenController extends GetxController{
         //   afterStream,
         //   afterLength,
         // );
-        //
-        // request.files.add(multiPart);
+
+        //request.files.add(multiPart);
         // request.files.add(beforeMultiPart);
         // request.files.add(afterMultiPart);
+
+        //var multiPart = http.MultipartFile('file', stream, length);
+        // request.files.add(multiPart);
+        var response = await request.send();
+        log('response: ${response.request}');
+
+        response.stream.transform(utf8.decoder).listen((value) {
+          GetUserUpdateProfileModel response1 = GetUserUpdateProfileModel.fromJson(json.decode(value));
+          log('response1 ::::::${response1.messege}');
+          isSuccessStatusCode = response1.success.obs;
+          log('status : $isSuccessStatusCode');
+
+          if(isSuccessStatusCode.value){
+            Fluttertoast.showToast(msg: response1.messege);
+            getProfileAPI();
+          } else {
+            log('status code false: ${response1.success}');
+            log('response1.errorMessage: ${response1.errorMessage}');
+            //if(response1.errorMessage.contains("Token don't match")){
+            //Fluttertoast.showToast(msg: response1.errorMessage);
+            Fluttertoast.showToast(msg: response1.messege);
+            // }
+
+            log('False False');
+          }
+        });
+      }
+      else if(profile == null && beforeImageProfile != null && afterImageProfile != null){
+        var request = http.MultipartRequest('POST', Uri.parse(url));
+
+        // var stream = http.ByteStream(profile!.openRead());
+         var beforeStream = http.ByteStream(beforeImageProfile!.openRead());
+         var afterStream = http.ByteStream(afterImageProfile!.openRead());
+        //
+        // stream.cast();
+         beforeStream.cast();
+         afterStream.cast();
+        //
+        // var length = await profile!.length();
+         var beforeLength = await beforeImageProfile!.length();
+         var afterLength = await afterImageProfile!.length();
+
+        // request.files.add(await http.MultipartFile.fromPath("image", profile!.path));
+         request.files.add(await http.MultipartFile.fromPath("beforeimage", beforeImageProfile!.path));
+         request.files.add(await http.MultipartFile.fromPath("afterimage", afterImageProfile!.path));
+
+        request.headers.addAll(apiHeader.headers);
+
+        request.fields['id'] = "${UserDetails.userId}";
+        request.fields['name'] = nameFieldController.text.trim();
+        request.fields['address'] = addressFieldController.text.trim();
+        request.fields['gender'] = genderValue.value;
+        request.fields['height'] = heightFieldController.text.trim();
+        request.fields['weight'] = weightFieldController.text.trim();
+        request.fields['chest'] = chestFieldController.text.trim();
+        request.fields['l_arm'] = leftArmFieldController.text.trim();
+        request.fields['r_arm'] = rightArmFieldController.text.trim();
+        request.fields['walst'] = waistFieldController.text.trim();
+        request.fields['hlps'] = hipsFieldController.text.trim();
+        request.fields['l_thigh'] = leftThighFieldController.text.trim();
+        request.fields['r_thigh'] = rightThighFieldController.text.trim();
+
+
+        log('request.fields: ${request.fields}');
+        log('request.files: ${request.files}');
+
+        // var multiPart = http.MultipartFile(
+        //   'image',
+        //   stream,
+        //   length,
+        // );
+        var beforeMultiPart = http.MultipartFile(
+          'beforeimage',
+          beforeStream,
+          beforeLength,
+        );
+        var afterMultiPart = http.MultipartFile(
+          'afterimage',
+          afterStream,
+          afterLength,
+        );
+        //
+        // request.files.add(multiPart);
+        request.files.add(beforeMultiPart);
+        request.files.add(afterMultiPart);
 
         //var multiPart = http.MultipartFile('file', stream, length);
         // request.files.add(multiPart);
@@ -272,13 +357,865 @@ class EditProfileScreenController extends GetxController{
             log('status code false: ${response1.success}');
             log('response1.errorMessage: ${response1.errorMessage}');
             //if(response1.errorMessage.contains("Token don't match")){
-              Fluttertoast.showToast(msg: response1.errorMessage);
+              //Fluttertoast.showToast(msg: response1.errorMessage);
             Fluttertoast.showToast(msg: response1.messege);
             //}
             log('False False');
           }
         });
       }
+      /*else if(beforeImageProfile != null){
+        var request = http.MultipartRequest('POST', Uri.parse(url));
+
+        //var stream = http.ByteStream(profile!.openRead());
+         var beforeStream = http.ByteStream(beforeImageProfile!.openRead());
+        // var afterStream = http.ByteStream(afterImageProfile!.openRead());
+
+        //stream.cast();
+         beforeStream.cast();
+        // afterStream.cast();
+
+        //var length = await profile!.length();
+        var beforeLength = await beforeImageProfile!.length();
+        //var afterLength = await afterImageProfile!.length();
+
+        //request.files.add(await http.MultipartFile.fromPath("image", profile!.path));
+         request.files.add(await http.MultipartFile.fromPath("beforeimage", beforeImageProfile!.path));
+        // request.files.add(await http.MultipartFile.fromPath("afterimage", profile!.path));
+
+        request.headers.addAll(apiHeader.headers);
+
+        request.fields['id'] = "${UserDetails.userId}";
+        request.fields['name'] = nameFieldController.text.trim();
+        request.fields['address'] = addressFieldController.text.trim();
+        request.fields['gender'] = genderValue.value;
+        request.fields['height'] = heightFieldController.text.trim();
+        request.fields['weight'] = weightFieldController.text.trim();
+        request.fields['chest'] = chestFieldController.text.trim();
+        request.fields['l_arm'] = leftArmFieldController.text.trim();
+        request.fields['r_arm'] = rightArmFieldController.text.trim();
+        request.fields['walst'] = waistFieldController.text.trim();
+        request.fields['hlps'] = hipsFieldController.text.trim();
+        request.fields['l_thigh'] = leftThighFieldController.text.trim();
+        request.fields['r_thigh'] = rightThighFieldController.text.trim();
+
+
+        log('request.fields: ${request.fields}');
+        log('request.files: ${request.files}');
+
+        // var multiPart = http.MultipartFile(
+        //   'image',
+        //   stream,
+        //   length,
+        // );
+        var beforeMultiPart = http.MultipartFile(
+          'beforeimage',
+          beforeStream,
+          beforeLength,
+        );
+        // var afterMultiPart = http.MultipartFile(
+        //   'afterimage',
+        //   afterStream,
+        //   afterLength,
+        // );
+
+        //request.files.add(multiPart);
+         request.files.add(beforeMultiPart);
+        // request.files.add(afterMultiPart);
+
+        //var multiPart = http.MultipartFile('file', stream, length);
+        // request.files.add(multiPart);
+        var response = await request.send();
+        log('response: ${response.request}');
+
+        response.stream.transform(utf8.decoder).listen((value) {
+          GetUserUpdateProfileModel response1 = GetUserUpdateProfileModel.fromJson(json.decode(value));
+          log('response1 ::::::${response1.messege}');
+          isSuccessStatusCode = response1.success.obs;
+          log('status : $isSuccessStatusCode');
+
+          if(isSuccessStatusCode.value){
+            Fluttertoast.showToast(msg: response1.messege);
+            getProfileAPI();
+          } else {
+            log('status code false: ${response1.success}');
+            log('response1.errorMessage: ${response1.errorMessage}');
+            //if(response1.errorMessage.contains("Token don't match")){
+            Fluttertoast.showToast(msg: response1.errorMessage);
+            Fluttertoast.showToast(msg: response1.messege);
+            // }
+
+            log('False False');
+          }
+        });
+      }*/
+      else if(beforeImageProfile == null && profile != null && afterImageProfile != null){
+        var request = http.MultipartRequest('POST', Uri.parse(url));
+
+        var stream = http.ByteStream(profile!.openRead());
+        //var beforeStream = http.ByteStream(beforeImageProfile!.openRead());
+         var afterStream = http.ByteStream(afterImageProfile!.openRead());
+
+        stream.cast();
+        //beforeStream.cast();
+         afterStream.cast();
+
+        var length = await profile!.length();
+        //var beforeLength = await beforeImageProfile!.length();
+        var afterLength = await afterImageProfile!.length();
+
+        request.files.add(await http.MultipartFile.fromPath("image", profile!.path));
+        //request.files.add(await http.MultipartFile.fromPath("beforeimage", beforeImageProfile!.path));
+        request.files.add(await http.MultipartFile.fromPath("afterimage", afterImageProfile!.path));
+
+        request.headers.addAll(apiHeader.headers);
+
+        request.fields['id'] = "${UserDetails.userId}";
+        request.fields['name'] = nameFieldController.text.trim();
+        request.fields['address'] = addressFieldController.text.trim();
+        request.fields['gender'] = genderValue.value;
+        request.fields['height'] = heightFieldController.text.trim();
+        request.fields['weight'] = weightFieldController.text.trim();
+        request.fields['chest'] = chestFieldController.text.trim();
+        request.fields['l_arm'] = leftArmFieldController.text.trim();
+        request.fields['r_arm'] = rightArmFieldController.text.trim();
+        request.fields['walst'] = waistFieldController.text.trim();
+        request.fields['hlps'] = hipsFieldController.text.trim();
+        request.fields['l_thigh'] = leftThighFieldController.text.trim();
+        request.fields['r_thigh'] = rightThighFieldController.text.trim();
+
+
+        log('request.fields: ${request.fields}');
+        log('request.files: ${request.files}');
+
+        var multiPart = http.MultipartFile(
+          'image',
+          stream,
+          length,
+        );
+        // var beforeMultiPart = http.MultipartFile(
+        //   'beforeimage',
+        //   beforeStream,
+        //   beforeLength,
+        // );
+        var afterMultiPart = http.MultipartFile(
+          'afterimage',
+          afterStream,
+          afterLength,
+        );
+
+        request.files.add(multiPart);
+       // request.files.add(beforeMultiPart);
+         request.files.add(afterMultiPart);
+
+        //var multiPart = http.MultipartFile('file', stream, length);
+        // request.files.add(multiPart);
+        var response = await request.send();
+        log('response: ${response.request}');
+
+        response.stream.transform(utf8.decoder).listen((value) {
+          GetUserUpdateProfileModel response1 = GetUserUpdateProfileModel.fromJson(json.decode(value));
+          log('response1 ::::::${response1.messege}');
+          isSuccessStatusCode = response1.success.obs;
+          log('status : $isSuccessStatusCode');
+
+          if(isSuccessStatusCode.value){
+            Fluttertoast.showToast(msg: response1.messege);
+            getProfileAPI();
+          } else {
+            log('status code false: ${response1.success}');
+            log('response1.errorMessage: ${response1.errorMessage}');
+            //if(response1.errorMessage.contains("Token don't match")){
+            //Fluttertoast.showToast(msg: response1.errorMessage);
+            Fluttertoast.showToast(msg: response1.messege);
+            // }
+
+            log('False False');
+          }
+        });
+      }
+      /*else if(afterImageProfile != null){
+        var request = http.MultipartRequest('POST', Uri.parse(url));
+
+        //var stream = http.ByteStream(profile!.openRead());
+        //var beforeStream = http.ByteStream(beforeImageProfile!.openRead());
+         var afterStream = http.ByteStream(afterImageProfile!.openRead());
+
+        //stream.cast();
+        //beforeStream.cast();
+         afterStream.cast();
+
+        //var length = await profile!.length();
+        //var beforeLength = await beforeImageProfile!.length();
+        var afterLength = await afterImageProfile!.length();
+
+        //request.files.add(await http.MultipartFile.fromPath("image", profile!.path));
+        //request.files.add(await http.MultipartFile.fromPath("beforeimage", beforeImageProfile!.path));
+         request.files.add(await http.MultipartFile.fromPath("afterimage", afterImageProfile!.path));
+
+        request.headers.addAll(apiHeader.headers);
+
+        request.fields['id'] = "${UserDetails.userId}";
+        request.fields['name'] = nameFieldController.text.trim();
+        request.fields['address'] = addressFieldController.text.trim();
+        request.fields['gender'] = genderValue.value;
+        request.fields['height'] = heightFieldController.text.trim();
+        request.fields['weight'] = weightFieldController.text.trim();
+        request.fields['chest'] = chestFieldController.text.trim();
+        request.fields['l_arm'] = leftArmFieldController.text.trim();
+        request.fields['r_arm'] = rightArmFieldController.text.trim();
+        request.fields['walst'] = waistFieldController.text.trim();
+        request.fields['hlps'] = hipsFieldController.text.trim();
+        request.fields['l_thigh'] = leftThighFieldController.text.trim();
+        request.fields['r_thigh'] = rightThighFieldController.text.trim();
+
+
+        log('request.fields: ${request.fields}');
+        log('request.files: ${request.files}');
+
+        // var multiPart = http.MultipartFile(
+        //   'image',
+        //   stream,
+        //   length,
+        // );
+        // var beforeMultiPart = http.MultipartFile(
+        //   'beforeimage',
+        //   beforeStream,
+        //   beforeLength,
+        // );
+        var afterMultiPart = http.MultipartFile(
+          'afterimage',
+          afterStream,
+          afterLength,
+        );
+
+        //request.files.add(multiPart);
+        //request.files.add(beforeMultiPart);
+         request.files.add(afterMultiPart);
+
+        //var multiPart = http.MultipartFile('file', stream, length);
+        // request.files.add(multiPart);
+        var response = await request.send();
+        log('response: ${response.request}');
+
+        response.stream.transform(utf8.decoder).listen((value) {
+          GetUserUpdateProfileModel response1 = GetUserUpdateProfileModel.fromJson(json.decode(value));
+          log('response1 ::::::${response1.messege}');
+          isSuccessStatusCode = response1.success.obs;
+          log('status : $isSuccessStatusCode');
+
+          if(isSuccessStatusCode.value){
+            Fluttertoast.showToast(msg: response1.messege);
+            getProfileAPI();
+          } else {
+            log('status code false: ${response1.success}');
+            log('response1.errorMessage: ${response1.errorMessage}');
+            //if(response1.errorMessage.contains("Token don't match")){
+            Fluttertoast.showToast(msg: response1.errorMessage);
+            Fluttertoast.showToast(msg: response1.messege);
+            // }
+
+            log('False False');
+          }
+        });
+      }*/
+      else if(afterImageProfile == null && profile != null && beforeImageProfile != null){
+        var request = http.MultipartRequest('POST', Uri.parse(url));
+
+        var stream = http.ByteStream(profile!.openRead());
+        var beforeStream = http.ByteStream(beforeImageProfile!.openRead());
+        //var afterStream = http.ByteStream(afterImageProfile!.openRead());
+
+        stream.cast();
+        beforeStream.cast();
+        //afterStream.cast();
+
+        var length = await profile!.length();
+        var beforeLength = await beforeImageProfile!.length();
+        //var afterLength = await afterImageProfile!.length();
+
+        request.files.add(await http.MultipartFile.fromPath("image", profile!.path));
+        request.files.add(await http.MultipartFile.fromPath("beforeimage", beforeImageProfile!.path));
+        //request.files.add(await http.MultipartFile.fromPath("afterimage", afterImageProfile!.path));
+
+        request.headers.addAll(apiHeader.headers);
+
+        request.fields['id'] = "${UserDetails.userId}";
+        request.fields['name'] = nameFieldController.text.trim();
+        request.fields['address'] = addressFieldController.text.trim();
+        request.fields['gender'] = genderValue.value;
+        request.fields['height'] = heightFieldController.text.trim();
+        request.fields['weight'] = weightFieldController.text.trim();
+        request.fields['chest'] = chestFieldController.text.trim();
+        request.fields['l_arm'] = leftArmFieldController.text.trim();
+        request.fields['r_arm'] = rightArmFieldController.text.trim();
+        request.fields['walst'] = waistFieldController.text.trim();
+        request.fields['hlps'] = hipsFieldController.text.trim();
+        request.fields['l_thigh'] = leftThighFieldController.text.trim();
+        request.fields['r_thigh'] = rightThighFieldController.text.trim();
+
+
+        log('request.fields: ${request.fields}');
+        log('request.files: ${request.files}');
+
+        var multiPart = http.MultipartFile(
+          'image',
+          stream,
+          length,
+        );
+        var beforeMultiPart = http.MultipartFile(
+          'beforeimage',
+          beforeStream,
+          beforeLength,
+        );
+        // var afterMultiPart = http.MultipartFile(
+        //   'afterimage',
+        //   afterStream,
+        //   afterLength,
+        // );
+
+        request.files.add(multiPart);
+        request.files.add(beforeMultiPart);
+        //request.files.add(afterMultiPart);
+
+        //var multiPart = http.MultipartFile('file', stream, length);
+        // request.files.add(multiPart);
+        var response = await request.send();
+        log('response: ${response.request}');
+
+        response.stream.transform(utf8.decoder).listen((value) {
+          GetUserUpdateProfileModel response1 = GetUserUpdateProfileModel.fromJson(json.decode(value));
+          log('response1 ::::::${response1.messege}');
+          isSuccessStatusCode = response1.success.obs;
+          log('status : $isSuccessStatusCode');
+
+          if(isSuccessStatusCode.value){
+            Fluttertoast.showToast(msg: response1.messege);
+            getProfileAPI();
+          } else {
+            log('status code false: ${response1.success}');
+            log('response1.errorMessage: ${response1.errorMessage}');
+            //if(response1.errorMessage.contains("Token don't match")){
+            //Fluttertoast.showToast(msg: response1.errorMessage);
+            Fluttertoast.showToast(msg: response1.messege);
+            // }
+
+            log('False False');
+          }
+        });
+      }
+      else if(profile != null && beforeImageProfile == null && afterImageProfile == null){
+        var request = http.MultipartRequest('POST', Uri.parse(url));
+
+        var stream = http.ByteStream(profile!.openRead());
+        //var beforeStream = http.ByteStream(beforeImageProfile!.openRead());
+        //var afterStream = http.ByteStream(afterImageProfile!.openRead());
+
+        stream.cast();
+        //beforeStream.cast();
+        //afterStream.cast();
+
+        var length = await profile!.length();
+       // var beforeLength = await beforeImageProfile!.length();
+        //var afterLength = await afterImageProfile!.length();
+
+        request.files.add(await http.MultipartFile.fromPath("image", profile!.path));
+        //request.files.add(await http.MultipartFile.fromPath("beforeimage", beforeImageProfile!.path));
+        //request.files.add(await http.MultipartFile.fromPath("afterimage", afterImageProfile!.path));
+
+        request.headers.addAll(apiHeader.headers);
+
+        request.fields['id'] = "${UserDetails.userId}";
+        request.fields['name'] = nameFieldController.text.trim();
+        request.fields['address'] = addressFieldController.text.trim();
+        request.fields['gender'] = genderValue.value;
+        request.fields['height'] = heightFieldController.text.trim();
+        request.fields['weight'] = weightFieldController.text.trim();
+        request.fields['chest'] = chestFieldController.text.trim();
+        request.fields['l_arm'] = leftArmFieldController.text.trim();
+        request.fields['r_arm'] = rightArmFieldController.text.trim();
+        request.fields['walst'] = waistFieldController.text.trim();
+        request.fields['hlps'] = hipsFieldController.text.trim();
+        request.fields['l_thigh'] = leftThighFieldController.text.trim();
+        request.fields['r_thigh'] = rightThighFieldController.text.trim();
+
+
+        log('request.fields: ${request.fields}');
+        log('request.files: ${request.files}');
+
+        var multiPart = http.MultipartFile(
+          'image',
+          stream,
+          length,
+        );
+        // var beforeMultiPart = http.MultipartFile(
+        //   'beforeimage',
+        //   beforeStream,
+        //   beforeLength,
+        // );
+        // var afterMultiPart = http.MultipartFile(
+        //   'afterimage',
+        //   afterStream,
+        //   afterLength,
+        // );
+
+        request.files.add(multiPart);
+        //request.files.add(beforeMultiPart);
+        //request.files.add(afterMultiPart);
+
+        //var multiPart = http.MultipartFile('file', stream, length);
+        // request.files.add(multiPart);
+        var response = await request.send();
+        log('response: ${response.request}');
+
+        response.stream.transform(utf8.decoder).listen((value) {
+          GetUserUpdateProfileModel response1 = GetUserUpdateProfileModel.fromJson(json.decode(value));
+          log('response1 ::::::${response1.messege}');
+          isSuccessStatusCode = response1.success.obs;
+          log('status : $isSuccessStatusCode');
+
+          if(isSuccessStatusCode.value){
+            Fluttertoast.showToast(msg: response1.messege);
+            getProfileAPI();
+          } else {
+            log('status code false: ${response1.success}');
+            log('response1.errorMessage: ${response1.errorMessage}');
+            //if(response1.errorMessage.contains("Token don't match")){
+            //Fluttertoast.showToast(msg: response1.errorMessage);
+            Fluttertoast.showToast(msg: response1.messege);
+            // }
+
+            log('False False');
+          }
+        });
+      }
+      else if(beforeImageProfile != null && profile == null && afterImageProfile == null){
+        var request = http.MultipartRequest('POST', Uri.parse(url));
+
+        //var stream = http.ByteStream(profile!.openRead());
+        var beforeStream = http.ByteStream(beforeImageProfile!.openRead());
+        //var afterStream = http.ByteStream(afterImageProfile!.openRead());
+
+        //stream.cast();
+        beforeStream.cast();
+        //afterStream.cast();
+
+        //var length = await profile!.length();
+        var beforeLength = await beforeImageProfile!.length();
+        //var afterLength = await afterImageProfile!.length();
+
+        //request.files.add(await http.MultipartFile.fromPath("image", profile!.path));
+        request.files.add(await http.MultipartFile.fromPath("beforeimage", beforeImageProfile!.path));
+        //request.files.add(await http.MultipartFile.fromPath("afterimage", afterImageProfile!.path));
+
+        request.headers.addAll(apiHeader.headers);
+
+        request.fields['id'] = "${UserDetails.userId}";
+        request.fields['name'] = nameFieldController.text.trim();
+        request.fields['address'] = addressFieldController.text.trim();
+        request.fields['gender'] = genderValue.value;
+        request.fields['height'] = heightFieldController.text.trim();
+        request.fields['weight'] = weightFieldController.text.trim();
+        request.fields['chest'] = chestFieldController.text.trim();
+        request.fields['l_arm'] = leftArmFieldController.text.trim();
+        request.fields['r_arm'] = rightArmFieldController.text.trim();
+        request.fields['walst'] = waistFieldController.text.trim();
+        request.fields['hlps'] = hipsFieldController.text.trim();
+        request.fields['l_thigh'] = leftThighFieldController.text.trim();
+        request.fields['r_thigh'] = rightThighFieldController.text.trim();
+
+
+        log('request.fields: ${request.fields}');
+        log('request.files: ${request.files}');
+
+        // var multiPart = http.MultipartFile(
+        //   'image',
+        //   stream,
+        //   length,
+        // );
+        var beforeMultiPart = http.MultipartFile(
+          'beforeimage',
+          beforeStream,
+          beforeLength,
+        );
+        // var afterMultiPart = http.MultipartFile(
+        //   'afterimage',
+        //   afterStream,
+        //   afterLength,
+        // );
+
+        //request.files.add(multiPart);
+        request.files.add(beforeMultiPart);
+        //request.files.add(afterMultiPart);
+
+        //var multiPart = http.MultipartFile('file', stream, length);
+        // request.files.add(multiPart);
+        var response = await request.send();
+        log('response: ${response.request}');
+
+        response.stream.transform(utf8.decoder).listen((value) {
+          GetUserUpdateProfileModel response1 = GetUserUpdateProfileModel.fromJson(json.decode(value));
+          log('response1 ::::::${response1.messege}');
+          isSuccessStatusCode = response1.success.obs;
+          log('status : $isSuccessStatusCode');
+
+          if(isSuccessStatusCode.value){
+            Fluttertoast.showToast(msg: response1.messege);
+            getProfileAPI();
+          } else {
+            log('status code false: ${response1.success}');
+            log('response1.errorMessage: ${response1.errorMessage}');
+            //if(response1.errorMessage.contains("Token don't match")){
+            //Fluttertoast.showToast(msg: response1.errorMessage);
+            Fluttertoast.showToast(msg: response1.messege);
+            // }
+
+            log('False False');
+          }
+        });
+      }
+      else if(afterImageProfile != null && profile == null && beforeImageProfile == null){
+        var request = http.MultipartRequest('POST', Uri.parse(url));
+
+        //var stream = http.ByteStream(profile!.openRead());
+        //var beforeStream = http.ByteStream(beforeImageProfile!.openRead());
+        var afterStream = http.ByteStream(afterImageProfile!.openRead());
+
+        //stream.cast();
+        //beforeStream.cast();
+        afterStream.cast();
+
+        //var length = await profile!.length();
+        //var beforeLength = await beforeImageProfile!.length();
+        var afterLength = await afterImageProfile!.length();
+
+        //request.files.add(await http.MultipartFile.fromPath("image", profile!.path));
+        //request.files.add(await http.MultipartFile.fromPath("beforeimage", beforeImageProfile!.path));
+        request.files.add(await http.MultipartFile.fromPath("afterimage", afterImageProfile!.path));
+
+        request.headers.addAll(apiHeader.headers);
+
+        request.fields['id'] = "${UserDetails.userId}";
+        request.fields['name'] = nameFieldController.text.trim();
+        request.fields['address'] = addressFieldController.text.trim();
+        request.fields['gender'] = genderValue.value;
+        request.fields['height'] = heightFieldController.text.trim();
+        request.fields['weight'] = weightFieldController.text.trim();
+        request.fields['chest'] = chestFieldController.text.trim();
+        request.fields['l_arm'] = leftArmFieldController.text.trim();
+        request.fields['r_arm'] = rightArmFieldController.text.trim();
+        request.fields['walst'] = waistFieldController.text.trim();
+        request.fields['hlps'] = hipsFieldController.text.trim();
+        request.fields['l_thigh'] = leftThighFieldController.text.trim();
+        request.fields['r_thigh'] = rightThighFieldController.text.trim();
+
+
+        log('request.fields: ${request.fields}');
+        log('request.files: ${request.files}');
+
+        // var multiPart = http.MultipartFile(
+        //   'image',
+        //   stream,
+        //   length,
+        // );
+        // var beforeMultiPart = http.MultipartFile(
+        //   'beforeimage',
+        //   beforeStream,
+        //   beforeLength,
+        // );
+        var afterMultiPart = http.MultipartFile(
+          'afterimage',
+          afterStream,
+          afterLength,
+        );
+
+        // request.files.add(multiPart);
+        // request.files.add(beforeMultiPart);
+        request.files.add(afterMultiPart);
+
+        //var multiPart = http.MultipartFile('file', stream, length);
+        // request.files.add(multiPart);
+        var response = await request.send();
+        log('response: ${response.request}');
+
+        response.stream.transform(utf8.decoder).listen((value) {
+          GetUserUpdateProfileModel response1 = GetUserUpdateProfileModel.fromJson(json.decode(value));
+          log('response1 ::::::${response1.messege}');
+          isSuccessStatusCode = response1.success.obs;
+          log('status : $isSuccessStatusCode');
+
+          if(isSuccessStatusCode.value){
+            Fluttertoast.showToast(msg: response1.messege);
+            getProfileAPI();
+          } else {
+            log('status code false: ${response1.success}');
+            log('response1.errorMessage: ${response1.errorMessage}');
+            //if(response1.errorMessage.contains("Token don't match")){
+            //Fluttertoast.showToast(msg: response1.errorMessage);
+            Fluttertoast.showToast(msg: response1.messege);
+            // }
+
+            log('False False');
+          }
+        });
+      }
+      else if(profile == null && beforeImageProfile == null) {
+        var request = http.MultipartRequest('POST', Uri.parse(url));
+
+        //var stream = http.ByteStream(profile!.openRead());
+        //var beforeStream = http.ByteStream(beforeImageProfile!.openRead());
+        var afterStream = http.ByteStream(afterImageProfile!.openRead());
+
+        //stream.cast();
+        //beforeStream.cast();
+        afterStream.cast();
+
+        //var length = await profile!.length();
+        //var beforeLength = await beforeImageProfile!.length();
+        var afterLength = await afterImageProfile!.length();
+
+        //request.files.add(await http.MultipartFile.fromPath("image", profile!.path));
+        //request.files.add(await http.MultipartFile.fromPath("beforeimage", beforeImageProfile!.path));
+        request.files.add(await http.MultipartFile.fromPath("afterimage", afterImageProfile!.path));
+
+        request.headers.addAll(apiHeader.headers);
+
+        request.fields['id'] = "${UserDetails.userId}";
+        request.fields['name'] = nameFieldController.text.trim();
+        request.fields['address'] = addressFieldController.text.trim();
+        request.fields['gender'] = genderValue.value;
+        request.fields['height'] = heightFieldController.text.trim();
+        request.fields['weight'] = weightFieldController.text.trim();
+        request.fields['chest'] = chestFieldController.text.trim();
+        request.fields['l_arm'] = leftArmFieldController.text.trim();
+        request.fields['r_arm'] = rightArmFieldController.text.trim();
+        request.fields['walst'] = waistFieldController.text.trim();
+        request.fields['hlps'] = hipsFieldController.text.trim();
+        request.fields['l_thigh'] = leftThighFieldController.text.trim();
+        request.fields['r_thigh'] = rightThighFieldController.text.trim();
+
+
+        log('request.fields: ${request.fields}');
+        log('request.files: ${request.files}');
+
+        // var multiPart = http.MultipartFile(
+        //   'image',
+        //   stream,
+        //   length,
+        // );
+        // var beforeMultiPart = http.MultipartFile(
+        //   'beforeimage',
+        //   beforeStream,
+        //   beforeLength,
+        // );
+        var afterMultiPart = http.MultipartFile(
+          'afterimage',
+          afterStream,
+          afterLength,
+        );
+
+        // request.files.add(multiPart);
+        // request.files.add(beforeMultiPart);
+        request.files.add(afterMultiPart);
+
+        //var multiPart = http.MultipartFile('file', stream, length);
+        // request.files.add(multiPart);
+        var response = await request.send();
+        log('response: ${response.request}');
+
+        response.stream.transform(utf8.decoder).listen((value) {
+          GetUserUpdateProfileModel response1 = GetUserUpdateProfileModel.fromJson(json.decode(value));
+          log('response1 ::::::${response1.messege}');
+          isSuccessStatusCode = response1.success.obs;
+          log('status : $isSuccessStatusCode');
+
+          if(isSuccessStatusCode.value){
+            Fluttertoast.showToast(msg: response1.messege);
+            getProfileAPI();
+          } else {
+            log('status code false: ${response1.success}');
+            log('response1.errorMessage: ${response1.errorMessage}');
+            //if(response1.errorMessage.contains("Token don't match")){
+            //Fluttertoast.showToast(msg: response1.errorMessage);
+            Fluttertoast.showToast(msg: response1.messege);
+            // }
+
+            log('False False');
+          }
+        });
+      }
+      else if(profile == null && afterImageProfile == null){
+        var request = http.MultipartRequest('POST', Uri.parse(url));
+
+        //var stream = http.ByteStream(profile!.openRead());
+        var beforeStream = http.ByteStream(beforeImageProfile!.openRead());
+        //var afterStream = http.ByteStream(afterImageProfile!.openRead());
+
+        //stream.cast();
+        beforeStream.cast();
+        //afterStream.cast();
+
+        //var length = await profile!.length();
+        var beforeLength = await beforeImageProfile!.length();
+        //var afterLength = await afterImageProfile!.length();
+
+        //request.files.add(await http.MultipartFile.fromPath("image", profile!.path));
+        request.files.add(await http.MultipartFile.fromPath("beforeimage", beforeImageProfile!.path));
+        //request.files.add(await http.MultipartFile.fromPath("afterimage", afterImageProfile!.path));
+
+        request.headers.addAll(apiHeader.headers);
+
+        request.fields['id'] = "${UserDetails.userId}";
+        request.fields['name'] = nameFieldController.text.trim();
+        request.fields['address'] = addressFieldController.text.trim();
+        request.fields['gender'] = genderValue.value;
+        request.fields['height'] = heightFieldController.text.trim();
+        request.fields['weight'] = weightFieldController.text.trim();
+        request.fields['chest'] = chestFieldController.text.trim();
+        request.fields['l_arm'] = leftArmFieldController.text.trim();
+        request.fields['r_arm'] = rightArmFieldController.text.trim();
+        request.fields['walst'] = waistFieldController.text.trim();
+        request.fields['hlps'] = hipsFieldController.text.trim();
+        request.fields['l_thigh'] = leftThighFieldController.text.trim();
+        request.fields['r_thigh'] = rightThighFieldController.text.trim();
+
+
+        log('request.fields: ${request.fields}');
+        log('request.files: ${request.files}');
+
+        // var multiPart = http.MultipartFile(
+        //   'image',
+        //   stream,
+        //   length,
+        // );
+        var beforeMultiPart = http.MultipartFile(
+          'beforeimage',
+          beforeStream,
+          beforeLength,
+        );
+        // var afterMultiPart = http.MultipartFile(
+        //   'afterimage',
+        //   afterStream,
+        //   afterLength,
+        // );
+
+        // request.files.add(multiPart);
+         request.files.add(beforeMultiPart);
+        // request.files.add(afterMultiPart);
+
+        //var multiPart = http.MultipartFile('file', stream, length);
+        // request.files.add(multiPart);
+        var response = await request.send();
+        log('response: ${response.request}');
+
+        response.stream.transform(utf8.decoder).listen((value) {
+          GetUserUpdateProfileModel response1 = GetUserUpdateProfileModel.fromJson(json.decode(value));
+          log('response1 ::::::${response1.messege}');
+          isSuccessStatusCode = response1.success.obs;
+          log('status : $isSuccessStatusCode');
+
+          if(isSuccessStatusCode.value){
+            Fluttertoast.showToast(msg: response1.messege);
+            getProfileAPI();
+          } else {
+            log('status code false: ${response1.success}');
+            log('response1.errorMessage: ${response1.errorMessage}');
+            //if(response1.errorMessage.contains("Token don't match")){
+            //Fluttertoast.showToast(msg: response1.errorMessage);
+            Fluttertoast.showToast(msg: response1.messege);
+            // }
+
+            log('False False');
+          }
+        });
+      }
+      else if(beforeImageProfile == null && afterImageProfile == null){
+        var request = http.MultipartRequest('POST', Uri.parse(url));
+
+        var stream = http.ByteStream(profile!.openRead());
+        //var beforeStream = http.ByteStream(beforeImageProfile!.openRead());
+        //var afterStream = http.ByteStream(afterImageProfile!.openRead());
+
+        stream.cast();
+        //beforeStream.cast();
+        //afterStream.cast();
+
+        var length = await profile!.length();
+        //var beforeLength = await beforeImageProfile!.length();
+        //var afterLength = await afterImageProfile!.length();
+
+        request.files.add(await http.MultipartFile.fromPath("image", profile!.path));
+        //request.files.add(await http.MultipartFile.fromPath("beforeimage", beforeImageProfile!.path));
+        //request.files.add(await http.MultipartFile.fromPath("afterimage", afterImageProfile!.path));
+
+        request.headers.addAll(apiHeader.headers);
+
+        request.fields['id'] = "${UserDetails.userId}";
+        request.fields['name'] = nameFieldController.text.trim();
+        request.fields['address'] = addressFieldController.text.trim();
+        request.fields['gender'] = genderValue.value;
+        request.fields['height'] = heightFieldController.text.trim();
+        request.fields['weight'] = weightFieldController.text.trim();
+        request.fields['chest'] = chestFieldController.text.trim();
+        request.fields['l_arm'] = leftArmFieldController.text.trim();
+        request.fields['r_arm'] = rightArmFieldController.text.trim();
+        request.fields['walst'] = waistFieldController.text.trim();
+        request.fields['hlps'] = hipsFieldController.text.trim();
+        request.fields['l_thigh'] = leftThighFieldController.text.trim();
+        request.fields['r_thigh'] = rightThighFieldController.text.trim();
+
+
+        log('request.fields: ${request.fields}');
+        log('request.files: ${request.files}');
+
+        var multiPart = http.MultipartFile(
+          'image',
+          stream,
+          length,
+        );
+        // var beforeMultiPart = http.MultipartFile(
+        //   'beforeimage',
+        //   beforeStream,
+        //   beforeLength,
+        // );
+        // var afterMultiPart = http.MultipartFile(
+        //   'afterimage',
+        //   afterStream,
+        //   afterLength,
+        // );
+
+         request.files.add(multiPart);
+        // request.files.add(beforeMultiPart);
+        //request.files.add(afterMultiPart);
+
+        //var multiPart = http.MultipartFile('file', stream, length);
+        // request.files.add(multiPart);
+        var response = await request.send();
+        log('response: ${response.request}');
+
+        response.stream.transform(utf8.decoder).listen((value) {
+          GetUserUpdateProfileModel response1 = GetUserUpdateProfileModel.fromJson(json.decode(value));
+          log('response1 ::::::${response1.messege}');
+          isSuccessStatusCode = response1.success.obs;
+          log('status : $isSuccessStatusCode');
+
+          if(isSuccessStatusCode.value){
+            Fluttertoast.showToast(msg: response1.messege);
+            getProfileAPI();
+          } else {
+            log('status code false: ${response1.success}');
+            log('response1.errorMessage: ${response1.errorMessage}');
+            //if(response1.errorMessage.contains("Token don't match")){
+            //Fluttertoast.showToast(msg: response1.errorMessage);
+            Fluttertoast.showToast(msg: response1.messege);
+            // }
+
+            log('False False');
+          }
+        });
+      }
+
+
 
     }catch(e){
       log('Error: $e');
@@ -297,11 +1234,11 @@ class EditProfileScreenController extends GetxController{
 
     Map<String, dynamic> data= {
       "userid" : "${UserDetails.userId}",
-      //"gameid" : "${UserDetails.gameId}"
+      "gameid" : "${UserDetails.gameId}"
     };
     try{
       http.Response response = await http.post(Uri.parse(url), body: data, headers: apiHeader.headers);
-      log('Response : ${response.body}');
+      log('Star point add Response : ${response.body}');
       AddStarPointModel addStarPointModel = AddStarPointModel.fromJson(json.decode(response.body));
       isAddStarSuccessStatusCode = addStarPointModel.success.obs;
       log('isStatus: $isAddStarSuccessStatusCode');
@@ -310,7 +1247,7 @@ class EditProfileScreenController extends GetxController{
         log('Success');
         //Fluttertoast.showToast(msg: addStarPointModel.messege);
       }else{
-       // Fluttertoast.showToast(msg: addStarPointModel.messege);
+        //Fluttertoast.showToast(msg: addStarPointModel.messege);
         log('Fail');
       }
     }catch(e){
