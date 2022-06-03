@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:friend_fitness_app/common/constants/api_header.dart';
 import 'package:friend_fitness_app/common/constants/api_url.dart';
+import 'package:friend_fitness_app/common/sharedpreference_data/sharedpreference_data.dart';
 import 'package:friend_fitness_app/common/user_details.dart';
 import 'package:friend_fitness_app/model/create_game_model/create_game_model.dart';
+import 'package:friend_fitness_app/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -23,6 +25,8 @@ class CreateGameScreenController extends GetxController{
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
   RxString weekDayValue = 'Monday'.obs;
+
+  SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
   createGameFunction()async{
     isLoading(true);
@@ -53,7 +57,11 @@ class CreateGameScreenController extends GetxController{
 
       }else{
         Fluttertoast.showToast(msg: createGameModel.messege);
-        //Fluttertoast.showToast(msg: createGameModel.errorMessage);
+
+        if(createGameModel.messege == "Token don't match"){
+          sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+          Get.offAll(SignInScreen(), transition: Transition.zoom);
+        }
         log('Fail');
         log('isStatus.value: ${isSuccessStatus.value}');
 

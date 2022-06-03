@@ -9,6 +9,7 @@ import 'package:friend_fitness_app/common/user_details.dart';
 import 'package:friend_fitness_app/model/get_all_game_list_model/get_all_game_list_model.dart';
 import 'package:friend_fitness_app/model/get_all_game_members_model/get_all_game_members_model.dart';
 import 'package:friend_fitness_app/model/member_join_game_model/member_join_game_model.dart';
+import 'package:friend_fitness_app/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -61,6 +62,11 @@ class GroupListScreenController extends GetxController{
       } else{
         //Fluttertoast.showToast(msg: getAllGameListModel.errorMessage);
         Fluttertoast.showToast(msg: getAllGameListModel.messege);
+
+        if(getAllGameListModel.messege == "Token don't match"){
+          sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+          Get.offAll(SignInScreen(), transition: Transition.zoom);
+        }
       }
 
     } catch(e) {
@@ -99,6 +105,11 @@ class GroupListScreenController extends GetxController{
         Fluttertoast.showToast(msg: memberJoinGameModel.messege);
       }else{
         Fluttertoast.showToast(msg: memberJoinGameModel.messege);
+
+        if(memberJoinGameModel.messege == "Token don't match"){
+          sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+          Get.offAll(SignInScreen(), transition: Transition.zoom);
+        }
       }
 
     } catch(e) {
@@ -135,6 +146,11 @@ class GroupListScreenController extends GetxController{
         log('isStatus.value: ${isSuccessStatusCode.value}');
         Fluttertoast.showToast(msg: getAllGameMembersModel.messege);
         //Fluttertoast.showToast(msg: getAllGameMembersModel.errorMessage);
+        if(getAllGameMembersModel.messege == "Token don't match"){
+          sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+          Get.offAll(SignInScreen(), transition: Transition.zoom);
+        }
+
       }
     }catch(e){
       log('getAllGameMembersList Error: $e');

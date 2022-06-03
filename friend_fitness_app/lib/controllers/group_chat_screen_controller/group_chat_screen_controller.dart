@@ -6,9 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:friend_fitness_app/common/constants/api_header.dart';
 import 'package:friend_fitness_app/common/constants/api_url.dart';
+import 'package:friend_fitness_app/common/sharedpreference_data/sharedpreference_data.dart';
 import 'package:friend_fitness_app/common/user_details.dart';
 import 'package:friend_fitness_app/controllers/send_message_model/send_message_model.dart';
 import 'package:friend_fitness_app/model/get_all_message_model/get_all_message_model.dart';
+import 'package:friend_fitness_app/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -20,6 +22,9 @@ class GroupChatScreenController extends GetxController {
 
   RxBool isLoading = false.obs;
   RxBool isSuccessStatus = false.obs;
+
+  var isEmojiVisible = false.obs;
+  FocusNode focusNode = FocusNode();
 
   String attachImage = "";
 
@@ -33,15 +38,8 @@ class GroupChatScreenController extends GetxController {
 
   TextEditingController userMessageFieldController = TextEditingController();
 
-  List<UserChatMessageModel> userChatList = [
-    UserChatMessageModel(isSendByMe: false, message: "Hi lorem Ipsum dummy text ever since the 150s, when an unknown printer to ok a gallery of type "),
-    UserChatMessageModel(isSendByMe: false, message: "Hi lorem Ipsum dummy text ever"),
-    UserChatMessageModel(isSendByMe: true, message: "Hi lorem Ipsum dummy text ever since the 150s, when an unknown printer to ok a gallery of type"),
-    UserChatMessageModel(isSendByMe: true, message: "Hi lorem Ipsum dummy text ever"),
-    UserChatMessageModel(isSendByMe: false, message: "Hi lorem Ipsum dummy text ever"),
-    UserChatMessageModel(isSendByMe: false, message: "Hi lorem Ipsum dummy text ever"),
-    UserChatMessageModel(isSendByMe: true, message: "Hi lorem Ipsum dummy text ever since the 150s, when an unknown printer to ok a gallery of type"),
-  ];
+  SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
+  ScrollController scrollController = ScrollController();
 
   sendMessageApi() async{
     isLoading(true);
@@ -65,7 +63,7 @@ class GroupChatScreenController extends GetxController {
 
         request.fields['userid'] = "${UserDetails.userId}";
         request.fields['gameid'] = gameId;
-        request.fields['message'] = userMessageFieldController.text.trim();
+        request.fields['message'] = userMessageFieldController.text.trim().toString();
 
 
         log('request.fields: ${request.fields}');
@@ -92,9 +90,16 @@ class GroupChatScreenController extends GetxController {
 
           if(isSuccessStatusCode.value){
             Fluttertoast.showToast(msg: response1.messege);
+
             getAllMessageFunction(gameId: gameId);
+
           } else {
             Fluttertoast.showToast(msg: response1.messege);
+
+            if(response1.messege == "Token don't match"){
+              sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+              Get.offAll(SignInScreen(), transition: Transition.zoom);
+            }
             log('False False');
           }
         });
@@ -122,7 +127,7 @@ class GroupChatScreenController extends GetxController {
 
         request.fields['userid'] = "${UserDetails.userId}";
         request.fields['gameid'] = gameId;
-        request.fields['message'] = userMessageFieldController.text.trim();
+        request.fields['message'] = userMessageFieldController.text.trim().toString();
 
 
         log('request.fields: ${request.fields}');
@@ -161,11 +166,17 @@ class GroupChatScreenController extends GetxController {
 
           if(isSuccessStatusCode.value){
             Fluttertoast.showToast(msg: response1.messege);
+            //addPhoto!.deleteSync();
             getAllMessageFunction(gameId: gameId);
 
           } else {
             Fluttertoast.showToast(msg: response1.messege);
             //Fluttertoast.showToast(msg: response1.errorMessage);
+
+            if(response1.messege == "Token don't match"){
+              sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+              Get.offAll(SignInScreen(), transition: Transition.zoom);
+            }
             log('False False');
           }
         });
@@ -195,20 +206,31 @@ class GroupChatScreenController extends GetxController {
       http.Response response = await http.post(Uri.parse(url), body: data, headers: apiHeader.headers);
       log('Get All Message Response : ${response.body}');
       GetAllMessageModel getAllMessageModel = GetAllMessageModel.fromJson(json.decode(response.body));
-      isSuccessStatusCode = getAllMessageModel.success!.obs;
+      isSuccessStatusCode = getAllMessageModel.success.obs;
       log('isStatus: $isSuccessStatusCode');
 
       if(isSuccessStatusCode.value){
         log('Success');
-        getAllMessageList = getAllMessageModel.list!;
-        log('getAllMessageList : $getAllMessageList');
+        getAllMessageList = getAllMessageModel.list;
+        //log('getAllMessageList : $getAllMessageList');
         for(int i =0; i < getAllMessageList.length ; i++){
-          attachImage = "https://squadgame.omdemo.co.in/asset/uploads/chat/" +getAllMessageList[i].file!;
+          attachImage = "https://squadgame.omdemo.co.in/asset/uploads/chat/" +getAllMessageList[i].file;
+          //getAllMessageList.reversed.toList();
+
+          // var temp = getAllMessageList[i];
+          // getAllMessageList[i] = getAllMessageList[getAllMessageList.length-1-i];
+          // getAllMessageList[getAllMessageList.length-1-i] = temp;
+          // log('getAllMessageList : $getAllMessageList');
         }
 
       }else{
-        Fluttertoast.showToast(msg: getAllMessageModel.messege!);
+        Fluttertoast.showToast(msg: getAllMessageModel.messege);
         //Fluttertoast.showToast(msg: getAllMessageModel.errorMessage!);
+        if(getAllMessageModel.messege == "Token don't match"){
+          sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+          Get.offAll(SignInScreen(), transition: Transition.zoom);
+        }
+
         log('Fail');
       }
     }catch(e){
@@ -228,6 +250,11 @@ class GroupChatScreenController extends GetxController {
     // TODO: implement onInit
     super.onInit();
     getAllMessageFunction(gameId: gameId);
+    focusNode.addListener(() {
+      if(focusNode.hasFocus){
+        isEmojiVisible.value = false;
+      }
+    });
   }
 
 }

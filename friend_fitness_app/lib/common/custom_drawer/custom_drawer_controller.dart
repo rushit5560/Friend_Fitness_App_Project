@@ -4,9 +4,11 @@ import 'dart:developer';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:friend_fitness_app/common/constants/api_header.dart';
 import 'package:friend_fitness_app/common/constants/api_url.dart';
+import 'package:friend_fitness_app/common/sharedpreference_data/sharedpreference_data.dart';
 import 'package:friend_fitness_app/common/user_details.dart';
 import 'package:friend_fitness_app/model/end_game_model/end_game_model.dart';
 import 'package:friend_fitness_app/model/start_game_model/start_game_model.dart';
+import 'package:friend_fitness_app/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -16,6 +18,7 @@ class CustomDrawerController extends GetxController{
   RxBool isSuccessStatusCode = false.obs;
   ApiHeader apiHeader= ApiHeader();
   RxBool startGame = true.obs;
+  SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
   startGameFunction() async {
     isLoading(true);
@@ -45,6 +48,11 @@ class CustomDrawerController extends GetxController{
       }else{
         Fluttertoast.showToast(msg: createGameModel.messege);
         //Fluttertoast.showToast(msg: createGameModel.errorMessage);
+
+        if(createGameModel.messege == "Token don't match"){
+          sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+          Get.offAll(SignInScreen(), transition: Transition.zoom);
+        }
         log('Fail');
         log('isStatus.value: ${isSuccessStatusCode.value}');
         //Get.snackbar("User Already Register", '');
@@ -88,6 +96,10 @@ class CustomDrawerController extends GetxController{
       } else {
         Fluttertoast.showToast(msg: endGameModel.messege);
         //Fluttertoast.showToast(msg: endGameModel.errorMessage);
+        if(endGameModel.messege == "Token don't match"){
+          sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+          Get.offAll(SignInScreen(), transition: Transition.zoom);
+        }
         log('Fail');
         log('isStatus.value: ${isSuccessStatusCode.value}');
         //Get.snackbar("User Already Register", '');

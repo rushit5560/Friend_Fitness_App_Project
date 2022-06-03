@@ -4,9 +4,11 @@ import 'dart:developer';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:friend_fitness_app/common/constants/api_header.dart';
 import 'package:friend_fitness_app/common/constants/api_url.dart';
+import 'package:friend_fitness_app/common/sharedpreference_data/sharedpreference_data.dart';
 import 'package:friend_fitness_app/common/user_details.dart';
 import 'package:friend_fitness_app/model/add_star_point_model/add_star_point_model.dart';
 import 'package:friend_fitness_app/model/get_user_wise_point_model/get_user_wise_point_model.dart';
+import 'package:friend_fitness_app/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 
@@ -20,6 +22,7 @@ class GameSummaryDetailsScreenController extends GetxController{
   int totalNegativePoint = 0;
   String currentDate = "";
   ApiHeader apiHeader= ApiHeader();
+  SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
   @override
   void onInit() {
@@ -56,6 +59,11 @@ class GameSummaryDetailsScreenController extends GetxController{
       } else{
         //Fluttertoast.showToast(msg: getUserWisePointModel.errorMessage);
         Fluttertoast.showToast(msg: getUserWisePointModel.messege);
+
+        if(getUserWisePointModel.messege == "Token don't match"){
+          sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+          Get.offAll(SignInScreen(), transition: Transition.zoom);
+        }
       }
 
     } catch(e) {
@@ -88,7 +96,7 @@ class GameSummaryDetailsScreenController extends GetxController{
         Fluttertoast.showToast(msg: addStarPointModel.messege);
       }else{
         Fluttertoast.showToast(msg: addStarPointModel.messege);
-        Fluttertoast.showToast(msg: addStarPointModel.errorMessage);
+        //Fluttertoast.showToast(msg: addStarPointModel.errorMessage);
         log('Fail');
       }
     }catch(e){

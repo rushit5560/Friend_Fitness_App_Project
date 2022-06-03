@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:friend_fitness_app/common/common_widgets.dart';
 import 'package:friend_fitness_app/common/custom_drawer/custom_drawer.dart';
 import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
+import 'package:friend_fitness_app/controllers/profile_screen_controller/profile_screen_controller.dart';
 import 'package:get/get.dart';
 
 import '../../controllers/home_screen_controller/home_screen_controller.dart';

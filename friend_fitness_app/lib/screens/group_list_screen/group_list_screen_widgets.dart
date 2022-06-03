@@ -249,29 +249,32 @@ class GroupListModule extends StatelessWidget {
 
             Column(
               children: [
-                GestureDetector(
-                  onTap: () {
-                    screenController.memberJoinGame(gameId: screenController.getGameList[i].id, totalPerson: screenController.getGameList[i].person);
-                  },
-                  child: Container(
-                    width: 130,
-                    height: 35,
-                    decoration: BoxDecoration(
-                      color: AppColors.colorDarkGrey,
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: const Center(
-                      child: Text(
-                        "JOIN GAME",
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          color: Colors.white,
-                          fontSize: 13,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
+
+                 UserDetails.gameId == screenController.getGameList[i].id.toString() ?
+                      Container()
+                    : GestureDetector(
+                   onTap: () {
+                     screenController.memberJoinGame(gameId: screenController.getGameList[i].id, totalPerson: screenController.getGameList[i].person);
+                   },
+                   child: Container(
+                     width: 130,
+                     height: 35,
+                     decoration: BoxDecoration(
+                       color: AppColors.colorDarkGrey,
+                       borderRadius: BorderRadius.circular(20),
+                     ),
+                     child: const Center(
+                       child: Text(
+                         "JOIN GAME",
+                         style: TextStyle(
+                           fontWeight: FontWeight.bold,
+                           color: Colors.white,
+                           fontSize: 13,
+                         ),
+                       ),
+                     ),
+                   ),
+                 ),
 
                 // UserDetails.roleId == 3 ? const SizedBox(height: 10) : Container(),
                 //

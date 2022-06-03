@@ -22,7 +22,7 @@ class AppImages{
   static const padlockImg = root + "padlock.png";
   static const createGameImg = root + "create_game.png";
   static const startGameImg = root + "start_game.png";
-  static const gameLogoImg = root + "game_logo.png";
+  static const gameLogoImg = root + "ic_launcher.png";
   static const logoutImg = root + "logout.png";
 
   static const bottomHomeImg = root + "bottom_home.png";

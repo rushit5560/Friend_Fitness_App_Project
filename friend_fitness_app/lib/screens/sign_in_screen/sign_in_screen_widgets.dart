@@ -31,7 +31,7 @@ class LoginHeaderModule extends StatelessWidget {
 /// Squad Goal Text
 class SquadGoalText extends StatelessWidget {
   SquadGoalText({Key? key}) : super(key: key);
-  final screenController = Get.find<SignInScreenController>();
+  //final screenController = Get.find<SignInScreenController>();
 
   @override
   Widget build(BuildContext context) {

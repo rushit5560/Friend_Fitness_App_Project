@@ -27,7 +27,7 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
+        body: SafeArea(
         child: Obx(()=>
         groupChatScreenController.isLoading.value ?
             const CustomCircularProgressIndicator():
@@ -35,12 +35,30 @@ class _GroupChatScreenState extends State<GroupChatScreen> {
             children: [
               GroupChatScreenAppBarModule(),
               const SizedBox(height: 10),
-              Expanded(
-                child: GroupChatListModule(),
-              ),
-              const SizedBox(height: 10),
-              SendMessageModule(),
-              const SizedBox(height: 10),
+
+              WillPopScope(
+                onWillPop: (){
+                  if(groupChatScreenController.isEmojiVisible.value){
+                    groupChatScreenController.isEmojiVisible.value = false;
+                  } else{
+                    Get.back();
+                  }
+                  return Future.value(false);
+                },
+                child: Expanded(
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: GroupChatListModule(),
+                      ),
+                      const SizedBox(height: 10),
+                      SendMessageModule(),
+                      const SizedBox(height: 10),
+                    ],
+                  ),
+                ),
+              )
+
             ],
           ),
         ),

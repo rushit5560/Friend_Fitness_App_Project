@@ -43,6 +43,8 @@ dependencies:
   shared_preferences: ^2.0.13
   fluttertoast: ^8.0.9
   intl: ^0.17.0
+  emoji_picker_flutter: ^1.2.1
+  avoid_keyboard: ^0.3.0
 
 dev_dependencies:
   flutter_test:

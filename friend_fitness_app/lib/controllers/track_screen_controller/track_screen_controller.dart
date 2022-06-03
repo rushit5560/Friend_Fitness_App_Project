@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:friend_fitness_app/common/constants/api_header.dart';
 import 'package:friend_fitness_app/common/constants/api_url.dart';
+import 'package:friend_fitness_app/common/sharedpreference_data/sharedpreference_data.dart';
 import 'package:friend_fitness_app/common/user_details.dart';
 import 'package:friend_fitness_app/model/add_water_intake_point_model/add_water_intake_point_model.dart';
 import 'package:friend_fitness_app/model/category_model/category_model.dart';
@@ -11,6 +12,7 @@ import 'package:friend_fitness_app/model/get_all_positive_category/get_all_posit
 import 'package:friend_fitness_app/model/home_screen_models/water_intake_model.dart';
 import 'package:friend_fitness_app/model/negative_category_point_model/negative_category_point_model.dart';
 import 'package:friend_fitness_app/model/positive_category_point_model/positive_category_point_model.dart';
+import 'package:friend_fitness_app/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:friend_fitness_app/model/home_screen_models/fitness_model.dart';
 import 'package:get/get.dart';
@@ -35,6 +37,8 @@ class TrackScreenController extends GetxController{
   ApiHeader apiHeader= ApiHeader();
   List<ListElement> getAllPositiveCategoryList = [];
   List<ListElement1> getAllNegativeCategoryList = [];
+  SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
+
 
   @override
   void onInit() {
@@ -208,6 +212,10 @@ class TrackScreenController extends GetxController{
 
       }else{
         Fluttertoast.showToast(msg: getAllPositiveCategoryModel.messege);
+        if(getAllPositiveCategoryModel.messege == "Token don't match"){
+          sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+          Get.offAll(SignInScreen(), transition: Transition.zoom);
+        }
       }
 
     } catch(e) {
@@ -240,6 +248,10 @@ class TrackScreenController extends GetxController{
 
       } else{
         Fluttertoast.showToast(msg: getAllNegativeCategoryModel.messege);
+        if(getAllNegativeCategoryModel.messege == "Token don't match"){
+          sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+          Get.offAll(SignInScreen(), transition: Transition.zoom);
+        }
       }
 
     } catch(e) {
@@ -295,6 +307,11 @@ class TrackScreenController extends GetxController{
       } else {
         Fluttertoast.showToast(msg: categoryAddPositivePointModel.messege);
         //Fluttertoast.showToast(msg: categoryAddPositivePointModel.errorMessage);
+        if(categoryAddPositivePointModel.messege == "Token don't match"){
+          sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+          Get.offAll(SignInScreen(), transition: Transition.zoom);
+        }
+
         log("addCategoryPointEntryToFirebaseFunction Else Else");
       }
 
@@ -344,6 +361,11 @@ class TrackScreenController extends GetxController{
 
       } else {
         Fluttertoast.showToast(msg: categoryAddNegativePointModel.messege);
+
+        if(categoryAddNegativePointModel.messege == "Token don't match"){
+          sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+          Get.offAll(SignInScreen(), transition: Transition.zoom);
+        }
         //Fluttertoast.showToast(msg: categoryAddNegativePointModel.errorMessage);
         log("addNegativeCategoryPointEntryTFunction Else Else");
       }
@@ -398,6 +420,11 @@ class TrackScreenController extends GetxController{
 
       } else {
         Fluttertoast.showToast(msg: addWaterIntakePointListModel.messege);
+
+        if(addWaterIntakePointListModel.messege == "Token don't match"){
+          sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+          Get.offAll(SignInScreen(), transition: Transition.zoom);
+        }
         //Fluttertoast.showToast(msg: addWaterIntakePointListModel.errorMessage);
         log("addWaterIntakeCategoryPointEntryFunction Else Else");
       }

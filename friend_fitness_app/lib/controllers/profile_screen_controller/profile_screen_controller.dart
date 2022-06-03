@@ -11,6 +11,7 @@ import 'package:friend_fitness_app/model/add_star_point_model/add_star_point_mod
 import 'package:friend_fitness_app/model/get_profile_model/get_profile_model.dart';
 import 'package:friend_fitness_app/model/get_update_profile_model/get_update_profile_model.dart';
 import 'package:friend_fitness_app/model/update_profile_model/update_profile_model.dart';
+import 'package:friend_fitness_app/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 
@@ -31,6 +32,8 @@ class EditProfileScreenController extends GetxController{
   File? afterImageProfile;
   String userAfterImageProfile = "";
 
+  int id= 0;
+
   RxString genderValue = 'female'.obs;
   GlobalKey<FormState> profileFormKey = GlobalKey();
   GlobalKey<FormState> editProfileFormKey = GlobalKey();
@@ -49,6 +52,8 @@ class EditProfileScreenController extends GetxController{
   TextEditingController hipsFieldController = TextEditingController();
   TextEditingController leftThighFieldController = TextEditingController();
   TextEditingController rightThighFieldController = TextEditingController();
+
+  SharedPreferenceData sharedPreferenceData = SharedPreferenceData();
 
   @override
   void onInit() {
@@ -73,6 +78,7 @@ class EditProfileScreenController extends GetxController{
 
       if(isSuccessStatusCode.value){
         log('Success');
+        id = getUserProfileModel.list.id;
         nameFieldController.text = getUserProfileModel.list.name;
         emailFieldController.text = getUserProfileModel.list.email;
         addressFieldController.text = getUserProfileModel.list.address;
@@ -94,6 +100,10 @@ class EditProfileScreenController extends GetxController{
       }else{
         log('Fail');
         Fluttertoast.showToast(msg: getUserProfileModel.messege);
+        if(getUserProfileModel.messege == "Token don't match"){
+          sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+          Get.offAll(SignInScreen(), transition: Transition.zoom);
+        }
       }
     }catch(e){
       log('Get Profile Error: $e');
@@ -188,6 +198,10 @@ class EditProfileScreenController extends GetxController{
             //if(response1.errorMessage.contains("Token don't match")){
               //Fluttertoast.showToast(msg: response1.errorMessage);
             Fluttertoast.showToast(msg: response1.messege);
+            if(response1.messege == "Token don't match"){
+              sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+              Get.offAll(SignInScreen(), transition: Transition.zoom);
+            }
            // }
 
             log('False False');
@@ -273,6 +287,10 @@ class EditProfileScreenController extends GetxController{
             //if(response1.errorMessage.contains("Token don't match")){
             //Fluttertoast.showToast(msg: response1.errorMessage);
             Fluttertoast.showToast(msg: response1.messege);
+            if(response1.messege == "Token don't match"){
+              sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+              Get.offAll(SignInScreen(), transition: Transition.zoom);
+            }
             // }
 
             log('False False');
@@ -359,6 +377,10 @@ class EditProfileScreenController extends GetxController{
             //if(response1.errorMessage.contains("Token don't match")){
               //Fluttertoast.showToast(msg: response1.errorMessage);
             Fluttertoast.showToast(msg: response1.messege);
+            if(response1.messege == "Token don't match"){
+              sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+              Get.offAll(SignInScreen(), transition: Transition.zoom);
+            }
             //}
             log('False False');
           }
@@ -528,6 +550,10 @@ class EditProfileScreenController extends GetxController{
             //if(response1.errorMessage.contains("Token don't match")){
             //Fluttertoast.showToast(msg: response1.errorMessage);
             Fluttertoast.showToast(msg: response1.messege);
+            if(response1.messege == "Token don't match"){
+              sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+              Get.offAll(SignInScreen(), transition: Transition.zoom);
+            }
             // }
 
             log('False False');
@@ -698,6 +724,10 @@ class EditProfileScreenController extends GetxController{
             //if(response1.errorMessage.contains("Token don't match")){
             //Fluttertoast.showToast(msg: response1.errorMessage);
             Fluttertoast.showToast(msg: response1.messege);
+            if(response1.messege == "Token don't match"){
+              sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+              Get.offAll(SignInScreen(), transition: Transition.zoom);
+            }
             // }
 
             log('False False');
@@ -783,6 +813,10 @@ class EditProfileScreenController extends GetxController{
             //if(response1.errorMessage.contains("Token don't match")){
             //Fluttertoast.showToast(msg: response1.errorMessage);
             Fluttertoast.showToast(msg: response1.messege);
+            if(response1.messege == "Token don't match"){
+              sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+              Get.offAll(SignInScreen(), transition: Transition.zoom);
+            }
             // }
 
             log('False False');
@@ -868,6 +902,10 @@ class EditProfileScreenController extends GetxController{
             //if(response1.errorMessage.contains("Token don't match")){
             //Fluttertoast.showToast(msg: response1.errorMessage);
             Fluttertoast.showToast(msg: response1.messege);
+            if(response1.messege == "Token don't match"){
+              sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+              Get.offAll(SignInScreen(), transition: Transition.zoom);
+            }
             // }
 
             log('False False');
@@ -953,6 +991,10 @@ class EditProfileScreenController extends GetxController{
             //if(response1.errorMessage.contains("Token don't match")){
             //Fluttertoast.showToast(msg: response1.errorMessage);
             Fluttertoast.showToast(msg: response1.messege);
+            if(response1.messege == "Token don't match"){
+              sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+              Get.offAll(SignInScreen(), transition: Transition.zoom);
+            }
             // }
 
             log('False False');
@@ -1038,6 +1080,10 @@ class EditProfileScreenController extends GetxController{
             //if(response1.errorMessage.contains("Token don't match")){
             //Fluttertoast.showToast(msg: response1.errorMessage);
             Fluttertoast.showToast(msg: response1.messege);
+            if(response1.messege == "Token don't match"){
+              sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+              Get.offAll(SignInScreen(), transition: Transition.zoom);
+            }
             // }
 
             log('False False');
@@ -1123,6 +1169,10 @@ class EditProfileScreenController extends GetxController{
             //if(response1.errorMessage.contains("Token don't match")){
             //Fluttertoast.showToast(msg: response1.errorMessage);
             Fluttertoast.showToast(msg: response1.messege);
+            if(response1.messege == "Token don't match"){
+              sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+              Get.offAll(SignInScreen(), transition: Transition.zoom);
+            }
             // }
 
             log('False False');
@@ -1208,6 +1258,10 @@ class EditProfileScreenController extends GetxController{
             //if(response1.errorMessage.contains("Token don't match")){
             //Fluttertoast.showToast(msg: response1.errorMessage);
             Fluttertoast.showToast(msg: response1.messege);
+            if(response1.messege == "Token don't match"){
+              sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+              Get.offAll(SignInScreen(), transition: Transition.zoom);
+            }
             // }
 
             log('False False');
@@ -1248,6 +1302,10 @@ class EditProfileScreenController extends GetxController{
         //Fluttertoast.showToast(msg: addStarPointModel.messege);
       }else{
         //Fluttertoast.showToast(msg: addStarPointModel.messege);
+        if(addStarPointModel.messege == "Token don't match"){
+          sharedPreferenceData.clearUserLoginDetailsFromPrefs();
+          Get.offAll(SignInScreen(), transition: Transition.zoom);
+        }
         log('Fail');
       }
     }catch(e){

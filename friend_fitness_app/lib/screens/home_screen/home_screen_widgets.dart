@@ -176,7 +176,7 @@ class LeaderBoardModule extends StatelessWidget {
                     fontSize: 17,
                   ),
                 ),
-                SizedBox(width: 5),
+                const SizedBox(width: 5),
                 screenController.isAddStarSuccessStatusCode.value ?
                     UserDetails.userId == screenController.getAllGameMembersList[i].userid ?
                 const Icon(Icons.star, color: Colors.yellow, size: 30,) : Container() : Container()
