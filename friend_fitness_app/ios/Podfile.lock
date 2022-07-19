@@ -1,4 +1,6 @@
 PODS:
+  - emoji_picker_flutter (0.0.1):
+    - Flutter
   - Flutter (1.0.0)
   - fluttertoast (0.0.2):
     - Flutter
@@ -10,6 +12,7 @@ PODS:
   - Toast (4.0.0)
 
 DEPENDENCIES:
+  - emoji_picker_flutter (from `.symlinks/plugins/emoji_picker_flutter/ios`)
   - Flutter (from `Flutter`)
   - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
@@ -20,6 +23,8 @@ SPEC REPOS:
     - Toast
 
 EXTERNAL SOURCES:
+  emoji_picker_flutter:
+    :path: ".symlinks/plugins/emoji_picker_flutter/ios"
   Flutter:
     :path: Flutter
   fluttertoast:
@@ -30,12 +35,13 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences_ios/ios"
 
 SPEC CHECKSUMS:
+  emoji_picker_flutter: df19dac03a2b39ac667dc8d1da939ef3a9e21347
   Flutter: 50d75fe2f02b26cc09d224853bb45737f8b3214a
   fluttertoast: 16fbe6039d06a763f3533670197d01fc73459037
   image_picker: 541dcbb3b9cf32d87eacbd957845d8651d6c62c3
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
 
-PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+PODFILE CHECKSUM: 3dffd8c48b531d21ec0ec153c22dc8e3a6223bc9
 
 COCOAPODS: 1.10.2

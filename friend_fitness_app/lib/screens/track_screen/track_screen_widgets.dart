@@ -411,7 +411,7 @@ class NegativePointModule extends StatelessWidget {
             ),*/
           ],
         ).commonAllSidePadding(padding: 15),
-      ),
+      ).commonAllSidePadding(padding: 5),
     );
   }
 }
@@ -522,13 +522,13 @@ class TrackExerciseModule extends StatelessWidget {
           ],
         ),
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 15),
           child: Row(
             //mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 width: 55,
-                height: 80,
+                height: 55,
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     // image: NetworkImage(
