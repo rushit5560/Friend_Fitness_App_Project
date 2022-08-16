@@ -92,9 +92,9 @@ class EditProfileScreenController extends GetxController{
         hipsFieldController.text =  getUserProfileModel.list.hlps;
         leftThighFieldController.text =  getUserProfileModel.list.lThigh;
         rightThighFieldController.text =  getUserProfileModel.list.rThigh;
-        userProfile =  "https://squadgame.omdemo.co.in/asset/uploads/" + getUserProfileModel.list.image;
-        userBeforeImageProfile = "https://squadgame.omdemo.co.in/asset/uploads/" + getUserProfileModel.list.beforeimage;
-        userAfterImageProfile = "https://squadgame.omdemo.co.in/asset/uploads/" + getUserProfileModel.list.afterimage;
+        userProfile =  ApiUrl.apiMainPath + "asset/uploads/" + getUserProfileModel.list.image;
+        userBeforeImageProfile = ApiUrl.apiMainPath + "asset/uploads/" + getUserProfileModel.list.beforeimage;
+        userAfterImageProfile = ApiUrl.apiMainPath + "asset/uploads/" + getUserProfileModel.list.afterimage;
         log('userBeforeImageProfile: $userBeforeImageProfile');
         log('userAfterImageProfile: $userAfterImageProfile');
       }else{

@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:friend_fitness_app/common/constants/api_url.dart';
 import 'package:friend_fitness_app/common/constants/app_colors.dart';
 import 'package:friend_fitness_app/common/constants/app_images.dart';
 import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
@@ -89,18 +90,24 @@ class ViewMembersListModule extends StatelessWidget {
           Container(
             height: 50,
             width: 50,
-            decoration:  const BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: AssetImage(AppImages.personImg),
-                fit: BoxFit.cover,
-              ),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                border: Border.all(color: Colors.grey)
+              // image: DecorationImage(
+              //   image: AssetImage(AppImages.personImg),
+              //   fit: BoxFit.cover,
+              // ),
             ),
+            child: Image.network(ApiUrl.apiMainPath + "asset/uploads/" + screenController.gameWiseMembersList[i].userimage,
+                fit: BoxFit.cover,
+                errorBuilder: (BuildContext context , ob, st){
+                  return Image.asset(AppImages.logoImg);
+                }),
           ),
           const SizedBox(width: 10),
           Expanded(
             child: Text(
-              screenController.gameWiseMembersList[i].gamename,
+              screenController.gameWiseMembersList[i].username,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 17,

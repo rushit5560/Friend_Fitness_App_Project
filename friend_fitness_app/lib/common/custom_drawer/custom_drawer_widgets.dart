@@ -86,10 +86,10 @@ class CustomDrawerSingleItemModule extends StatelessWidget {
       Get.to(() => ChangePasswordScreen(), transition: Transition.rightToLeft);
     } else if (customDrawerScreenOption == CustomDrawerOption.createGame) {
       Get.to(() => CreateGameScreen(), transition: Transition.rightToLeft);
-    } else if (customDrawerScreenOption == CustomDrawerOption.startGame) {
+    } /*else if (customDrawerScreenOption == CustomDrawerOption.startGame) {
       screenController.startGameFunction();
       //Get.to(() => CreateGameScreen(), transition: Transition.rightToLeft);
-    } else if (customDrawerScreenOption == CustomDrawerOption.endGame) {
+    }*/ else if (customDrawerScreenOption == CustomDrawerOption.endGame) {
       log("end game id: ${UserDetails.gameId}");
       if(UserDetails.gameId == 0){
         Fluttertoast.showToast(msg: 'Please join the game');

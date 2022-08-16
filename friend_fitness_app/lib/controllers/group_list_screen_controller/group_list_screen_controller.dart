@@ -40,6 +40,7 @@ class GroupListScreenController extends GetxController{
       "roleid" : "${UserDetails.roleId}"
     };
     log('getAllGameList data: $data');
+    log('header: ${apiHeader.headers}');
 
     try {
       http.Response response = await http.post(Uri.parse(url), body: data, headers: apiHeader.headers);

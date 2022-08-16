@@ -42,23 +42,23 @@ class CustomDrawer extends StatelessWidget {
               ) : Container(),
               UserDetails.roleId == 3 ? const SizedBox(height: 20) : Container(),
 
-              UserDetails.roleId == 3 ?
-              CustomDrawerSingleItemModule(
-                img: AppImages.gameLogoImg,
-                name: 'Start Game',
-                customDrawerOption: CustomDrawerOption.startGame,
-              ) :
-              Container(),
+              // UserDetails.roleId == 3 ?
+              // CustomDrawerSingleItemModule(
+              //   img: AppImages.gameLogoImg,
+              //   name: 'Start Game',
+              //   customDrawerOption: CustomDrawerOption.startGame,
+              // ) :
+              // Container(),
 
-              UserDetails.roleId == 3 ? const SizedBox(height: 20) : Container(),
+              //UserDetails.roleId == 3 ? const SizedBox(height: 20) : Container(),
 
-              UserDetails.roleId == 3 ?
-              CustomDrawerSingleItemModule(
-                img: AppImages.gameLogoImg,
-                name: 'End Game',
-                customDrawerOption: CustomDrawerOption.endGame,
-              ) : Container(),
-              UserDetails.roleId == 3 ? const SizedBox(height: 20) : Container(),
+              // UserDetails.roleId == 3 ?
+              // CustomDrawerSingleItemModule(
+              //   img: AppImages.gameLogoImg,
+              //   name: 'End Game',
+              //   customDrawerOption: CustomDrawerOption.endGame,
+              // ) : Container(),
+              // UserDetails.roleId == 3 ? const SizedBox(height: 20) : Container(),
 
               CustomDrawerSingleItemModule(
                 img: AppImages.logoutImg,

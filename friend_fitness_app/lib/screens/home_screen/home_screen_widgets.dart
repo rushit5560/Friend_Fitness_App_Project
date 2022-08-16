@@ -1,5 +1,6 @@
 import 'dart:developer';
 import 'package:flutter/material.dart';
+import 'package:friend_fitness_app/common/constants/api_url.dart';
 import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
 import 'package:friend_fitness_app/common/user_details.dart';
 import 'package:friend_fitness_app/model/home_screen_models/fitness_model.dart';
@@ -64,7 +65,7 @@ class LeaderBoardModule extends StatelessWidget {
   LeaderBoardModule({Key? key}) : super(key: key);
   final screenController = Get.find<HomeScreenController>();
 
-  List<String> memberName= [
+  /*List<String> memberName= [
     "person1",
     "person2",
     "person3",
@@ -88,7 +89,7 @@ class LeaderBoardModule extends StatelessWidget {
     "3",
     "2",
     "1"
-  ];
+  ];*/
 
   @override
   Widget build(BuildContext context) {
@@ -109,10 +110,36 @@ class LeaderBoardModule extends StatelessWidget {
               screenController.gameName,
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(
+              style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),
+            ),
+            const SizedBox(height: 20),
+            Row(
+              children: [
+                //SizedBox(width: 80),
+                Expanded(
+                  child: Text(
+                    "Name",
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
+                Text(
+                  "Points",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 20),
             Container(
@@ -158,12 +185,19 @@ class LeaderBoardModule extends StatelessWidget {
             height: 50,
             width: 50,
             decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: NetworkImage("https://squadgame.omdemo.co.in/asset/uploads/" + screenController.getAllGameMembersList[i].userimage),
-                fit: BoxFit.cover,
-              ),
+              borderRadius: BorderRadius.circular(30),
+              border: Border.all(color: Colors.grey)
+              //shape: BoxShape.circle,
+              // image: DecorationImage(
+              //   image: NetworkImage(ApiUrl.apiMainPath + "asset/uploads/" + screenController.getAllGameMembersList[i].userimage),
+              //   fit: BoxFit.cover,
+              // ),
             ),
+            child: Image.network(ApiUrl.apiMainPath + "asset/uploads/" + screenController.getAllGameMembersList[i].userimage,
+            fit: BoxFit.cover,
+            errorBuilder: (BuildContext context , ob, st){
+              return Image.asset(AppImages.logoImg);
+            }),
           ),
           const SizedBox(width: 15),
           Expanded(
@@ -197,6 +231,92 @@ class LeaderBoardModule extends StatelessWidget {
     ).commonAllSidePadding(padding: 5);
   }
 }
+
+class StartGameButtonModule extends StatelessWidget {
+  StartGameButtonModule({Key? key}) : super(key: key);
+
+  final screenController = Get.find<HomeScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: () {
+            screenController.startGameFunction();
+          },
+          child: Container(
+            width: Get.width/2,
+            decoration: BoxDecoration(
+              color: AppColors.colorDarkGrey,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(AppImages.gameLogoImg, height: 30, width: 30),
+                SizedBox(width: 10),
+                const Text(
+                  "Start Game",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
+                ).commonSymmetricPadding(vertical: 14),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class EndGameButtonModule extends StatelessWidget {
+  EndGameButtonModule({Key? key}) : super(key: key);
+
+  final screenController = Get.find<HomeScreenController>();
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: () {
+            screenController.endGameFunction();
+          },
+          child: Container(
+            width: Get.width/2,
+            decoration: BoxDecoration(
+              color: AppColors.colorDarkGrey,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image.asset(AppImages.gameLogoImg, height: 30, width: 30),
+                const SizedBox(width: 10),
+                const Text(
+                  "End Game",
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                    fontSize: 20,
+                  ),
+                ).commonSymmetricPadding(vertical: 14),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+
 
 /*/// Track Exercise
 class TrackExerciseModule extends StatelessWidget {
@@ -499,7 +619,8 @@ class TrackWaterIntakeModule extends StatelessWidget {
           ).commonAllSidePadding(padding: 15),
         ).commonAllSidePadding(),
 
-        *//*Container(
+        */
+/*Container(
           width: Get.width,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),

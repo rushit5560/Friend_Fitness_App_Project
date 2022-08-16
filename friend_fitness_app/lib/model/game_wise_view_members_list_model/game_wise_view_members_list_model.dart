@@ -51,6 +51,8 @@ class ListElement {
     required this.categorytype,
     required this.categorypoint,
     required this.categoryimage,
+    required this.username,
+    required this.userimage,
   });
 
   int id;
@@ -70,6 +72,8 @@ class ListElement {
   String categorytype;
   String categorypoint;
   String categoryimage;
+  String username;
+  String userimage;
 
   factory ListElement.fromJson(Map<String, dynamic> json) => ListElement(
     id: json["id"] ?? 0,
@@ -89,6 +93,8 @@ class ListElement {
     categorytype: json["categorytype"] ?? "",
     categorypoint: json["categorypoint"] ?? "",
     categoryimage: json["categoryimage"] ?? "",
+    username: json["username"] ?? "",
+    userimage: json["userimage"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {
@@ -109,5 +115,7 @@ class ListElement {
     "categorytype": categorytype,
     "categorypoint": categorypoint,
     "categoryimage": categoryimage,
+    "username": username,
+    "userimage": userimage
   };
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:friend_fitness_app/common/common_widgets.dart';
 import 'package:friend_fitness_app/controllers/game_wise_view_members_list_screen_controller/game_wise_view_member_list_screen_controller.dart';
 import 'package:friend_fitness_app/controllers/home_screen_controller/home_screen_controller.dart';
 import 'package:friend_fitness_app/screens/game_wise_view_members_list_screen/game_wise_view_members_list_screen_widgets.dart';
@@ -18,7 +19,10 @@ class GameWiseViewMembersListScreen extends StatelessWidget {
             const GameWiseViewMembersAppBarModule(),
 
             Expanded(
-              child: ViewMembersListModule(),
+              child: Obx(()=>
+              screenController.isLoading.value ?
+                  const CustomCircularProgressIndicator():
+                   ViewMembersListModule()),
             )
           ],
         ),

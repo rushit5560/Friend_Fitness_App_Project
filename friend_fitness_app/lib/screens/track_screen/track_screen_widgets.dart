@@ -422,7 +422,7 @@ class TrackExerciseModule extends StatelessWidget {
   TrackExerciseModule({Key? key}) : super(key: key);
   final screenController = Get.find<TrackScreenController>();
 
-  List<String> image = [
+  /*List<String> image = [
     AppImages.runningImg,
     AppImages.weightsImg,
     AppImages.boxingImg,
@@ -450,7 +450,7 @@ class TrackExerciseModule extends StatelessWidget {
     "Stretching",
     "Journal",
     "Meditation"
-  ];
+  ];*/
 
   @override
   Widget build(BuildContext context) {

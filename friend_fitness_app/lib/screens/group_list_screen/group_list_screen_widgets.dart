@@ -60,7 +60,7 @@ class GroupListModule extends StatelessWidget {
       },
       child: Column(
         children: [
-          const SizedBox(height: 30),
+          //const SizedBox(height: 30),
           screenController.getGameList.isEmpty ?
               const Center(child: Text("No Game")):
             Expanded(
@@ -250,9 +250,9 @@ class GroupListModule extends StatelessWidget {
             Column(
               children: [
 
-                 UserDetails.gameId == screenController.getGameList[i].id.toString() ?
+                 /*UserDetails.gameId == screenController.getGameList[i].id.toString() ?
                       Container()
-                    : GestureDetector(
+                    :*/ GestureDetector(
                    onTap: () {
                      screenController.memberJoinGame(gameId: screenController.getGameList[i].id, totalPerson: screenController.getGameList[i].person);
                    },
@@ -260,7 +260,8 @@ class GroupListModule extends StatelessWidget {
                      width: 130,
                      height: 35,
                      decoration: BoxDecoration(
-                       color: AppColors.colorDarkGrey,
+                       color: UserDetails.gameId == screenController.getGameList[i].id.toString() ?
+                       Colors.green : AppColors.colorDarkGrey,
                        borderRadius: BorderRadius.circular(20),
                      ),
                      child: const Center(
@@ -276,33 +277,33 @@ class GroupListModule extends StatelessWidget {
                    ),
                  ),
 
-                // UserDetails.roleId == 3 ? const SizedBox(height: 10) : Container(),
-                //
-                // UserDetails.roleId == 3 ?
-                // GestureDetector(
-                //   onTap: () {
-                //     Get.to(() => GameWiseViewMembersListScreen(), arguments: screenController.getGameList[i].id);
-                //     //screenController.memberJoinGame(gameId: screenController.getGameList[i].id, totalPerson: screenController.getGameList[i].person);
-                //   },
-                //   child: Container(
-                //     width: 130,
-                //     height: 35,
-                //     decoration: BoxDecoration(
-                //       color: AppColors.colorDarkGrey,
-                //       borderRadius: BorderRadius.circular(20),
-                //     ),
-                //     child: const Center(
-                //       child: Text(
-                //         "VIEW MEMBER",
-                //         style: TextStyle(
-                //           fontWeight: FontWeight.bold,
-                //           color: Colors.white,
-                //           fontSize: 13,
-                //         ),
-                //       ),
-                //     ),
-                //   ),
-                // ) : Container(),
+                UserDetails.roleId == 3 ? const SizedBox(height: 10) : Container(),
+
+                UserDetails.roleId == 3 ?
+                GestureDetector(
+                  onTap: () {
+                    Get.to(() => GameWiseViewMembersListScreen(), arguments: screenController.getGameList[i].id);
+                    //screenController.memberJoinGame(gameId: screenController.getGameList[i].id, totalPerson: screenController.getGameList[i].person);
+                  },
+                  child: Container(
+                    width: 130,
+                    height: 35,
+                    decoration: BoxDecoration(
+                      color: AppColors.colorDarkGrey,
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    child: const Center(
+                      child: Text(
+                        "VIEW MEMBER",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ),
+                  ),
+                ) : Container(),
               ],
             )
           ],
