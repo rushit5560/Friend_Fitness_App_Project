@@ -178,6 +178,7 @@ class NameTextFieldModule extends StatelessWidget {
                   ),
                 ),
                 TextFormField(
+                  readOnly: true,
                   controller: screenController.nameFieldController,
                   keyboardType: TextInputType.text,
                   cursorColor: Colors.black,
@@ -226,6 +227,7 @@ class EmailTextFieldModule extends StatelessWidget {
                   ),
                 ),
                 TextFormField(
+                  readOnly: true,
                   controller: screenController.emailFieldController,
                   keyboardType: TextInputType.emailAddress,
                   cursorColor: Colors.black,

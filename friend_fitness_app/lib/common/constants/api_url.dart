@@ -58,4 +58,7 @@ class ApiUrl {
   /// send message and Get message
   static const sendMessageApi = apiMainPath + "api/sendmeassage";
   static const getAllMessageApi = apiMainPath + "api/messageall";
+
+  /// Winner Member
+  static const winnerMemberApi = apiMainPath + "api/wingame";
 }

@@ -45,12 +45,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     const SizedBox(height: 15),
 
                     UserDetails.roleId == 3 ?
-                    StartGameButtonModule() : Container(),
+                    const StartGameAndEndGameButtonModule() : Container(),
 
-                    const SizedBox(height: 15),
-
-                    UserDetails.roleId == 3 ?
-                    EndGameButtonModule() : Container(),
+                    // UserDetails.roleId == 3 ?
+                    // StartGameButtonModule() : Container(),
+                    //
+                    // const SizedBox(height: 15),
+                    //
+                    // UserDetails.roleId == 3 ?
+                    // EndGameButtonModule() : Container(),
                   ],
                 ),
         ),

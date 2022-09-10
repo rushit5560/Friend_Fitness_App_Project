@@ -115,12 +115,38 @@ class ViewMembersListModule extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 10),
-          Text(
-            screenController.gameWiseMembersList[i].point.toString(),
-            style: const TextStyle(
-              fontWeight: FontWeight.bold,
-              fontSize: 17,
-            ),
+          Row(
+            children: [
+              Text(
+                screenController.gameWiseMembersList[i].point.toString(),
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 17,
+                ),
+              ),
+              const SizedBox(width: 5),
+
+              i == 0 ?
+              GestureDetector(
+                onTap: () async {
+                  await screenController.memberWinnerFunction();
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: AppColors.colorDarkGrey,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: const Text(
+                    "Winner",
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                      fontSize: 15,
+                    ),
+                  ).commonSymmetricPadding(horizontal: 10, vertical: 5),
+                ),
+              ) :  Container(width: 65)
+            ],
           ),
         ],
       ).commonAllSidePadding(padding: 12),

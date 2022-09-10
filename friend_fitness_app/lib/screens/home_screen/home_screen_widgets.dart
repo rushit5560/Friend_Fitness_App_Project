@@ -106,25 +106,38 @@ class LeaderBoardModule extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              screenController.gameName,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
+            Row(
+              children: [
+                const Text(
+                  "Game name: ",
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                ),
+                Text(
+                  screenController.gameName,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 17,
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 20),
             Row(
-              children: [
+              children: const [
                 //SizedBox(width: 80),
                 Expanded(
                   child: Text(
                     "Name",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
@@ -134,7 +147,7 @@ class LeaderBoardModule extends StatelessWidget {
                   "Points",
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 16,
                   ),
@@ -187,17 +200,15 @@ class LeaderBoardModule extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(30),
               border: Border.all(color: Colors.grey)
-              //shape: BoxShape.circle,
-              // image: DecorationImage(
-              //   image: NetworkImage(ApiUrl.apiMainPath + "asset/uploads/" + screenController.getAllGameMembersList[i].userimage),
-              //   fit: BoxFit.cover,
-              // ),
             ),
-            child: Image.network(ApiUrl.apiMainPath + "asset/uploads/" + screenController.getAllGameMembersList[i].userimage,
-            fit: BoxFit.cover,
-            errorBuilder: (BuildContext context , ob, st){
-              return Image.asset(AppImages.logoImg);
-            }),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(30),
+              child: Image.network(ApiUrl.apiMainPath + "asset/uploads/" + screenController.getAllGameMembersList[i].userimage,
+              fit: BoxFit.cover,
+              errorBuilder: (BuildContext context , ob, st){
+                return Image.asset(AppImages.logoImg);
+              }),
+            ),
           ),
           const SizedBox(width: 15),
           Expanded(
@@ -232,6 +243,26 @@ class LeaderBoardModule extends StatelessWidget {
   }
 }
 
+class StartGameAndEndGameButtonModule extends StatelessWidget {
+  const StartGameAndEndGameButtonModule({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: StartGameButtonModule(),
+        ),
+        const SizedBox(width: 10),
+        Expanded(
+          child: EndGameButtonModule(),
+        )
+      ],
+    ).commonSymmetricPadding(horizontal: 20);
+  }
+}
+
+
 class StartGameButtonModule extends StatelessWidget {
   StartGameButtonModule({Key? key}) : super(key: key);
 
@@ -239,37 +270,32 @@ class StartGameButtonModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        GestureDetector(
-          onTap: () {
-            screenController.startGameFunction();
-          },
-          child: Container(
-            width: Get.width/2,
-            decoration: BoxDecoration(
-              color: AppColors.colorDarkGrey,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(AppImages.gameLogoImg, height: 30, width: 30),
-                SizedBox(width: 10),
-                const Text(
-                  "Start Game",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    fontSize: 20,
-                  ),
-                ).commonSymmetricPadding(vertical: 14),
-              ],
-            ),
-          ),
+    return GestureDetector(
+      onTap: () {
+        screenController.startGameFunction();
+      },
+      child: Container(
+        //width: Get.width/2.4,
+        decoration: BoxDecoration(
+          color: AppColors.colorDarkGrey,
+          borderRadius: BorderRadius.circular(12),
         ),
-      ],
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(AppImages.gameLogoImg, height: 30, width: 30),
+            const SizedBox(width: 10),
+            const Text(
+              "Start Game",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                fontSize: 18,
+              ),
+            ).commonSymmetricPadding(vertical: 12),
+          ],
+        ).commonSymmetricPadding(horizontal: 12),
+      ),
     );
   }
 }
@@ -281,37 +307,32 @@ class EndGameButtonModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        GestureDetector(
-          onTap: () {
-            screenController.endGameFunction();
-          },
-          child: Container(
-            width: Get.width/2,
-            decoration: BoxDecoration(
-              color: AppColors.colorDarkGrey,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image.asset(AppImages.gameLogoImg, height: 30, width: 30),
-                const SizedBox(width: 10),
-                const Text(
-                  "End Game",
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    fontSize: 20,
-                  ),
-                ).commonSymmetricPadding(vertical: 14),
-              ],
-            ),
-          ),
+    return GestureDetector(
+      onTap: () {
+        screenController.endGameFunction();
+      },
+      child: Container(
+        //width: Get.width/2.4,
+        decoration: BoxDecoration(
+          color: AppColors.colorDarkGrey,
+          borderRadius: BorderRadius.circular(12),
         ),
-      ],
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(AppImages.gameLogoImg, height: 30, width: 30),
+            const SizedBox(width: 10),
+            const Text(
+              "End Game",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Colors.white,
+                fontSize: 18,
+              ),
+            ).commonSymmetricPadding(vertical: 12),
+          ],
+        ).commonSymmetricPadding(horizontal: 15),
+      ),
     );
   }
 }

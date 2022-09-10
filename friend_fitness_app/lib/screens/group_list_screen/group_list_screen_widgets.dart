@@ -255,6 +255,17 @@ class GroupListModule extends StatelessWidget {
                     :*/ GestureDetector(
                    onTap: () {
                      screenController.memberJoinGame(gameId: screenController.getGameList[i].id, totalPerson: screenController.getGameList[i].person);
+                     /*if(UserDetails.gameId == screenController.getGameList[i].id.toString()){
+                       Fluttertoast.showToast(msg: 'Already join this game!!');
+                     }else if(UserDetails.gameId.isEmpty){
+                       screenController.memberJoinGame(
+                           gameId: screenController.getGameList[i].id,
+                           totalPerson: screenController.getGameList[i].person
+                       );
+                     } else if(UserDetails.gameId.isNotEmpty){
+                       Fluttertoast.showToast(msg: 'Already join in another game!!');
+                     }*/
+
                    },
                    child: Container(
                      width: 130,
