@@ -114,9 +114,9 @@ class VerifyOtpButtonModule extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
+      onTap: () async {
         if (screenController.verifyOtpFormKey.currentState!.validate()) {
-          screenController.verifyOtpFunction();
+          await screenController.verifyOtpFunction();
         }
       },
       child: Container(

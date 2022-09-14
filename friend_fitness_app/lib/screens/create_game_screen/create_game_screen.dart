@@ -17,33 +17,32 @@ class CreateGameScreen extends StatelessWidget {
         child: Column(
           children: [
             const CreateGameScreenAppBarModule(),
-            
             Expanded(
-              child: Obx(()=>
-              createGameScreenController.isLoading.value ?
-                  const Center(child: CustomCircularProgressIndicator()) :
-                  Form(
-                    key: createGameScreenController.createGameFormKey,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          NameTextFieldModule(),
-                          const SizedBox(height: 20),
-                          DaysTextFieldModule(),
-                          const SizedBox(height: 20),
-                          PersonTextFieldModule(),
-                          const SizedBox(height: 20),
-                          AmountTextFieldModule(),
-                          const SizedBox(height: 20),
-                          RewardPointsTextFieldModule(),
-                          const SizedBox(height: 20),
-                          SelectDayDropDownModule(),
-                          const SizedBox(height: 25),
-                          CreateGameButtonModule()
-                        ],
-                      ).commonAllSidePadding(padding: 15),
-                    ),
-                ),
+              child: Obx(
+                () => createGameScreenController.isLoading.value
+                    ? const Center(child: CustomCircularProgressIndicator())
+                    : Form(
+                        key: createGameScreenController.createGameFormKey,
+                        child: SingleChildScrollView(
+                          child: Column(
+                            children: [
+                              NameTextFieldModule(),
+                              const SizedBox(height: 20),
+                              DaysTextFieldModule(),
+                              const SizedBox(height: 20),
+                              PersonTextFieldModule(),
+                              const SizedBox(height: 20),
+                              AmountTextFieldModule(),
+                              const SizedBox(height: 20),
+                              RewardPointsTextFieldModule(),
+                              const SizedBox(height: 20),
+                              SelectDayDropDownModule(),
+                              const SizedBox(height: 25),
+                              CreateGameButtonModule()
+                            ],
+                          ).commonAllSidePadding(padding: 15),
+                        ),
+                      ),
               ),
             )
           ],

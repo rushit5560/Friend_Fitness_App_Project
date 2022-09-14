@@ -48,7 +48,7 @@ class VerifyOtpScreenController extends GetxController{
         userId = verifyOtpModel.list.id;
         Fluttertoast.showToast(msg: verifyOtpModel.message);
         clearOtpFieldsFunction();
-        Get.to(() => ResetPasswordScreen(), arguments: userId);
+        Get.off(() => ResetPasswordScreen(), arguments: userId);
 
       }else{
         log('Fail');
@@ -65,7 +65,7 @@ class VerifyOtpScreenController extends GetxController{
     }
   }
 
-  clearOtpFieldsFunction(){
+  clearOtpFieldsFunction() {
     otpFieldController.clear();
   }
 }

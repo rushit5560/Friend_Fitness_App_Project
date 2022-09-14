@@ -1,15 +1,15 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:friend_fitness_app/common/constants/api_header.dart';
 import 'package:friend_fitness_app/common/constants/api_url.dart';
-import 'package:friend_fitness_app/common/user_details.dart';
 import 'package:friend_fitness_app/model/reset_password_model/reset_password_model.dart';
 import 'package:friend_fitness_app/screens/sign_in_screen/sign_in_screen.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+
+
 
 class ResetPasswordScreenController extends GetxController{
   GlobalKey<FormState> resetPasswordFormKey = GlobalKey();
@@ -25,7 +25,7 @@ class ResetPasswordScreenController extends GetxController{
   ApiHeader apiHeader = ApiHeader();
   RxBool isSuccessStatus = false.obs;
 
-  resetPasswordFunction()async{
+  Future<void> resetPasswordFunction() async {
     isLoading(true);
     String url = ApiUrl.resetPasswordApi;
     log('url: $url');

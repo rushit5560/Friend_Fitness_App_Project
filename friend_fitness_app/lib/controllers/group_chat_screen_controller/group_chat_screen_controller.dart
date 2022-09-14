@@ -29,7 +29,7 @@ class GroupChatScreenController extends GetxController {
   String attachImage = "";
 
 
-  File ? addPhoto;
+  File addPhoto = File("");
 
   RxBool isSuccessStatusCode = false.obs;
   List<List1> getAllMessageList = [];
@@ -42,22 +42,22 @@ class GroupChatScreenController extends GetxController {
   ScrollController scrollController = ScrollController();
 
   sendMessageApi() async{
-    isLoading(true);
+    // isLoading(true);
     String url = ApiUrl.sendMessageApi;
     log('url: $url');
     log('userId: $userId');
     log('gameId: $gameId');
     try{
-      if(addPhoto != null){
+      if(addPhoto.path != ""){
         var request = http.MultipartRequest('POST', Uri.parse(url));
 
-        var stream = http.ByteStream(addPhoto!.openRead());
+        var stream = http.ByteStream(addPhoto.openRead());
 
         stream.cast();
 
-        var length = await addPhoto!.length();
+        var length = await addPhoto.length();
 
-        request.files.add(await http.MultipartFile.fromPath("file", addPhoto!.path));
+        request.files.add(await http.MultipartFile.fromPath("file", addPhoto.path));
 
         request.headers.addAll(apiHeader.headers);
 
@@ -82,19 +82,19 @@ class GroupChatScreenController extends GetxController {
         var response = await request.send();
         log('response: ${response.request}');
 
-        response.stream.transform(utf8.decoder).listen((value) {
+        response.stream.transform(utf8.decoder).listen((value) async {
           SendMessageModel response1 = SendMessageModel.fromJson(json.decode(value));
           log('response1 ::::::$response1');
           isSuccessStatusCode = response1.success.obs;
           log('status : $isSuccessStatusCode');
 
           if(isSuccessStatusCode.value){
-            Fluttertoast.showToast(msg: response1.messege);
+            // Fluttertoast.showToast(msg: response1.messege);
 
-            getAllMessageFunction(gameId: gameId);
+            await getAllMessageFunction(gameId: gameId);
 
           } else {
-            Fluttertoast.showToast(msg: response1.messege);
+            // Fluttertoast.showToast(msg: response1.messege);
 
             if(response1.messege == "Token don't match"){
               sharedPreferenceData.clearUserLoginDetailsFromPrefs();
@@ -104,7 +104,7 @@ class GroupChatScreenController extends GetxController {
           }
         });
       }
-      else if(addPhoto == null){
+      else if(addPhoto.path == ""){
         var request = http.MultipartRequest('POST', Uri.parse(url));
 
         // var stream = http.ByteStream(profile!.openRead());
@@ -186,7 +186,7 @@ class GroupChatScreenController extends GetxController {
       log('Error: $e');
     } finally{
       //isLoading(false);
-      getAllMessageFunction(gameId: gameId);
+      await getAllMessageFunction(gameId: gameId);
     }
   }
 

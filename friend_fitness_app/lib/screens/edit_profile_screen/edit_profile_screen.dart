@@ -9,6 +9,7 @@ class EditProfileScreen extends StatelessWidget {
   //EditProfileScreen({Key? key}) : super(key: key);
   EditProfileScreen({Key? key}) : super(key: key);
   final screenController = Get.put(EditProfileScreenController());
+
   //final screenController = Get.find<ProfileScreenController>();
   @override
   Widget build(BuildContext context) {
@@ -20,53 +21,52 @@ class EditProfileScreen extends StatelessWidget {
             const ProfileScreenAppBarModule(),
             const SizedBox(height: 15),
             Expanded(
-              child: SingleChildScrollView(
-                child: Obx(()=>
-                screenController.isLoading.value
-                    ? const Center(child: CircularProgressIndicator()):
-                  Form(
-                    key: screenController.editProfileFormKey,
-                    child: Column(
-                      children: [
-                        ProfileImage(),
-                        const SizedBox(height: 35),
-                         NameTextFieldModule(),
-                        const SizedBox(height: 20),
-                        EmailTextFieldModule(),
-                        const SizedBox(height: 20),
-                        AddressTextFieldModule(),
-                        const SizedBox(height: 20),
-                        GenderTextFieldModule(),
-                        const SizedBox(height: 20),
-                         WeightTextFieldModule(),
-                        const SizedBox(height: 20),
-                         HeightTextFieldModule(),
-                        const SizedBox(height: 20),
-                        ChestTextFieldModule(),
-                        const SizedBox(height: 20),
-                        LeftArmTextFieldModule(),
-                        const SizedBox(height: 20),
-                        RightArmTextFieldModule(),
-                        const SizedBox(height: 20),
-                        WaistTextFieldModule(),
-                        const SizedBox(height: 20),
-                        HipsTextFieldModule(),
-                        const SizedBox(height: 20),
-                        LeftThighTextFieldModule(),
-                        const SizedBox(height: 20),
-                        RightThighTextFieldModule(),
-                        const SizedBox(height: 30),
-                         UpdateButtonModule(),
-                        const SizedBox(height: 30),
-                        BeforeAfterImageModule(),
-                        const SizedBox(height: 20),
-                      ],
-                    ).commonAllSidePadding(),
-                  ),
-                ),
+              child: Obx(
+                () => screenController.isLoading.value
+                    ? const Center(child: CircularProgressIndicator())
+                    : SingleChildScrollView(
+                        child: Form(
+                          key: screenController.editProfileFormKey,
+                          child: Column(
+                            children: [
+                              ProfileImage(),
+                              const SizedBox(height: 35),
+                              NameTextFieldModule(),
+                              const SizedBox(height: 20),
+                              EmailTextFieldModule(),
+                              const SizedBox(height: 20),
+                              AddressTextFieldModule(),
+                              const SizedBox(height: 20),
+                              GenderTextFieldModule(),
+                              const SizedBox(height: 20),
+                              WeightTextFieldModule(),
+                              const SizedBox(height: 20),
+                              HeightTextFieldModule(),
+                              const SizedBox(height: 20),
+                              ChestTextFieldModule(),
+                              const SizedBox(height: 20),
+                              LeftArmTextFieldModule(),
+                              const SizedBox(height: 20),
+                              RightArmTextFieldModule(),
+                              const SizedBox(height: 20),
+                              WaistTextFieldModule(),
+                              const SizedBox(height: 20),
+                              HipsTextFieldModule(),
+                              const SizedBox(height: 20),
+                              LeftThighTextFieldModule(),
+                              const SizedBox(height: 20),
+                              RightThighTextFieldModule(),
+                              const SizedBox(height: 30),
+                              UpdateButtonModule(),
+                              const SizedBox(height: 30),
+                              BeforeAfterImageModule(),
+                              const SizedBox(height: 20),
+                            ],
+                          ).commonAllSidePadding(),
+                        ),
+                      ),
               ),
             )
-
           ],
         ),
       ),

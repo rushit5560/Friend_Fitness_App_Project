@@ -133,23 +133,29 @@ class LeaderBoardModule extends StatelessWidget {
               children: const [
                 //SizedBox(width: 80),
                 Expanded(
+                  child: Padding(
+                    padding: EdgeInsets.only(left: 15),
+                    child: Text(
+                      "Name",
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(right: 15),
                   child: Text(
-                    "Name",
+                    "Points",
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
                       fontSize: 16,
                     ),
-                  ),
-                ),
-                Text(
-                  "Points",
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 16,
                   ),
                 ),
               ],

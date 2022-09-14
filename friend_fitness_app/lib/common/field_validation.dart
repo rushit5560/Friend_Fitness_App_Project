@@ -112,6 +112,13 @@ class FieldValidator {
     return null;
   }
 
+  String? validateGameName(String value) {
+    if (value.isEmpty) {
+      return 'Please enter game name';
+    }
+    return null;
+  }
+
   String? validateAddress(String value) {
     if (value.isEmpty) {
       return 'Please enter address';
@@ -122,6 +129,13 @@ class FieldValidator {
   String? validateDay(String value) {
     if (value.isEmpty) {
       return 'Please enter day';
+    }
+    return null;
+  }
+
+  String? validateGameDay(String value) {
+    if (value.isEmpty) {
+      return 'Please enter total day';
     }
     return null;
   }

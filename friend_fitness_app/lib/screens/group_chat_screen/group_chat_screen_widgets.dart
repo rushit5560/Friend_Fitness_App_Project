@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:avoid_keyboard/avoid_keyboard.dart';
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:friend_fitness_app/common/extension_methods/extension_methods.dart';
 import 'package:friend_fitness_app/common/user_details.dart';
 import 'package:get/get.dart';
@@ -67,8 +68,8 @@ class GroupChatListModule extends StatelessWidget {
   Widget build(BuildContext context) {
     return RefreshIndicator(
       onRefresh: () {
-        return Future.delayed(const Duration(seconds: 1), () {
-          screenController.getAllMessageFunction(
+        return Future.delayed(const Duration(seconds: 1), () async {
+          await screenController.getAllMessageFunction(
               gameId: screenController.gameId);
         });
       },
@@ -527,14 +528,13 @@ class _SendMessageModuleState extends State<SendMessageModule> {
             const SizedBox(width: 10),
             GestureDetector(
               onTap: () async {
-                // if(screenController.userMessageFieldController.text.isEmpty) {
-                //   log("Message : ${screenController.userMessageFieldController.text}");
-                // } else {
-                //   log("Message1 : ${screenController.userMessageFieldController.text}");
-                // }
+                if(screenController.userMessageFieldController.text.isEmpty && "${screenController.addPhoto.path}" == ""){
+                  Fluttertoast.showToast(msg: 'Message is empty');
+                } else{
+                  await screenController.sendMessageApi();
+                  screenController.userMessageFieldController.clear();
+                }
 
-                await screenController.sendMessageApi();
-                screenController.userMessageFieldController.clear();
                 //screenController.scrollController.animateTo(screenController.scrollController.position.maxScrollExtent, duration: Duration(milliseconds: 300), curve: Curves.easeOut);
               },
               child: Container(

@@ -17,7 +17,6 @@ class _GroupListScreenState extends State<GroupListScreen> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     groupScreenController.getAllGameList();
   }
@@ -26,18 +25,16 @@ class _GroupListScreenState extends State<GroupListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Obx(()=>
-        groupScreenController.isLoading.value ?
-        const CustomCircularProgressIndicator():
-           Column(
-            children: [
-              const GroupListScreenAppBarModule(),
-              const SizedBox(height: 20),
-              Expanded(
-                child: GroupListModule(),
+        child: Obx(
+          () => groupScreenController.isLoading.value
+              ? const CustomCircularProgressIndicator()
+              : Column(
+                  children: [
+                    const GroupListScreenAppBarModule(),
+                    const SizedBox(height: 20),
+                    Expanded(child: GroupListModule()),
+                  ],
                 ),
-            ],
-          ),
         ),
       ),
       /*body: SafeArea(
@@ -61,4 +58,3 @@ class _GroupListScreenState extends State<GroupListScreen> {
     );
   }
 }
-

@@ -54,30 +54,43 @@ class NameTextFieldModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          height: 50,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 6,
-                blurStyle: BlurStyle.outer,
-                color: AppColors.colorLightGrey,
-              ),
-            ],
+        const Text(
+          "Game Name",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 18,
           ),
         ),
+        const SizedBox(height: 10),
+        Stack(
+          children: [
+            Container(
+              height: 50,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 6,
+                    blurStyle: BlurStyle.outer,
+                    color: AppColors.colorLightGrey,
+                  ),
+                ],
+              ),
+            ),
 
-        TextFormField(
-          controller: screenController.nameFieldController,
-          keyboardType: TextInputType.text,
-          cursorColor: Colors.grey,
-          decoration: createGameInputDecoration(hintText: "Name"),
-          validator: (value) => fieldValidator.validateName(value!),
+            TextFormField(
+              controller: screenController.nameFieldController,
+              keyboardType: TextInputType.text,
+              cursorColor: Colors.grey,
+              decoration: createGameInputDecoration(hintText: "Game Name"),
+              validator: (value) => fieldValidator.validateGameName(value!),
+            ),
+
+          ],
         ),
-
       ],
     );
   }
@@ -91,30 +104,44 @@ class DaysTextFieldModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          height: 50,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 6,
-                blurStyle: BlurStyle.outer,
-                color: AppColors.colorLightGrey,
-              ),
-            ],
+        const Text(
+          "Total Day",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 18,
           ),
         ),
+        const SizedBox(height: 10),
 
-        TextFormField(
-          controller: screenController.dayFieldController,
-          keyboardType: TextInputType.text,
-          cursorColor: Colors.grey,
-          decoration: createGameInputDecoration(hintText: "Day"),
-          validator: (value) => fieldValidator.validateDay(value!),
+        Stack(
+          children: [
+            Container(
+              height: 50,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 6,
+                    blurStyle: BlurStyle.outer,
+                    color: AppColors.colorLightGrey,
+                  ),
+                ],
+              ),
+            ),
+
+            TextFormField(
+              controller: screenController.dayFieldController,
+              keyboardType: TextInputType.text,
+              cursorColor: Colors.grey,
+              decoration: createGameInputDecoration(hintText: "Total Day"),
+              validator: (value) => fieldValidator.validateGameDay(value!),
+            ),
+
+          ],
         ),
-
       ],
     );
   }
@@ -128,30 +155,44 @@ class PersonTextFieldModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          height: 50,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 6,
-                blurStyle: BlurStyle.outer,
-                color: AppColors.colorLightGrey,
-              ),
-            ],
+        const Text(
+          "Total Person",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 18,
           ),
         ),
+        const SizedBox(height: 10),
 
-        TextFormField(
-          controller: screenController.personFieldController,
-          keyboardType: TextInputType.text,
-          cursorColor: Colors.grey,
-          decoration: createGameInputDecoration(hintText: "Person"),
-          validator: (value) => fieldValidator.validatePerson(value!),
+        Stack(
+          children: [
+            Container(
+              height: 50,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 6,
+                    blurStyle: BlurStyle.outer,
+                    color: AppColors.colorLightGrey,
+                  ),
+                ],
+              ),
+            ),
+
+            TextFormField(
+              controller: screenController.personFieldController,
+              keyboardType: TextInputType.text,
+              cursorColor: Colors.grey,
+              decoration: createGameInputDecoration(hintText: "Total Person"),
+              validator: (value) => fieldValidator.validatePerson(value!),
+            ),
+
+          ],
         ),
-
       ],
     );
   }
@@ -165,30 +206,44 @@ class AmountTextFieldModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          height: 50,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 6,
-                blurStyle: BlurStyle.outer,
-                color: AppColors.colorLightGrey,
-              ),
-            ],
+        const Text(
+          "Amount",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 18,
           ),
         ),
+        const SizedBox(height: 10),
 
-        TextFormField(
-          controller: screenController.amountFieldController,
-          keyboardType: TextInputType.text,
-          cursorColor: Colors.grey,
-          decoration: createGameInputDecoration(hintText: "Amount"),
-          validator: (value) => fieldValidator.validateAmount(value!),
+        Stack(
+          children: [
+            Container(
+              height: 50,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 6,
+                    blurStyle: BlurStyle.outer,
+                    color: AppColors.colorLightGrey,
+                  ),
+                ],
+              ),
+            ),
+
+            TextFormField(
+              controller: screenController.amountFieldController,
+              keyboardType: TextInputType.text,
+              cursorColor: Colors.grey,
+              decoration: createGameInputDecoration(hintText: "Amount"),
+              validator: (value) => fieldValidator.validateAmount(value!),
+            ),
+
+          ],
         ),
-
       ],
     );
   }
@@ -202,30 +257,44 @@ class RewardPointsTextFieldModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          height: 50,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: [
-              BoxShadow(
-                blurRadius: 6,
-                blurStyle: BlurStyle.outer,
-                color: AppColors.colorLightGrey,
-              ),
-            ],
+        const Text(
+          "Reward Point",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 18,
           ),
         ),
+        const SizedBox(height: 10),
 
-        TextFormField(
-          controller: screenController.rewardPointFieldController,
-          keyboardType: TextInputType.text,
-          cursorColor: Colors.grey,
-          decoration: createGameInputDecoration(hintText: "Reward Point"),
-          validator: (value) => fieldValidator.validateRewardPoint(value!),
+        Stack(
+          children: [
+            Container(
+              height: 50,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(
+                    blurRadius: 6,
+                    blurStyle: BlurStyle.outer,
+                    color: AppColors.colorLightGrey,
+                  ),
+                ],
+              ),
+            ),
+
+            TextFormField(
+              controller: screenController.rewardPointFieldController,
+              keyboardType: TextInputType.text,
+              cursorColor: Colors.grey,
+              decoration: createGameInputDecoration(hintText: "Reward Point"),
+              validator: (value) => fieldValidator.validateRewardPoint(value!),
+            ),
+
+          ],
         ),
-
       ],
     );
   }
@@ -238,72 +307,86 @@ class SelectDayDropDownModule extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Container(
-          height: 50,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(15),
-            //border: Border.all(color: AppColors.colorLightGrey),
-            boxShadow: [
-              BoxShadow(
-                color: AppColors.colorLightGrey,
-                blurRadius: 5,
-                //spreadRadius: 5,
-                blurStyle: BlurStyle.outer,
-              ),
-            ],
+
+        const Text(
+          "Cheat Day",
+          style: TextStyle(
+            fontWeight: FontWeight.w600,
+            fontSize: 18,
           ),
         ),
-
-        Obx(() =>
+        const SizedBox(height: 10),
+        Stack(
+          children: [
             Container(
-              padding: const EdgeInsets.only(left: 10),
-              width: Get.width, //gives the width of the dropdown button
-              decoration: const BoxDecoration(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
+              height: 50,
+              decoration: BoxDecoration(
                 color: Colors.white,
-              ),
-              child: Theme(
-                data: Theme.of(context).copyWith(
-                  //canvasColor: Colors.grey.shade100,
-                  buttonTheme: ButtonTheme.of(context).copyWith(
-                    alignedDropdown: true,
+                borderRadius: BorderRadius.circular(15),
+                //border: Border.all(color: AppColors.colorLightGrey),
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.colorLightGrey,
+                    blurRadius: 5,
+                    //spreadRadius: 5,
+                    blurStyle: BlurStyle.outer,
                   ),
-                ),
-                child: DropdownButtonHideUnderline(
-                  child: DropdownButton<String>(
-
-                    value: screenController.weekDayValue.value,
-
-                    items: <String>[
-                      'Monday',
-                      'Tuesday',
-                      'Wednesday',
-                      'Thursday',
-                      'Friday',
-                      'Saturday',
-                      'Sunday'
-                    ].map<DropdownMenuItem<String>>((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(
-                          value,
-                          style: const TextStyle(color: Colors.grey),
-                        ),
-                      );
-                    }).toList(),
-
-                    onChanged: (value){
-                      screenController.isLoading(true);
-                      screenController.weekDayValue.value = value!;
-                      screenController.isLoading(false);
-                    },
-                  ),
-                ),
+                ],
               ),
             ),
+
+            Obx(() =>
+                Container(
+                  padding: const EdgeInsets.only(left: 10),
+                  width: Get.width, //gives the width of the dropdown button
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    color: Colors.white,
+                  ),
+                  child: Theme(
+                    data: Theme.of(context).copyWith(
+                      //canvasColor: Colors.grey.shade100,
+                      buttonTheme: ButtonTheme.of(context).copyWith(
+                        alignedDropdown: true,
+                      ),
+                    ),
+                    child: DropdownButtonHideUnderline(
+                      child: DropdownButton<String>(
+
+                        value: screenController.weekDayValue.value,
+
+                        items: <String>[
+                          'Monday',
+                          'Tuesday',
+                          'Wednesday',
+                          'Thursday',
+                          'Friday',
+                          'Saturday',
+                          'Sunday'
+                        ].map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: const TextStyle(color: Colors.grey),
+                            ),
+                          );
+                        }).toList(),
+
+                        onChanged: (value){
+                          screenController.isLoading(true);
+                          screenController.weekDayValue.value = value!;
+                          screenController.isLoading(false);
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+            ),
+          ],
         ),
       ],
     );
